@@ -1,0 +1,53 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const predictionsData = await import('../../data/predictions.json');
+  return predictionsData.default.map((item) => ({
+    params: { slug: item.slug },
+    props: { item },
+  }));
+}
+
+const { item } = Astro.props;
+
+const getNeonColor = (value: number) => {
+  if (value > 70) return 'text-emerald-400 border-emerald-500/30 bg-emerald-950/20';
+  if (value >= 40) return 'text-cyan-400 border-cyan-500/30 bg-cyan-950/20';
+  return 'text-rose-400 border-rose-500/30 bg-rose-950/20';
+};
+---
+
+<Layout title={item.title}>
+  <div class="mb-6">
+    <a href="/" class="text-xs text-cyan-400 hover:underline flex items-center gap-1 mb-4">
+      &larr; Back to all predictions
+    </a>
+    <span class="text-xs px-2.5 py-1 rounded-full bg-gray-800 text-cyan-400 font-medium inline-block">
+      {item.category}
+    </span>
+  </div>
+
+  <div class="p-8 rounded-2xl border border-gray-800 bg-[#161E2E] shadow-2xl relative overflow-hidden">
+    <h1 class="text-2xl md:text-3xl font-bold mb-6 text-gray-100">{item.title}</h1>
+    
+    <div class="flex items-center gap-6 my-6">
+      <div class={`text-5xl md:text-6xl font-black px-6 py-4 rounded-xl border flex items-center justify-center shrink-0 ${getNeonColor(item.odds)}`}>
+        {item.odds}%
+      </div>
+      <div>
+        <p class="text-sm text-gray-400 uppercase tracking-widest font-semibold">Current AI Probability</p>
+        <p class="text-xs text-gray-500 mt-1">Real-time telemetry aggregated from global indicators.</p>
+      </div>
+    </div>
+
+    <div class="mt-8 pt-6 border-t border-gray-800 text-gray-300 space-y-4 leading-relaxed">
+      <p class="text-lg font-medium text-gray-200">
+        {item.summary}
+      </p>
+      <p>
+        OddsPulse Labs continuously tracks macroeconomic signals, technological milestones, and geopolitical vectors. Check back regularly for metric revisions and deep-dive analytical insights.
+      </p>
+    </div>
+  </div>
+</Layout>

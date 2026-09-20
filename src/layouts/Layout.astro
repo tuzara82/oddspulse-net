@@ -1,0 +1,46 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<html lang="en" class="dark bg-[#0B0F19] text-white">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title} | OddsPulse.net</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="min-h-screen flex flex-col font-sans selection:bg-cyan-500 selection:text-black">
+    
+    <!-- Header -->
+    <header class="border-b border-gray-800/80 bg-[#0B0F19]/80 backdrop-blur-md sticky top-0 z-50 px-6 py-4">
+      <div class="max-w-4xl mx-auto w-full flex justify-between items-center">
+        <a href="/" class="text-xl font-black tracking-wider flex items-center gap-2">
+          <span>OddsPulse</span><span class="text-cyan-400 bg-cyan-950/50 px-1.5 py-0.5 rounded text-xs border border-cyan-500/30">.net</span>
+        </a>
+        <nav class="text-sm text-gray-400 flex gap-6 items-center font-medium">
+          <a href="/" class="hover:text-cyan-400 transition-colors">Markets</a>
+          <a href="/" class="hover:text-cyan-400 transition-colors">Methodology</a>
+          <span class="text-xs px-2 py-1 rounded bg-emerald-950/50 text-emerald-400 border border-emerald-500/30">● Live AI</span>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-4xl mx-auto w-full p-6 my-8">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800/80 py-8 text-center text-xs text-gray-500 bg-[#080C14]">
+      <p class="mb-2">&copy; 2026 OddsPulse.net. All rights reserved.</p>
+      <p class="text-gray-600">Autonomous probabilistic intelligence telemetry for global markets.</p>
+    </footer>
+
+  </body>
+</html>
