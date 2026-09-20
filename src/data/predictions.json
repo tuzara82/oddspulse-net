@@ -2,8 +2,8 @@
   {
     "slug": "agi-by-2029",
     "title": "Will Artificial General Intelligence (AGI) surpass human capabilities by 2029?",
-    "odds": 77,
-    "trend": "+3% this week",
+    "odds": 78,
+    "trend": "+1% this week",
     "trendUp": true,
     "category": "AI & Tech",
     "summary": "Based on current hardware scaling rates, autonomous agent frameworks, and machine learning breakthroughs, expert networks project a high probability of achieving AGI."
@@ -11,16 +11,16 @@
   {
     "slug": "humanoid-robot-under-5000",
     "title": "Will a consumer home humanoid robot retail for under $5,000 by 2030?",
-    "odds": 44,
-    "trend": "+2% this week",
-    "trendUp": true,
+    "odds": 42,
+    "trend": "-2% this week",
+    "trendUp": false,
     "category": "AI & Tech",
     "summary": "Robotic hardware manufacturing is scaling fast, but reaching a sub-$5,000 price point for a fully autonomous household utility remains a significant engineering hurdle."
   },
   {
     "slug": "nvidia-market-cap",
     "title": "Will Nvidia's market cap exceed Apple and Microsoft combined before 2030?",
-    "odds": 36,
+    "odds": 37,
     "trend": "+1% this week",
     "trendUp": true,
     "category": "AI & Tech",
@@ -29,7 +29,7 @@
   {
     "slug": "global-inflation-2027",
     "title": "Will global inflation sustainably drop below 2% across developed economies over the next 12 months?",
-    "odds": 59,
+    "odds": 60,
     "trend": "+1% this week",
     "trendUp": true,
     "category": "Economy",
@@ -38,8 +38,8 @@
   {
     "slug": "cbdc-g7-launch",
     "title": "Will at least one G7 nation launch a retail Central Bank Digital Currency (CBDC)?",
-    "odds": 66,
-    "trend": "+2% this week",
+    "odds": 69,
+    "trend": "+3% this week",
     "trendUp": true,
     "category": "Economy",
     "summary": "Leading central banks are intensifying pilot programs for digital fiat to secure payment rails and counter private stablecoin dominance."
@@ -47,17 +47,17 @@
   {
     "slug": "brics-expansion",
     "title": "Will a new major economy formally join the BRICS bloc next year?",
-    "odds": 78,
-    "trend": "-1% this week",
-    "trendUp": false,
+    "odds": 81,
+    "trend": "+3% this week",
+    "trendUp": true,
     "category": "Geopolitics",
     "summary": "Geopolitical realignment continues to drive developing nations toward alternative economic blocs, with multiple formal applications pending."
   },
   {
     "slug": "mars-unmanned-landing",
     "title": "Will the first commercial unmanned spacecraft successfully land on Mars by 2028?",
-    "odds": 66,
-    "trend": "+1% this week",
+    "odds": 68,
+    "trend": "+2% this week",
     "trendUp": true,
     "category": "Space & Science",
     "summary": "Private aerospace investments in interplanetary transport architectures are accelerating timelines for initial cargo payloads to the Red Planet."
@@ -65,8 +65,8 @@
   {
     "slug": "streaming-vs-tv",
     "title": "Will streaming platforms capture over 70% of traditional linear TV advertising revenue?",
-    "odds": 85,
-    "trend": "-3% this week",
+    "odds": 84,
+    "trend": "-1% this week",
     "trendUp": false,
     "category": "Culture & Society",
     "summary": "The ongoing migration of audiences and ad budgets toward ad-supported streaming ecosystems continues to hollow out legacy broadcast revenues."
@@ -74,9 +74,9 @@
   {
     "slug": "will-a-major-tech-giant-launch-the-first",
     "title": "Will a major tech giant launch the first commercially successful neural interface for daily use?",
-    "odds": 34,
-    "trend": "+2% this week",
-    "trendUp": true,
+    "odds": 31,
+    "trend": "-3% this week",
+    "trendUp": false,
     "category": "AI & Tech",
     "summary": "Clinical trials for non-invasive and minimally invasive brain-computer interfaces are progressing faster than anticipated."
   }
