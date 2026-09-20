@@ -30,7 +30,7 @@ const getNeonColor = (value: number) => {
   </div>
 
   <!-- Main Article / Prediction Card -->
-  <article class="p-8 rounded-3xl border border-gray-800/90 bg-gradient-to-br from-[#131B2E] to-[#0D1322] shadow-2xl relative overflow-hidden">
+  <article class="p-8 rounded-3xl border border-gray-800/90 bg-gradient-to-br from-[#131B2E] to-[#0D1322] shadow-2xl relative overflow-hidden" data-slug={item.slug}>
     <div class="absolute -right-20 -top-20 w-64 h-64 bg-cyan-500/5 blur-3xl rounded-full pointer-events-none"></div>
 
     <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
@@ -70,6 +70,32 @@ const getNeonColor = (value: number) => {
       </p>
     </div>
 
+    <!-- Interactive Community Voting Section -->
+    <div class="p-6 rounded-2xl bg-[#090E17] border border-cyan-500/20 mb-8">
+      <h3 class="text-xs font-bold uppercase tracking-wider text-cyan-400 mb-2 flex items-center gap-2">
+        <span>🗳️</span> Community Sentiment Poll
+      </h3>
+      <p class="text-xs text-gray-400 mb-4">Cast your vote to influence crowd telemetry consensus.</p>
+      
+      <div class="grid grid-cols-2 gap-4" id="poll-container">
+        <button 
+          id="vote-yes" 
+          class="vote-btn py-3 px-4 rounded-xl font-bold text-sm bg-emerald-950/40 text-emerald-400 border border-emerald-500/40 hover:bg-emerald-900/40 transition-all flex items-center justify-center gap-2"
+        >
+          <span>🟢 Yes / Bullish</span>
+          <span id="count-yes" class="bg-emerald-900/60 px-2 py-0.5 rounded text-xs">142</span>
+        </button>
+        <button 
+          id="vote-no" 
+          class="vote-btn py-3 px-4 rounded-xl font-bold text-sm bg-rose-950/40 text-rose-400 border border-rose-500/40 hover:bg-rose-900/40 transition-all flex items-center justify-center gap-2"
+        >
+          <span>🔴 No / Bearish</span>
+          <span id="count-no" class="bg-rose-900/60 px-2 py-0.5 rounded text-xs">38</span>
+        </button>
+      </div>
+      <p id="vote-status" class="text-center text-xs text-gray-500 mt-3 hidden">Thank you for voting! Your voice has been recorded.</p>
+    </div>
+
     <!-- Catalysts & Risks Grid -->
     <div class="grid md:grid-cols-2 gap-6 pt-6 border-t border-gray-800/80">
       <div class="p-5 rounded-2xl bg-[#0B101B] border border-emerald-500/20">
@@ -95,4 +121,51 @@ const getNeonColor = (value: number) => {
       </div>
     </div>
   </article>
+
+  <!-- Client-side Voting Script -->
+  <script>
+    const article = document.querySelector('article');
+    const slug = article?.getAttribute('data-slug') || 'default';
+    const storageKey = `oddspulse_vote_${slug}`;
+
+    const btnYes = document.getElementById('vote-yes');
+    const btnNo = document.getElementById('vote-no');
+    const countYes = document.getElementById('count-yes');
+    const countNo = document.getElementById('count-no');
+    const statusText = document.getElementById('vote-status');
+
+    // Проверяваме дали потребителят вече е гласувал
+    const hasVoted = localStorage.getItem(storageKey);
+    if (hasVoted) {
+      if (btnYes) (btnYes as HTMLButtonElement).disabled = true;
+      if (btnNo) (btnNo as HTMLButtonElement).disabled = true;
+      if (statusText) statusText.classList.remove('hidden');
+    }
+
+    // Случайни начални бройки за демонстрация
+    let baseYes = 142;
+    let baseNo = 38;
+
+    btnYes?.addEventListener('click', () => {
+      if (!localStorage.getItem(storageKey)) {
+        baseYes++;
+        if (countYes) countYes.textContent = baseYes.toString();
+        localStorage.setItem(storageKey, 'yes');
+        if (btnYes) (btnYes as HTMLButtonElement).disabled = true;
+        if (btnNo) (btnNo as HTMLButtonElement).disabled = true;
+        if (statusText) statusText.classList.remove('hidden');
+      }
+    });
+
+    btnNo?.addEventListener('click', () => {
+      if (!localStorage.getItem(storageKey)) {
+        baseNo++;
+        if (countNo) countNo.textContent = baseNo.toString();
+        localStorage.setItem(storageKey, 'no');
+        if (btnYes) (btnYes as HTMLButtonElement).disabled = true;
+        if (btnNo) (btnNo as HTMLButtonElement).disabled = true;
+        if (statusText) statusText.classList.remove('hidden');
+      }
+    });
+  </script>
 </Layout>
