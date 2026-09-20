@@ -20,6 +20,24 @@ NEW_TOPICS_POOL = [
         "title": "Will global electric vehicle sales exceed 60% of total new car sales worldwide?",
         "category": "Economy",
         "summary": "Rapid battery cost deflation and aggressive manufacturing scale-up across Asian and European markets are accelerating mass adoption."
+    },
+    {
+        "title": "Will a sovereign nation adopt Bitcoin as an official national reserve asset by the end of 2027?",
+        "category": "Crypto",
+        "summary": "Macroeconomic pressures and sovereign debt concerns are prompting emerging economies to explore decentralized digital reserves.",
+        "odds": 38
+    },
+    {
+        "title": "Will humanity successfully establish a permanent crewed habitat on the surface of Mars before 2040?",
+        "category": "Space",
+        "summary": "Heavy-lift reusable rocketry and autonomous ISRU (In-Situ Resource Utilization) trials are accelerating interplanetary colonization timelines.",
+        "odds": 45
+    },
+    {
+        "title": "Will an autonomous AI system successfully orchestrate a major multinational cyber-defense grid intervention?",
+        "category": "Geopolitics",
+        "summary": "Nation-states are increasingly delegating real-time critical infrastructure security to advanced neural defence agents amid escalating state-sponsored attacks.",
+        "odds": 55
     }
 ]
 
@@ -46,7 +64,6 @@ def update_predictions():
             item["trend"] = f"{delta}% this week"
             item["trendUp"] = False
 
-        # Поддържаме автоматична история за sparkline графиките
         if "history" not in item:
             item["history"] = [item["odds"] - delta, item["odds"]]
         else:
@@ -75,7 +92,7 @@ def update_predictions():
     with open(DATA_PATH, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
     
-    print("Market telemetry updated successfully!")
+    print("Market telemetry updated successfully with new geopolitical and crypto domains!")
 
 if __name__ == "__main__":
     update_predictions()
