@@ -1,11 +1,15 @@
 ---
 import '../styles/global.css';
+import predictions from '../data/predictions.json';
 
 interface Props {
   title: string;
 }
 
 const { title } = Astro.props;
+
+// Дублираме списъка, за да се получи перфектен безкраен цикъл на анимацията
+const tickerItems = [...predictions, ...predictions];
 ---
 
 <html lang="en" class="dark bg-[#0B0F19] text-white">
@@ -18,7 +22,7 @@ const { title } = Astro.props;
   <body class="min-h-screen flex flex-col font-sans selection:bg-cyan-500 selection:text-black">
     
     <!-- Header -->
-    <header class="border-b border-gray-800/80 bg-[#0B0F19]/80 backdrop-blur-md sticky top-0 z-50 px-6 py-4">
+    <header class="border-b border-gray-800/80 bg-[#0B0F19]/90 backdrop-blur-md sticky top-0 z-50 px-6 py-4">
       <div class="max-w-4xl mx-auto w-full flex justify-between items-center">
         <a href="/" class="text-xl font-black tracking-wider flex items-center gap-2">
           <span>OddsPulse</span><span class="text-cyan-400 bg-cyan-950/50 px-1.5 py-0.5 rounded text-xs border border-cyan-500/30">.net</span>
@@ -30,6 +34,28 @@ const { title } = Astro.props;
         </nav>
       </div>
     </header>
+
+    <!-- Bloomberg-style Live Ticker Tape -->
+    <div class="bg-[#070A12] border-b border-gray-800/80 overflow-hidden py-2.5 text-xs text-gray-300 relative">
+      <div class="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-[#070A12] to-transparent z-10 pointer-events-none"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[#070A12] to-transparent z-10 pointer-events-none"></div>
+      
+      <div class="animate-marquee flex items-center gap-8 whitespace-nowrap">
+        <div class="flex items-center gap-2 text-cyan-400 font-semibold px-2">
+          <span>⚡ TELEMETRY FEED:</span>
+        </div>
+        {tickerItems.map((item) => (
+          <a href={`/predictions/${item.slug}`} class="flex items-center gap-2 hover:text-cyan-300 transition-colors">
+            <span class="text-gray-400 font-medium">{item.title}</span>
+            <span class="text-cyan-400 font-bold">{item.odds}%</span>
+            <span class={`text-[11px] font-semibold px-1.5 py-0.5 rounded ${item.trendUp ? 'text-emerald-400 bg-emerald-950/50' : 'text-rose-400 bg-rose-950/50'}`}>
+              {item.trend}
+            </span>
+            <span class="text-gray-700 mx-2">|</span>
+          </a>
+        ))}
+      </div>
+    </div>
 
     <!-- Main Content -->
     <main class="flex-grow max-w-4xl mx-auto w-full p-6 my-8">
