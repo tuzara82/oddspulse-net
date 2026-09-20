@@ -7,11 +7,14 @@ const getNeonColor = (value: number) => {
   if (value >= 40) return 'text-cyan-400 border-cyan-500/40 bg-cyan-950/30 shadow-[0_0_15px_rgba(6,182,212,0.15)]';
   return 'text-rose-400 border-rose-500/40 bg-rose-950/30 shadow-[0_0_15px_rgba(244,63,94,0.15)]';
 };
+
+// Извличаме уникалните категории динамично
+const categories = ['All', ...new Set(predictions.map((item) => item.category))];
 ---
 
 <Layout title="Global Odds Thermometer">
   <!-- Hero Section -->
-  <div class="mb-12 text-center relative">
+  <div class="mb-10 text-center relative">
     <div class="absolute inset-0 -top-10 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-blue-500/10 blur-3xl -z-10 rounded-full"></div>
     <span class="text-xs uppercase tracking-widest px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-semibold mb-4 inline-block">
       Live Intelligence Feed
@@ -24,10 +27,30 @@ const getNeonColor = (value: number) => {
     </p>
   </div>
 
+  <!-- Category Filter Buttons -->
+  <div class="flex flex-wrap items-center justify-center gap-2 mb-8" id="filter-container">
+    {categories.map((cat, index) => (
+      <button
+        data-category={cat}
+        class={`filter-btn text-xs px-3.5 py-2 rounded-xl font-medium transition-all duration-200 border ${
+          index === 0
+            ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/50 shadow-[0_0_10px_rgba(6,182,212,0.2)]'
+            : 'bg-[#161E2E] text-gray-400 border-gray-800 hover:border-gray-700 hover:text-white'
+        }`}
+      >
+        {cat}
+      </button>
+    ))}
+  </div>
+
   <!-- Predictions Grid / List -->
-  <div class="grid gap-4">
+  <div class="grid gap-4" id="predictions-grid">
     {predictions.map((item) => (
-      <a href={`/predictions/${item.slug}`} class="block p-6 rounded-2xl border border-gray-800/80 bg-gradient-to-br from-[#131B2E] to-[#0D1322] hover:border-cyan-500/50 transition-all duration-300 group shadow-xl hover:shadow-2xl hover:-translate-y-0.5">
+      <a
+        href={`/predictions/${item.slug}`}
+        data-category={item.category}
+        class="prediction-card block p-6 rounded-2xl border border-gray-800/80 bg-gradient-to-br from-[#131B2E] to-[#0D1322] hover:border-cyan-500/50 transition-all duration-300 group shadow-xl hover:shadow-2xl hover:-translate-y-0.5"
+      >
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div class="space-y-2 flex-grow">
             <div class="flex items-center gap-3">
@@ -60,4 +83,32 @@ const getNeonColor = (value: number) => {
       </a>
     ))}
   </div>
+
+  <!-- Client-side Filtering Script -->
+  <script>
+    const buttons = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.prediction-card');
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        // Променяме стиловете на бутоните
+        buttons.forEach((b) => {
+          b.className = 'filter-btn text-xs px-3.5 py-2 rounded-xl font-medium transition-all duration-200 border bg-[#161E2E] text-gray-400 border-gray-800 hover:border-gray-700 hover:text-white';
+        });
+        btn.className = 'filter-btn text-xs px-3.5 py-2 rounded-xl font-medium transition-all duration-200 border bg-cyan-500/20 text-cyan-300 border-cyan-500/50 shadow-[0_0_10px_rgba(6,182,212,0.2)]';
+
+        const selectedCategory = btn.getAttribute('data-category');
+
+        // Филтрираме картите
+        cards.forEach((card) => {
+          const cardCategory = card.getAttribute('data-category');
+          if (selectedCategory === 'All' || cardCategory === selectedCategory) {
+            (card as HTMLElement).style.display = 'block';
+          } else {
+            (card as HTMLElement).style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
 </Layout>
