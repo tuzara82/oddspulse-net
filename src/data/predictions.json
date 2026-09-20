@@ -2,82 +2,157 @@
   {
     "slug": "agi-by-2029",
     "title": "Will Artificial General Intelligence (AGI) surpass human capabilities by 2029?",
-    "odds": 78,
-    "trend": "+1% this week",
-    "trendUp": true,
+    "odds": 79,
+    "trend": "-1% this week",
+    "trendUp": false,
     "category": "AI & Tech",
-    "summary": "Based on current hardware scaling rates, autonomous agent frameworks, and machine learning breakthroughs, expert networks project a high probability of achieving AGI."
+    "summary": "Based on current hardware scaling rates, autonomous agent frameworks, and machine learning breakthroughs, expert networks project a high probability of achieving AGI.",
+    "history": [
+      80,
+      79
+    ]
   },
   {
     "slug": "humanoid-robot-under-5000",
     "title": "Will a consumer home humanoid robot retail for under $5,000 by 2030?",
-    "odds": 42,
-    "trend": "-2% this week",
+    "odds": 43,
+    "trend": "-1% this week",
     "trendUp": false,
     "category": "AI & Tech",
-    "summary": "Robotic hardware manufacturing is scaling fast, but reaching a sub-$5,000 price point for a fully autonomous household utility remains a significant engineering hurdle."
+    "summary": "Robotic hardware manufacturing is scaling fast, but reaching a sub-$5,000 price point for a fully autonomous household utility remains a significant engineering hurdle.",
+    "history": [
+      44,
+      43
+    ]
   },
   {
     "slug": "nvidia-market-cap",
     "title": "Will Nvidia's market cap exceed Apple and Microsoft combined before 2030?",
-    "odds": 37,
+    "odds": 39,
     "trend": "+1% this week",
     "trendUp": true,
     "category": "AI & Tech",
-    "summary": "While Nvidia dominates AI silicon infrastructure, macroeconomic shifts and aggressive hyperscaler custom silicon programs could alter the trajectory."
+    "summary": "While Nvidia dominates AI silicon infrastructure, macroeconomic shifts and aggressive hyperscaler custom silicon programs could alter the trajectory.",
+    "history": [
+      38,
+      39
+    ]
   },
   {
     "slug": "global-inflation-2027",
     "title": "Will global inflation sustainably drop below 2% across developed economies over the next 12 months?",
-    "odds": 60,
-    "trend": "+1% this week",
-    "trendUp": true,
+    "odds": 59,
+    "trend": "-2% this week",
+    "trendUp": false,
     "category": "Economy",
-    "summary": "Analysis of central bank monetary tightening, energy stabilization, and supply chain normalization points toward moderate price stabilization."
+    "summary": "Analysis of central bank monetary tightening, energy stabilization, and supply chain normalization points toward moderate price stabilization.",
+    "history": [
+      61,
+      59
+    ]
   },
   {
     "slug": "cbdc-g7-launch",
     "title": "Will at least one G7 nation launch a retail Central Bank Digital Currency (CBDC)?",
     "odds": 69,
-    "trend": "+3% this week",
+    "trend": "+1% this week",
     "trendUp": true,
     "category": "Economy",
-    "summary": "Leading central banks are intensifying pilot programs for digital fiat to secure payment rails and counter private stablecoin dominance."
+    "summary": "Leading central banks are intensifying pilot programs for digital fiat to secure payment rails and counter private stablecoin dominance.",
+    "history": [
+      68,
+      69
+    ]
   },
   {
     "slug": "brics-expansion",
     "title": "Will a new major economy formally join the BRICS bloc next year?",
     "odds": 81,
-    "trend": "+3% this week",
-    "trendUp": true,
+    "trend": "-1% this week",
+    "trendUp": false,
     "category": "Geopolitics",
-    "summary": "Geopolitical realignment continues to drive developing nations toward alternative economic blocs, with multiple formal applications pending."
+    "summary": "Geopolitical realignment continues to drive developing nations toward alternative economic blocs, with multiple formal applications pending.",
+    "history": [
+      82,
+      81
+    ]
   },
   {
     "slug": "mars-unmanned-landing",
     "title": "Will the first commercial unmanned spacecraft successfully land on Mars by 2028?",
     "odds": 68,
-    "trend": "+2% this week",
+    "trend": "+1% this week",
     "trendUp": true,
     "category": "Space & Science",
-    "summary": "Private aerospace investments in interplanetary transport architectures are accelerating timelines for initial cargo payloads to the Red Planet."
+    "summary": "Private aerospace investments in interplanetary transport architectures are accelerating timelines for initial cargo payloads to the Red Planet.",
+    "history": [
+      67,
+      68
+    ]
   },
   {
     "slug": "streaming-vs-tv",
     "title": "Will streaming platforms capture over 70% of traditional linear TV advertising revenue?",
-    "odds": 84,
-    "trend": "-1% this week",
-    "trendUp": false,
+    "odds": 83,
+    "trend": "+1% this week",
+    "trendUp": true,
     "category": "Culture & Society",
-    "summary": "The ongoing migration of audiences and ad budgets toward ad-supported streaming ecosystems continues to hollow out legacy broadcast revenues."
+    "summary": "The ongoing migration of audiences and ad budgets toward ad-supported streaming ecosystems continues to hollow out legacy broadcast revenues.",
+    "history": [
+      82,
+      83
+    ]
   },
   {
     "slug": "will-a-major-tech-giant-launch-the-first",
     "title": "Will a major tech giant launch the first commercially successful neural interface for daily use?",
-    "odds": 31,
-    "trend": "-3% this week",
+    "odds": 30,
+    "trend": "-2% this week",
     "trendUp": false,
     "category": "AI & Tech",
-    "summary": "Clinical trials for non-invasive and minimally invasive brain-computer interfaces are progressing faster than anticipated."
+    "summary": "Clinical trials for non-invasive and minimally invasive brain-computer interfaces are progressing faster than anticipated.",
+    "history": [
+      32,
+      30
+    ]
+  },
+  {
+    "slug": "will-artificial-intelligence-present-an-",
+    "title": "Will artificial intelligence present an existential threat to humanity within the next 10 years?",
+    "odds": 9,
+    "trend": "-1% this week",
+    "trendUp": false,
+    "category": "AI & Tech",
+    "summary": "Experts and alignment researchers debate the long-term containment risks of autonomous recursive self-improvement and superhuman general intelligence.",
+    "history": [
+      10,
+      9
+    ]
+  },
+  {
+    "slug": "will-commercial-nuclear-fusion-generate-",
+    "title": "Will commercial nuclear fusion generate stable net electricity to the grid by 2032?",
+    "odds": 41,
+    "trend": "+1% this week",
+    "trendUp": true,
+    "category": "Space & Science",
+    "summary": "Recent plasma confinement breakthroughs and private capital injections are pushing magnetic confinement fusion closer to pilot commercial viability.",
+    "history": [
+      40,
+      41
+    ]
+  },
+  {
+    "slug": "will-global-electric-vehicle-sales-excee",
+    "title": "Will global electric vehicle sales exceed 60% of total new car sales worldwide?",
+    "odds": 49,
+    "trend": "+1% this week",
+    "trendUp": true,
+    "category": "Economy",
+    "summary": "Rapid battery cost deflation and aggressive manufacturing scale-up across Asian and European markets are accelerating mass adoption.",
+    "history": [
+      48,
+      49
+    ]
   }
 ]
