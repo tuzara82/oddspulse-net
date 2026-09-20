@@ -4,12 +4,33 @@ import predictions from '../data/predictions.json';
 
 interface Props {
   title: string;
+  description?: string;
+  image?: string;
+  canonicalURL?: string;
 }
 
-const { title } = Astro.props;
+const { 
+  title, 
+  description = "Autonomous probabilistic intelligence telemetry for global markets, tech breakthroughs, and AI existential risks.",
+  image = "https://oddspulse.net/og-image.png",
+  canonicalURL = Astro.url.href
+} = Astro.props;
 
-// Дублираме списъка, за да се получи перфектен безкраен цикъл на анимацията
 const tickerItems = [...predictions, ...predictions];
+
+// Structured Data (JSON-LD) за финансова/прогностична платформа
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "OddsPulse.net",
+  "url": "https://oddspulse.net",
+  "description": description,
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://oddspulse.net/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+};
 ---
 
 <html lang="en" class="dark bg-[#0B0F19] text-white">
@@ -18,6 +39,28 @@ const tickerItems = [...predictions, ...predictions];
     <title>{title} | OddsPulse.net</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="OddsPulse Intelligence" />
+
+    <!-- Open Graph / Social Sharing (LinkedIn, Facebook, Discord) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={`${title} | OddsPulse.net`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+
+    <!-- Twitter Card Data -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${title} | OddsPulse.net`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    <!-- Structured Data JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body class="min-h-screen flex flex-col font-sans selection:bg-cyan-500 selection:text-black">
     
