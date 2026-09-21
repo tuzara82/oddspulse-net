@@ -11,7 +11,6 @@ export async function getStaticPaths() {
 
 const { item } = Astro.props;
 
-// Generate structured data for SEO
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "NewsArticle",
@@ -27,7 +26,6 @@ const jsonLd = {
 ---
 
 <Layout title={`${item.title} - OddsPulse.net`}>
-  <!-- Inject JSON-LD Schema -->
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} slot="head" />
 
   <div class="max-w-3xl mx-auto">
@@ -88,7 +86,6 @@ const jsonLd = {
           <span class="text-[11px] text-gray-500">Live Telemetry History</span>
         </div>
         <div class="h-24 w-full relative">
-          <!-- SVG Sparkline -->
           <svg class="w-full h-full overflow-visible" viewBox="0 0 300 80" preserveAspectRatio="none">
             <defs>
               <linearGradient id="chart-gradient" x1="0" y1="0" x2="0" y2="1">
@@ -119,14 +116,14 @@ const jsonLd = {
         <div class="grid grid-cols-2 gap-3 mb-4" id="vote-buttons">
           <button 
             data-vote="yes" 
-            class="py-3 px-4 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 font-bold text-xs hover:bg-emerald-900/50 transition-all flex items-center justify-center gap-2"
+            class="py-3 px-4 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 font-bold text-xs hover:bg-emerald-900/50 transition-all flex items-center justify-center gap-2 cursor-pointer"
           >
             <span>👍 Yes</span>
             <span id="yes-count" class="bg-emerald-900/60 px-2 py-0.5 rounded-md text-[10px]">0</span>
           </button>
           <button 
             data-vote="no" 
-            class="py-3 px-4 rounded-xl bg-rose-950/40 border border-rose-500/30 text-rose-400 font-bold text-xs hover:bg-rose-900/50 transition-all flex items-center justify-center gap-2"
+            class="py-3 px-4 rounded-xl bg-rose-950/40 border border-rose-500/30 text-rose-400 font-bold text-xs hover:bg-rose-900/50 transition-all flex items-center justify-center gap-2 cursor-pointer"
           >
             <span>👎 No</span>
             <span id="no-count" class="bg-rose-900/60 px-2 py-0.5 rounded-md text-[10px]">0</span>
@@ -165,28 +162,25 @@ const jsonLd = {
   </div>
 
   <script define:vars={{ itemTitle: item.title, itemOdds: item.odds, itemSlug: item.slug }}>
-    // Social share links generator
     const currentUrl = window.location.href;
-    const shareText = `Tracking "${itemTitle}" on OddsPulse.net — Current Probability: ${itemOdds}%. Check it out:`;
+    const shareText = "Tracking \"" + itemTitle + "\" on OddsPulse.net — Current Probability: " + itemOdds + "%. Check it out:";
     
     const twitterBtn = document.getElementById('share-twitter');
     if (twitterBtn) {
-      twitterBtn.setAttribute('href', `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(currentUrl)}`);
+      twitterBtn.setAttribute('href', 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText) + '&url=' + encodeURIComponent(currentUrl));
     }
 
     const telegramBtn = document.getElementById('share-telegram');
     if (telegramBtn) {
-      telegramBtn.setAttribute('href`, `https://t.me/share/url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(shareText)}`);
+      telegramBtn.setAttribute('href', 'https://t.me/share/url?url=' + encodeURIComponent(currentUrl) + '&text=' + encodeURIComponent(shareText));
     }
 
-    // Client-side voting logic with localStorage
-    const storageKey = `oddspulse_vote_${itemSlug}`;
+    const storageKey = 'oddspulse_vote_' + itemSlug;
     const voteButtons = document.querySelectorAll('#vote-buttons button');
     const voteStatus = document.getElementById('vote-status');
     const yesCountEl = document.getElementById('yes-count');
     const noCountEl = document.getElementById('no-count');
 
-    // Base mock counts + user vote
     let yesVotes = 42;
     let noVotes = 12;
 
@@ -199,12 +193,12 @@ const jsonLd = {
 
     if (savedVote && voteStatus) {
       voteStatus.classList.remove('hidden');
-      voteButtons.forEach(btn => btn.setAttribute('disabled', 'true'));
+      voteButtons.forEach(function(btn) { btn.setAttribute('disabled', 'true'); });
     }
 
-    voteButtons.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const choice = (e.currentTarget as HTMLElement).getAttribute('data-vote');
+    voteButtons.forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        const choice = e.currentTarget.getAttribute('data-vote');
         if (!choice || localStorage.getItem(storageKey)) return;
 
         localStorage.setItem(storageKey, choice);
@@ -215,7 +209,7 @@ const jsonLd = {
         if (noCountEl) noCountEl.textContent = noVotes.toString();
 
         if (voteStatus) voteStatus.classList.remove('hidden');
-        voteButtons.forEach(b => b.setAttribute('disabled', 'true'));
+        voteButtons.forEach(function(b) { b.setAttribute('disabled', 'true'); });
       });
     });
   </script>
