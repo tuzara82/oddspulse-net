@@ -76,7 +76,7 @@ const categories = ['All', ...new Set(predictions.map(item => item.category))];
             </div>
             
             <div class="flex items-center gap-4 shrink-0 justify-between md:justify-end">
-              <span class={`text-xs font-medium px-2.5 py-1 rounded-md ${
+              <span class={`change-badge text-xs font-medium px-2.5 py-1 rounded-md ${
                 isNew 
                   ? 'bg-cyan-950/60 text-cyan-400 border border-cyan-500/30' 
                   : isPositive 
@@ -86,7 +86,7 @@ const categories = ['All', ...new Set(predictions.map(item => item.category))];
                 {item.change}
               </span>
               
-              <div class="text-base font-extrabold text-white px-3 py-1 rounded-xl bg-[#080C14] border border-gray-800 min-w-[65px] text-center">
+              <div class="odds-value text-base font-extrabold text-white px-3 py-1 rounded-xl bg-[#080C14] border border-gray-800 min-w-[65px] text-center transition-all duration-300">
                 {item.odds}%
               </div>
             </div>
@@ -101,7 +101,7 @@ const categories = ['All', ...new Set(predictions.map(item => item.category))];
     No matching telemetry records found for your search/filter criteria.
   </div>
 
-  <!-- Client-side Filtering & Search Script -->
+  <!-- Client-side Filtering, Search & Live Simulation Script -->
   <script>
     const searchInput = document.getElementById('search-input') as HTMLInputElement;
     const filterButtons = document.querySelectorAll('#category-filters button');
@@ -145,7 +145,6 @@ const categories = ['All', ...new Set(predictions.map(item => item.category))];
     // Category buttons listener
     filterButtons.forEach((btn) => {
       btn.addEventListener('click', (e) => {
-        // Update active styles
         filterButtons.forEach((b) => {
           b.className = 'px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border bg-[#121A2C] text-gray-300 border-gray-800 hover:border-cyan-500/50 hover:text-white';
         });
@@ -157,5 +156,50 @@ const categories = ['All', ...new Set(predictions.map(item => item.category))];
         applyFilters();
       });
     });
+
+    // Live Market Simulation (Fluctuates odds randomly every 4 seconds)
+    setInterval(() => {
+      if (cards.length === 0) return;
+      
+      // Pick a random card to update
+      const randomIndex = Math.floor(Math.random() * cards.length);
+      const card = cards[randomIndex];
+      
+      const oddsEl = card.querySelector('.odds-value');
+      const changeEl = card.querySelector('.change-badge');
+      
+      if (!oddsEl || !changeEl) return;
+
+      let currentOdds = parseInt(oddsEl.textContent || '50', 10);
+      
+      // Decide whether to go up or down (+1% or -1%)
+      const delta = Math.random() > 0.45 ? 1 : -1;
+      let newOdds = currentOdds + delta;
+      
+      // Keep within realistic bounds (10% to 98%)
+      if (newOdds < 10) newOdds = 11;
+      if (newOdds > 98) newOdds = 97;
+
+      if (newOdds !== currentOdds) {
+        oddsEl.textContent = `${newOdds}%`;
+        
+        // Brief visual flash effect
+        oddsEl.classList.add('text-cyan-400', 'border-cyan-500/60');
+        setTimeout(() => {
+          oddsEl.classList.remove('text-cyan-400', 'border-cyan-500/60');
+        }, 800);
+
+        // Update change label dynamically
+        const diff = newOdds - currentOdds;
+        const sign = diff > 0 ? `+${diff}%` : `${diff}%`;
+        changeEl.textContent = sign;
+        
+        if (diff > 0) {
+          changeEl.className = 'change-badge text-xs font-medium px-2.5 py-1 rounded-md bg-emerald-950/40 text-emerald-400 border border-emerald-500/20';
+        } else {
+          changeEl.className = 'change-badge text-xs font-medium px-2.5 py-1 rounded-md bg-rose-950/40 text-rose-400 border border-rose-500/20';
+        }
+      }
+    }, 4000);
   </script>
 </Layout>
