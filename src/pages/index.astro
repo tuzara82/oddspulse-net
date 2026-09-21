@@ -11,7 +11,7 @@ const categoryCounts = predictions.reduce((acc: Record<string, number>, item) =>
 ---
 
 <Layout title="OddsPulse.net - Real-time Predictive Markets & Telemetry">
-  <!-- Hero Section with Glowing Sparkle Effect -->
+  <!-- Hero Section -->
   <div class="mb-10 text-center md:text-left">
     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-semibold uppercase tracking-widest mb-4 shadow-[0_0_20px_rgba(6,182,212,0.15)]">
       <span class="relative flex h-2 w-2">
@@ -28,10 +28,13 @@ const categoryCounts = predictions.reduce((acc: Record<string, number>, item) =>
     </p>
   </div>
 
-  <!-- Bento Grid Category Overview (Aceternity Style) -->
+  <!-- Interactive Bento Grid Category Overview -->
   <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-    <!-- AI & Tech (Large Card - spans 2 cols) -->
-    <div class="md:col-span-2 p-6 rounded-3xl border border-gray-800 bg-gradient-to-br from-[#121A2C] via-[#0A0F1D] to-[#080C14] relative overflow-hidden group hover:border-cyan-500/50 transition-all shadow-xl">
+    <!-- AI & Tech Card -->
+    <div 
+      data-target-category="ai & tech" 
+      class="bento-card cursor-pointer md:col-span-2 p-6 rounded-3xl border border-gray-800 bg-gradient-to-br from-[#121A2C] via-[#0A0F1D] to-[#080C14] relative overflow-hidden group hover:border-cyan-500/60 hover:shadow-[0_0_25px_rgba(6,182,212,0.15)] transition-all"
+    >
       <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-cyan-500/10 rounded-full blur-3xl group-hover:bg-cyan-500/20 transition-all"></div>
       <div class="flex justify-between items-start mb-6">
         <span class="text-xs font-bold px-3 py-1 rounded-full bg-cyan-950 text-cyan-400 border border-cyan-500/30">AI & TECH</span>
@@ -41,12 +44,15 @@ const categoryCounts = predictions.reduce((acc: Record<string, number>, item) =>
       <p class="text-xs text-gray-400 mb-4">Tracking model releases, compute infrastructure, and autonomous agent capabilities.</p>
       <div class="flex items-center justify-between text-xs font-semibold text-cyan-400">
         <span>{categoryCounts['AI & Tech'] || 0} active markets</span>
-        <span class="group-hover:translate-x-1 transition-transform">Explore →</span>
+        <span class="group-hover:translate-x-1 transition-transform">Filter feed →</span>
       </div>
     </div>
 
     <!-- Crypto Card -->
-    <div class="p-6 rounded-3xl border border-gray-800 bg-gradient-to-br from-[#121A2C] via-[#0A0F1D] to-[#080C14] relative overflow-hidden group hover:border-emerald-500/50 transition-all shadow-xl">
+    <div 
+      data-target-category="crypto" 
+      class="bento-card cursor-pointer p-6 rounded-3xl border border-gray-800 bg-gradient-to-br from-[#121A2C] via-[#0A0F1D] to-[#080C14] relative overflow-hidden group hover:border-emerald-500/60 hover:shadow-[0_0_25px_rgba(16,185,129,0.15)] transition-all"
+    >
       <div class="absolute -right-10 -bottom-10 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl group-hover:bg-emerald-500/20 transition-all"></div>
       <div class="flex justify-between items-start mb-6">
         <span class="text-xs font-bold px-3 py-1 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-500/30">CRYPTO</span>
@@ -54,13 +60,16 @@ const categoryCounts = predictions.reduce((acc: Record<string, number>, item) =>
       </div>
       <h3 class="text-base font-bold text-white mb-1">Web3 & Macro</h3>
       <p class="text-xs text-gray-400 mb-4">Halvings, ETF flows & adoption.</p>
-      <div class="text-xs font-semibold text-emerald-400">
-        {categoryCounts['Crypto'] || 0} active markets
+      <div class="text-xs font-semibold text-emerald-400 group-hover:translate-x-1 transition-transform inline-block">
+        {categoryCounts['Crypto'] || 0} markets →
       </div>
     </div>
 
     <!-- Geopolitics Card -->
-    <div class="p-6 rounded-3xl border border-gray-800 bg-gradient-to-br from-[#121A2C] via-[#0A0F1D] to-[#080C14] relative overflow-hidden group hover:border-amber-500/50 transition-all shadow-xl">
+    <div 
+      data-target-category="geopolitics" 
+      class="bento-card cursor-pointer p-6 rounded-3xl border border-gray-800 bg-gradient-to-br from-[#121A2C] via-[#0A0F1D] to-[#080C14] relative overflow-hidden group hover:border-amber-500/60 hover:shadow-[0_0_25px_rgba(245,158,11,0.15)] transition-all"
+    >
       <div class="absolute -right-10 -bottom-10 w-32 h-32 bg-amber-500/10 rounded-full blur-3xl group-hover:bg-amber-500/20 transition-all"></div>
       <div class="flex justify-between items-start mb-6">
         <span class="text-xs font-bold px-3 py-1 rounded-full bg-amber-950 text-amber-400 border border-amber-500/30">GEOPOLITICS</span>
@@ -68,8 +77,8 @@ const categoryCounts = predictions.reduce((acc: Record<string, number>, item) =>
       </div>
       <h3 class="text-base font-bold text-white mb-1">Global Shifts</h3>
       <p class="text-xs text-gray-400 mb-4">Trade, policy & conflicts.</p>
-      <div class="text-xs font-semibold text-amber-400">
-        {categoryCounts['Geopolitics'] || 0} active markets
+      <div class="text-xs font-semibold text-amber-400 group-hover:translate-x-1 transition-transform inline-block">
+        {categoryCounts['Geopolitics'] || 0} markets →
       </div>
     </div>
   </div>
@@ -81,7 +90,7 @@ const categoryCounts = predictions.reduce((acc: Record<string, number>, item) =>
       {categories.map((cat, index) => (
         <button
           data-category={cat.toLowerCase()}
-          class={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border ${
+          class={`filter-pill px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border ${
             index === 0 
               ? 'bg-cyan-500 text-gray-950 border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.3)]' 
               : 'bg-[#121A2C] text-gray-300 border-gray-800 hover:border-cyan-500/50 hover:text-white'
@@ -156,10 +165,11 @@ const categoryCounts = predictions.reduce((acc: Record<string, number>, item) =>
     No matching telemetry records found for your search/filter criteria.
   </div>
 
-  <!-- Client-side Filtering, Search & Live Simulation Script -->
+  <!-- Client-side Filtering & Interactivity Script -->
   <script>
     const searchInput = document.getElementById('search-input') as HTMLInputElement;
-    const filterButtons = document.querySelectorAll('#category-filters button');
+    const filterButtons = document.querySelectorAll('.filter-pill');
+    const bentoCards = document.querySelectorAll('.bento-card');
     const cards = document.querySelectorAll('.prediction-card') as NodeListOf<HTMLElement>;
     const noResults = document.getElementById('no-results');
 
@@ -194,19 +204,42 @@ const categoryCounts = predictions.reduce((acc: Record<string, number>, item) =>
       }
     }
 
+    function setActiveCategory(cat: string) {
+      currentCategory = cat;
+      
+      // Update pill styles
+      filterButtons.forEach((b) => {
+        const btnCat = b.getAttribute('data-category');
+        if (btnCat === cat) {
+          b.className = 'filter-pill px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border bg-cyan-500 text-gray-950 border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.3)]';
+        } else {
+          b.className = 'filter-pill px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border bg-[#121A2C] text-gray-300 border-gray-800 hover:border-cyan-500/50 hover:text-white';
+        }
+      });
+
+      applyFilters();
+      
+      // Smooth scroll down to the feed
+      document.getElementById('predictions-feed')?.scrollIntoView({ behavior: 'smooth' });
+    }
+
     searchInput?.addEventListener('input', applyFilters);
 
     filterButtons.forEach((btn) => {
       btn.addEventListener('click', (e) => {
-        filterButtons.forEach((b) => {
-          b.className = 'px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border bg-[#121A2C] text-gray-300 border-gray-800 hover:border-cyan-500/50 hover:text-white';
-        });
-        
         const target = e.currentTarget as HTMLElement;
-        target.className = 'px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border bg-cyan-500 text-gray-950 border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.3)]';
+        setActiveCategory(target.getAttribute('data-category') || 'all');
+      });
+    });
 
-        currentCategory = target.getAttribute('data-category') || 'all';
-        applyFilters();
+    // Bento Cards Click Handler
+    bentoCards.forEach((card) => {
+      card.addEventListener('click', (e) => {
+        const targetCard = e.currentTarget as HTMLElement;
+        const targetCat = targetCard.getAttribute('data-target-category');
+        if (targetCat) {
+          setActiveCategory(targetCat);
+        }
       });
     });
 
