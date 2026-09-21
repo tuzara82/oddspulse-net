@@ -1,0 +1,31 @@
+name: Daily Market & AI Telemetry Update
+
+on:
+  schedule:
+    - cron: '0 8 * * *' # Пуска се всеки ден в 08:00 UTC
+  workflow_dispatch:    # Позволява ръчно пускане от GitHub таблото по всяко време
+
+jobs:
+  update-market:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Run update script
+        run: python update_market.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "OddsPulse Bot"
+          git config --global user.email "bot@oddspulse.net"
+          git add src/data/predictions.json
+          git commit -m "Automated daily AI telemetry and market odds update [skip ci]"
+          git push
