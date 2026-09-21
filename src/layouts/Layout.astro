@@ -13,7 +13,8 @@ const {
   image = "https://oddspulse.net/og-image.jpg" 
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+const siteUrl = Astro.site ? Astro.site.toString() : "https://oddspulse.net";
+const canonicalURL = new URL(Astro.url.pathname, siteUrl).toString();
 ---
 
 <!doctype html>
@@ -23,7 +24,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     
-    <!-- Astro SEO Integration -->
     <SEO
       title={title}
       description={description}
@@ -58,7 +58,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
   </head>
   <body class="bg-[#080C14] text-gray-100 min-h-screen font-sans selection:bg-cyan-500 selection:text-gray-950">
     <div class="max-w-5xl mx-auto px-4 py-8">
-      <!-- Header -->
       <header class="mb-8 flex items-center justify-between border-b border-gray-800/80 pb-6">
         <a href="/" class="flex items-center gap-2 group">
           <div class="h-9 w-9 rounded-xl bg-gradient-to-tr from-cyan-500 to-emerald-400 p-0.5 flex items-center justify-center shadow-[0_0_20px_rgba(6,182,212,0.3)]">
@@ -77,12 +76,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
         </div>
       </header>
 
-      <!-- Main Content Slot -->
       <main>
         <slot />
       </main>
 
-      <!-- Footer -->
       <footer class="mt-16 pt-6 border-t border-gray-800/80 text-center text-xs text-gray-500">
         <p>© {new Date().getFullYear()} OddsPulse.net — Real-time Predictive Markets & Telemetry Engine.</p>
       </footer>
