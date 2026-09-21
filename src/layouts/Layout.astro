@@ -1,115 +1,91 @@
 ---
-import '../styles/global.css';
-import predictions from '../data/predictions.json';
+import { SEO } from "astro-seo";
 
 interface Props {
   title: string;
   description?: string;
   image?: string;
-  canonicalURL?: string;
 }
 
 const { 
   title, 
-  description = "Autonomous probabilistic intelligence telemetry for global markets, tech breakthroughs, and AI existential risks.",
-  image = "https://oddspulse.net/og-image.png",
-  canonicalURL = Astro.url.href
+  description = "Real-time probabilistic tracking of global macroeconomic, technological, and geopolitical milestones on OddsPulse.net.",
+  image = "https://oddspulse.net/og-image.jpg" 
 } = Astro.props;
 
-const tickerItems = [...predictions, ...predictions];
-
-// Structured Data (JSON-LD) за финансова/прогностична платформа
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "OddsPulse.net",
-  "url": "https://oddspulse.net",
-  "description": description,
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://oddspulse.net/?q={search_term_string}",
-    "query-input": "required name=search_term_string"
-  }
-};
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 
-<html lang="en" class="dark bg-[#0B0F19] text-white">
+<!doctype html>
+<html lang="en" class="dark">
   <head>
-    <meta charset="utf-8" />
-    <title>{title} | OddsPulse.net</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="canonical" href={canonicalURL} />
-
-    <!-- SEO Meta Tags -->
-    <meta name="description" content={description} />
-    <meta name="robots" content="index, follow" />
-    <meta name="author" content="OddsPulse Intelligence" />
-
-    <!-- Open Graph / Social Sharing (LinkedIn, Facebook, Discord) -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalURL} />
-    <meta property="og:title" content={`${title} | OddsPulse.net`} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} />
-
-    <!-- Twitter Card Data -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={`${title} | OddsPulse.net`} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={image} />
-
-    <!-- Structured Data JSON-LD -->
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-  </head>
-  <body class="min-h-screen flex flex-col font-sans selection:bg-cyan-500 selection:text-black">
     
-    <!-- Header -->
-    <header class="border-b border-gray-800/80 bg-[#0B0F19]/90 backdrop-blur-md sticky top-0 z-50 px-6 py-4">
-      <div class="max-w-4xl mx-auto w-full flex justify-between items-center">
-        <a href="/" class="text-xl font-black tracking-wider flex items-center gap-2">
-          <span>OddsPulse</span><span class="text-cyan-400 bg-cyan-950/50 px-1.5 py-0.5 rounded text-xs border border-cyan-500/30">.net</span>
+    <!-- Astro SEO Integration -->
+    <SEO
+      title={title}
+      description={description}
+      canonical={canonicalURL}
+      openGraph={{
+        basic: {
+          title: title,
+          type: "website",
+          image: image,
+          url: canonicalURL,
+        },
+        image: {
+          alt: "OddsPulse.net Preview",
+        }
+      }}
+      twitter={{
+        creator: "@oddspulse",
+        card: "summary_large_image",
+        title: title,
+        description: description,
+        image: image,
+      }}
+      extend={{
+        meta: [
+          { name: "theme-color", content: "#080C14" },
+          { name: "author", content: "OddsPulse.net" }
+        ]
+      }}
+    />
+
+    <slot name="head" />
+  </head>
+  <body class="bg-[#080C14] text-gray-100 min-h-screen font-sans selection:bg-cyan-500 selection:text-gray-950">
+    <div class="max-w-5xl mx-auto px-4 py-8">
+      <!-- Header -->
+      <header class="mb-8 flex items-center justify-between border-b border-gray-800/80 pb-6">
+        <a href="/" class="flex items-center gap-2 group">
+          <div class="h-9 w-9 rounded-xl bg-gradient-to-tr from-cyan-500 to-emerald-400 p-0.5 flex items-center justify-center shadow-[0_0_20px_rgba(6,182,212,0.3)]">
+            <div class="h-full w-full bg-[#080C14] rounded-[10px] flex items-center justify-center">
+              <span class="text-cyan-400 font-extrabold text-sm">OP</span>
+            </div>
+          </div>
+          <span class="text-lg font-extrabold tracking-tight text-white group-hover:text-cyan-400 transition-colors">
+            Odds<span class="text-cyan-400">Pulse</span>.net
+          </span>
         </a>
-        <nav class="text-sm text-gray-400 flex gap-6 items-center font-medium">
-          <a href="/" class="hover:text-cyan-400 transition-colors">Markets</a>
-          <a href="/methodology" class="hover:text-cyan-400 transition-colors">Methodology</a>
-          <span class="text-xs px-2 py-1 rounded bg-emerald-950/50 text-emerald-400 border border-emerald-500/30">● Live AI</span>
-        </nav>
-      </div>
-    </header>
-
-    <!-- Bloomberg-style Live Ticker Tape -->
-    <div class="bg-[#070A12] border-b border-gray-800/80 overflow-hidden py-2.5 text-xs text-gray-300 relative">
-      <div class="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-[#070A12] to-transparent z-10 pointer-events-none"></div>
-      <div class="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[#070A12] to-transparent z-10 pointer-events-none"></div>
-      
-      <div class="animate-marquee flex items-center gap-8 whitespace-nowrap">
-        <div class="flex items-center gap-2 text-cyan-400 font-semibold px-2">
-          <span>⚡ TELEMETRY FEED:</span>
+        <div class="flex items-center gap-3">
+          <span class="text-[11px] font-semibold px-3 py-1 rounded-full bg-cyan-950/60 text-cyan-400 border border-cyan-500/30">
+            ● LIVE FEED
+          </span>
         </div>
-        {tickerItems.map((item) => (
-          <a href={`/predictions/${item.slug}`} class="flex items-center gap-2 hover:text-cyan-300 transition-colors">
-            <span class="text-gray-400 font-medium">{item.title}</span>
-            <span class="text-cyan-400 font-bold">{item.odds}%</span>
-            <span class={`text-[11px] font-semibold px-1.5 py-0.5 rounded ${item.trendUp ? 'text-emerald-400 bg-emerald-950/50' : 'text-rose-400 bg-rose-950/50'}`}>
-              {item.trend}
-            </span>
-            <span class="text-gray-700 mx-2">|</span>
-          </a>
-        ))}
-      </div>
+      </header>
+
+      <!-- Main Content Slot -->
+      <main>
+        <slot />
+      </main>
+
+      <!-- Footer -->
+      <footer class="mt-16 pt-6 border-t border-gray-800/80 text-center text-xs text-gray-500">
+        <p>© {new Date().getFullYear()} OddsPulse.net — Real-time Predictive Markets & Telemetry Engine.</p>
+      </footer>
     </div>
-
-    <!-- Main Content -->
-    <main class="flex-grow max-w-4xl mx-auto w-full p-6 my-8">
-      <slot />
-    </main>
-
-    <!-- Footer -->
-    <footer class="border-t border-gray-800/80 py-8 text-center text-xs text-gray-500 bg-[#080C14]">
-      <p class="mb-2">&copy; 2026 OddsPulse.net. All rights reserved.</p>
-      <p class="text-gray-600">Autonomous probabilistic intelligence telemetry for global markets.</p>
-    </footer>
-
   </body>
 </html>
