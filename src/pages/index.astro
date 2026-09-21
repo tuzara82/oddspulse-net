@@ -1,6 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import predictions from '../data/predictions.json';
+
+// Get unique categories dynamically
+const categories = ['All', ...new Set(predictions.map(item => item.category))];
 ---
 
 <Layout title="OddsPulse.net - Real-time Predictive Markets & Telemetry">
@@ -29,6 +32,22 @@ import predictions from '../data/predictions.json';
           class="w-full bg-[#0D1322] border border-gray-800 text-gray-200 text-xs rounded-xl pl-9 pr-4 py-2.5 focus:outline-none focus:border-cyan-500 transition-colors shadow-inner placeholder-gray-500"
         />
       </div>
+    </div>
+
+    <!-- Category Filter Pills -->
+    <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none" id="category-filters">
+      {categories.map((cat, index) => (
+        <button
+          data-category={cat.toLowerCase()}
+          class={`px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border ${
+            index === 0 
+              ? 'bg-cyan-500 text-gray-950 border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.3)]' 
+              : 'bg-[#121A2C] text-gray-300 border-gray-800 hover:border-cyan-500/50 hover:text-white'
+          }`}
+        >
+          {cat}
+        </button>
+      ))}
     </div>
   </div>
 
@@ -79,17 +98,20 @@ import predictions from '../data/predictions.json';
 
   <!-- No Results State -->
   <div id="no-results" class="hidden text-center py-12 text-gray-500 text-sm">
-    No matching telemetry records found for your search query.
+    No matching telemetry records found for your search/filter criteria.
   </div>
 
-  <!-- Client-side Search Filtering Script -->
+  <!-- Client-side Filtering & Search Script -->
   <script>
     const searchInput = document.getElementById('search-input') as HTMLInputElement;
+    const filterButtons = document.querySelectorAll('#category-filters button');
     const cards = document.querySelectorAll('.prediction-card') as NodeListOf<HTMLElement>;
     const noResults = document.getElementById('no-results');
 
-    searchInput?.addEventListener('input', (e) => {
-      const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
+    let currentCategory = 'all';
+
+    function applyFilters() {
+      const query = searchInput?.value.toLowerCase().trim() || '';
       let visibleCount = 0;
 
       cards.forEach((card) => {
@@ -97,7 +119,10 @@ import predictions from '../data/predictions.json';
         const category = card.getAttribute('data-category') || '';
         const summary = card.getAttribute('data-summary') || '';
 
-        if (title.includes(query) || category.includes(query) || summary.includes(query)) {
+        const matchesCategory = currentCategory === 'all' || category === currentCategory;
+        const matchesQuery = query === '' || title.includes(query) || category.includes(query) || summary.includes(query);
+
+        if (matchesCategory && matchesQuery) {
           card.style.display = 'block';
           visibleCount++;
         } else {
@@ -112,6 +137,25 @@ import predictions from '../data/predictions.json';
           noResults.classList.add('hidden');
         }
       }
+    }
+
+    // Search input listener
+    searchInput?.addEventListener('input', applyFilters);
+
+    // Category buttons listener
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        // Update active styles
+        filterButtons.forEach((b) => {
+          b.className = 'px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border bg-[#121A2C] text-gray-300 border-gray-800 hover:border-cyan-500/50 hover:text-white';
+        });
+        
+        const target = e.currentTarget as HTMLElement;
+        target.className = 'px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border bg-cyan-500 text-gray-950 border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.3)]';
+
+        currentCategory = target.getAttribute('data-category') || 'all';
+        applyFilters();
+      });
     });
   </script>
 </Layout>
