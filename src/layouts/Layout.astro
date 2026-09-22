@@ -117,6 +117,18 @@ const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site).toStri
         backdrop-filter: blur(12px); border-radius: 1rem; padding: 1rem;
         box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.2); max-width: 280px;
       }
+      /* Live Toast Alert Styles */
+      .toast-alert {
+        position: fixed; bottom: 1rem; left: 1rem; z-index: 50;
+        background: rgba(12, 18, 32, 0.95); border: 1px solid rgba(var(--accent-rgb), 0.5);
+        backdrop-filter: blur(12px); border-radius: 1rem; padding: 0.85rem 1.15rem;
+        box-shadow: 0 0 25px rgba(var(--accent-rgb), 0.25); max-width: 320px;
+        display: flex; align-items: center; gap: 0.75rem;
+        transform: translateY(150%); opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease;
+      }
+      .toast-alert.show {
+        transform: translateY(0); opacity: 1;
+      }
       .theme-dot {
         width: 14px; height: 14px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: transform 0.2s;
       }
@@ -158,7 +170,17 @@ const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site).toStri
       </footer>
     </div>
 
+    <!-- Live Toast Alert Element -->
+    <div class="toast-alert" id="live-toast">
+      <span style="font-size: 1.25rem;" id="toast-icon">⚡</span>
+      <div>
+        <div style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--accent); letter-spacing: 0.05em;" id="toast-title">Live Telemetry Update</div>
+        <div style="font-size: 0.75rem; color: #F3F4F6; font-weight: 600;" id="toast-message">Market probabilities adjusting...</div>
+      </div>
+    </div>
+
     <script>
+      // Theme Management
       const savedTheme = localStorage.getItem('oddspulse_theme') || 'cyan';
       document.documentElement.setAttribute('data-theme', savedTheme);
 
@@ -171,6 +193,38 @@ const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site).toStri
           }
         });
       });
+
+      // Live Market Toast Alerts System
+      const alerts = [
+        { icon: "⚡", title: "AGI Milestone Surge", msg: "Model release velocity increased probability by +2%." },
+        { icon: "🐋", title: "Whale Alert", msg: "5,000 BTC moved to cold storage from institutional reserves." },
+        { icon: "📈", title: "Crypto ETP Inflow", msg: "Global spot ETF volume crossed daily records." },
+        { icon: "🌍", title: "Geopolitical Shift", msg: "New trade corridor agreement submitted for ratification." },
+        { icon: "🤖", title: "Robotics Cost Curve", msg: "Actuator production efficiency improved by 4%." }
+      ];
+
+      const toast = document.getElementById('live-toast');
+      const toastIcon = document.getElementById('toast-icon');
+      const toastTitle = document.getElementById('toast-title');
+      const toastMessage = document.getElementById('toast-message');
+
+      function showRandomAlert() {
+        if (!toast || !toastIcon || !toastTitle || !toastMessage) return;
+        const randomAlert = alerts[Math.floor(Math.random() * alerts.length)];
+        toastIcon.textContent = randomAlert.icon;
+        toastTitle.textContent = randomAlert.title;
+        toastMessage.textContent = randomAlert.msg;
+
+        toast.classList.add('show');
+
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 5000); // Shows for 5 seconds
+      }
+
+      // Trigger first alert after 4 seconds, then every 18 seconds
+      setTimeout(showRandomAlert, 4000);
+      setInterval(showRandomAlert, 18000);
     </script>
   </body>
 </html>
