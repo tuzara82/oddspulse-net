@@ -9,5 +9,10 @@
     { "tier": "Sharks (1,000 - 10,000 BTC)", "share": "24.5%", "color": "#34d399" },
     { "tier": "Dolphins (100 - 1,000 BTC)", "share": "18.3%", "color": "#fbbf24" },
     { "tier": "Fish & Retail (<100 BTC)", "share": "25.1%", "color": "#a855f7" }
-  ]
+  ],
+  "sentimentIndex": {
+    "score": 78,
+    "label": "Extreme Optimism (Bullish)",
+    "aiAnalysis": "High probability weighting in AI & Crypto sectors driven by institutional inflows."
+  }
 }
