@@ -51,6 +51,26 @@ const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site).toStri
         --accent-rgb: 168, 85, 247;
         --accent-bg: rgba(76, 29, 149, 0.4);
       }
+      [data-theme="crimson"] {
+        --accent: #fb7185;
+        --accent-rgb: 244, 63, 94;
+        --accent-bg: rgba(76, 5, 25, 0.4);
+      }
+      [data-theme="orange"] {
+        --accent: #fb923c;
+        --accent-rgb: 249, 115, 22;
+        --accent-bg: rgba(124, 45, 18, 0.4);
+      }
+      [data-theme="indigo"] {
+        --accent: #818cf8;
+        --accent-rgb: 99, 102, 241;
+        --accent-bg: rgba(49, 46, 129, 0.4);
+      }
+      [data-theme="lime"] {
+        --accent: #acc310;
+        --accent-rgb: 163, 230, 53;
+        --accent-bg: rgba(65, 88, 10, 0.4);
+      }
 
       body {
         background-color: #080C14;
@@ -67,6 +87,7 @@ const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site).toStri
         display: flex; align-items: center; justify-content: space-between;
         border-bottom: 1px solid rgba(31, 41, 55, 0.8);
         padding-bottom: 1.5rem; margin-bottom: 2rem;
+        flex-wrap: wrap; gap: 1rem;
       }
       footer {
         margin-top: 4rem; padding-top: 1.5rem;
@@ -117,7 +138,6 @@ const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site).toStri
         backdrop-filter: blur(12px); border-radius: 1rem; padding: 1rem;
         box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.2); max-width: 280px;
       }
-      /* Live Toast Alert Styles */
       .toast-alert {
         position: fixed; bottom: 1rem; left: 1rem; z-index: 50;
         background: rgba(12, 18, 32, 0.95); border: 1px solid rgba(var(--accent-rgb), 0.5);
@@ -130,9 +150,9 @@ const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site).toStri
         transform: translateY(0); opacity: 1;
       }
       .theme-dot {
-        width: 14px; height: 14px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: transform 0.2s;
+        width: 13px; height: 13px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: transform 0.2s;
       }
-      .theme-dot:hover { transform: scale(1.2); }
+      .theme-dot:hover { transform: scale(1.25); }
     </style>
   </head>
   <body>
@@ -149,14 +169,18 @@ const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site).toStri
           </span>
         </a>
 
-        <!-- Theme Switcher Dots -->
-        <div style="display: flex; align-items: center; gap: 0.75rem;">
-          <span style="font-size: 0.7rem; color: #9CA3AF; font-weight: 600; text-transform: uppercase;">Theme:</span>
-          <div style="display: flex; gap: 0.4rem;" id="theme-switcher">
+        <!-- Extended Theme Switcher Dots -->
+        <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+          <span style="font-size: 0.65rem; color: #9CA3AF; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Palette:</span>
+          <div style="display: flex; gap: 0.35rem;" id="theme-switcher">
             <div class="theme-dot" data-theme-value="cyan" style="background: #22d3ee;" title="Cyber Cyan"></div>
             <div class="theme-dot" data-theme-value="emerald" style="background: #34d399;" title="Emerald Green"></div>
             <div class="theme-dot" data-theme-value="amber" style="background: #fbbf24;" title="Gold Amber"></div>
             <div class="theme-dot" data-theme-value="purple" style="background: #c084fc;" title="Laser Purple"></div>
+            <div class="theme-dot" data-theme-value="crimson" style="background: #fb7185;" title="Neon Crimson"></div>
+            <div class="theme-dot" data-theme-value="orange" style="background: #fb923c;" title="Solar Orange"></div>
+            <div class="theme-dot" data-theme-value="indigo" style="background: #818cf8;" title="Electric Indigo"></div>
+            <div class="theme-dot" data-theme-value="lime" style="background: #a3e635;" title="Matrix Lime"></div>
           </div>
         </div>
       </header>
@@ -219,10 +243,9 @@ const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site).toStri
 
         setTimeout(() => {
           toast.classList.remove('show');
-        }, 5000); // Shows for 5 seconds
+        }, 5000);
       }
 
-      // Trigger first alert after 4 seconds, then every 18 seconds
       setTimeout(showRandomAlert, 4000);
       setInterval(showRandomAlert, 18000);
     </script>
