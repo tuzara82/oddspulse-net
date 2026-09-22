@@ -14,15 +14,15 @@ const { prediction } = Astro.props;
 
 <Layout title={`${prediction.title} - OddsPulse.net`}>
   <div style="margin-bottom: 1.5rem;">
-    <a href="/" style="font-size: 0.75rem; color: #22d3ee; font-weight: 600;">← Back to Live Feed</a>
+    <a href="/" style="font-size: 0.75rem; color: var(--accent); font-weight: 600;">← Back to Live Feed</a>
   </div>
 
   <div class="bento-card" style="margin-bottom: 2rem;">
     <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
-      <span style="font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 0.35rem; background: #030712; color: #22d3ee; border: 1px solid #1F2937; text-transform: uppercase;">
+      <span style="font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 0.35rem; background: #030712; color: var(--accent); border: 1px solid rgba(var(--accent-rgb), 0.3); text-transform: uppercase;">
         {prediction.category}
       </span>
-      <span style="font-size: 1.25rem; font-weight: 800; color: #22d3ee;">{prediction.odds}% Probability</span>
+      <span style="font-size: 1.25rem; font-weight: 800; color: var(--accent);" id="display-odds">{prediction.odds}% Probability</span>
     </div>
 
     <h1 style="font-size: 1.5rem; font-weight: 800; margin: 0 0 1rem 0; color: #ffffff;">
@@ -33,6 +33,36 @@ const { prediction } = Astro.props;
       {prediction.summary}
     </p>
 
+    <!-- Interactive Odds Simulator Widget -->
+    <div style="background: #030712; border: 1px solid rgba(var(--accent-rgb), 0.3); border-radius: 1rem; padding: 1.5rem; margin-top: 1.5rem; box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.05);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <span style="font-size: 0.75rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;">
+          🎛️ Interactive Probability Simulator
+        </span>
+        <span style="font-size: 0.75rem; color: #9CA3AF;" id="simulator-status">Move slider to simulate your outlook</span>
+      </div>
+      
+      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+        <span style="font-size: 0.75rem; font-weight: 700; color: #9CA3AF;">0%</span>
+        <input 
+          type="range" 
+          id="odds-slider" 
+          min="0" 
+          max="100" 
+          value={prediction.odds} 
+          style="flex: 1; accent-color: var(--accent); cursor: pointer; height: 6px;" 
+        />
+        <span style="font-size: 0.75rem; font-weight: 700; color: #9CA3AF;">100%</span>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem;">
+        <span style="color: #9CA3AF;">Your Simulated Consensus: <strong style="color: #ffffff;" id="slider-value-text">{prediction.odds}%</strong></span>
+        <button id="save-simulation" style="background: var(--accent); color: #030712; border: none; padding: 0.4rem 0.8rem; border-radius: 0.5rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s;">
+          Lock Forecast
+        </button>
+      </div>
+    </div>
+
     <!-- 30-Day Trend Sparkline -->
     <div style="background: #030712; border: 1px solid #1F2937; border-radius: 1rem; padding: 1.5rem; margin-top: 1.5rem;">
       <div style="font-size: 0.75rem; font-weight: 700; color: #9CA3AF; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
@@ -41,19 +71,19 @@ const { prediction } = Astro.props;
       <svg viewBox="0 0 600 120" style="width: 100%; height: auto; overflow: visible;">
         <defs>
           <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.4" />
-            <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.0" />
+            <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.4" />
+            <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.0" />
           </linearGradient>
         </defs>
         <path d="M 0 90 Q 100 40 200 60 T 400 30 T 600 20 L 600 120 L 0 120 Z" fill="url(#glow)" />
-        <path d="M 0 90 Q 100 40 200 60 T 400 30 T 600 20" fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round" />
+        <path d="M 0 90 Q 100 40 200 60 T 400 30 T 600 20" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" />
       </svg>
     </div>
   </div>
 
   <!-- Community Voting Widget -->
   <div class="bento-card">
-    <h3 style="font-size: 1rem; font-weight: 700; margin: 0 0 0.5rem 0;">Community Consensus Poll</h3>
+    <h3 style="font-size: 1rem; font-weight: 700; margin: 0 0 0.5rem 0; color: #ffffff;">Community Consensus Poll</h3>
     <p style="font-size: 0.75rem; color: #9CA3AF; margin: 0 0 1rem 0;">Do you believe this milestone will be reached within the stated timeframe?</p>
     <div style="display: flex; gap: 1rem;" id="vote-container">
       <button id="vote-yes" style="flex: 1; background: #022c22; border: 1px solid #059669; color: #34d399; padding: 0.75rem; border-radius: 0.75rem; font-weight: 700; cursor: pointer;">
@@ -68,7 +98,40 @@ const { prediction } = Astro.props;
     </div>
   </div>
 
-  <script>
+  <script define:vars={{ slug: prediction.slug, defaultOdds: prediction.odds }}>
+    // Interactive Simulator Logic
+    const slider = document.getElementById('odds-slider');
+    const sliderValueText = document.getElementById('slider-value-text');
+    const displayOdds = document.getElementById('display-odds');
+    const simulatorStatus = document.getElementById('simulator-status');
+    const saveBtn = document.getElementById('save-simulation');
+
+    const storageKey = `oddspulse_sim_${slug}`;
+    const savedVal = localStorage.getItem(storageKey);
+
+    if (savedVal && slider && sliderValueText && displayOdds) {
+      slider.value = savedVal;
+      sliderValueText.textContent = savedVal + '%';
+      displayOdds.textContent = savedVal + '% Probability (Simulated)';
+      if (simulatorStatus) simulatorStatus.textContent = 'Custom user simulation loaded';
+    }
+
+    slider?.addEventListener('input', (e) => {
+      const val = (e.target as HTMLInputElement).value;
+      if (sliderValueText) sliderValueText.textContent = val + '%';
+      if (displayOdds) displayOdds.textContent = val + '% Probability (Simulated)';
+    });
+
+    saveBtn?.addEventListener('click', () => {
+      if (slider) {
+        localStorage.setItem(storageKey, slider.value);
+        if (simulatorStatus) simulatorStatus.textContent = '✓ Simulation successfully locked in storage!';
+        saveBtn.style.opacity = '0.7';
+        setTimeout(() => { if (simulatorStatus) simulatorStatus.textContent = 'Custom user simulation active'; }, 3000);
+      }
+    });
+
+    // Community Poll Logic
     const yesBtn = document.getElementById('vote-yes');
     const noBtn = document.getElementById('vote-no');
     const yesCount = document.getElementById('yes-count');
