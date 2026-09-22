@@ -82,7 +82,7 @@ const { prediction } = Astro.props;
   </div>
 
   <!-- Community Voting Widget -->
-  <div class="bento-card">
+  <div class="bento-card" style="margin-bottom: 2rem;">
     <h3 style="font-size: 1rem; font-weight: 700; margin: 0 0 0.5rem 0; color: #ffffff;">Community Consensus Poll</h3>
     <p style="font-size: 0.75rem; color: #9CA3AF; margin: 0 0 1rem 0;">Do you believe this milestone will be reached within the stated timeframe?</p>
     <div style="display: flex; gap: 1rem;" id="vote-container">
@@ -95,6 +95,35 @@ const { prediction } = Astro.props;
     </div>
     <div id="vote-msg" style="font-size: 0.75rem; color: #34d399; margin-top: 0.75rem; display: none;">
       Thank you for casting your vote! Community sentiment updated.
+    </div>
+  </div>
+
+  <!-- Interactive Comments & Analyst Discussion Feed -->
+  <div class="bento-card">
+    <h3 style="font-size: 1rem; font-weight: 700; margin: 0 0 0.5rem 0; color: #ffffff;">💬 Analyst Discussion & Insights</h3>
+    <p style="font-size: 0.75rem; color: #9CA3AF; margin: 0 0 1.25rem 0;">Share your thesis, macro perspective, or evidence regarding this prediction.</p>
+
+    <!-- New Comment Form -->
+    <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem;">
+      <input type="text" id="comment-author" placeholder="Your Analyst Handle / Name..." style="background: #030712; border: 1px solid #1F2937; color: #F3F4F6; font-size: 0.8rem; border-radius: 0.75rem; padding: 0.65rem 1rem; outline: none;" />
+      <textarea id="comment-text" rows="3" placeholder="Write your market thesis or telemetry analysis here..." style="background: #030712; border: 1px solid #1F2937; color: #F3F4F6; font-size: 0.8rem; border-radius: 0.75rem; padding: 0.75rem 1rem; outline: none; resize: vertical;"></textarea>
+      <button id="submit-comment" style="align-self: flex-end; background: var(--accent); color: #030712; border: none; padding: 0.5rem 1.25rem; border-radius: 0.75rem; font-weight: 700; font-size: 0.8rem; cursor: pointer;">
+        Post Analysis
+      </button>
+    </div>
+
+    <!-- Comments List Container -->
+    <div id="comments-list" style="display: flex; flex-direction: column; gap: 0.75rem;">
+      <!-- Default sample comment -->
+      <div style="background: #030712; border: 1px solid #1F2937; border-radius: 0.75rem; padding: 1rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--accent);">MacroQuant_99</span>
+          <span style="font-size: 0.65rem; color: #6B7280;">2 hours ago</span>
+        </div>
+        <p style="font-size: 0.8rem; color: #D1D5DB; margin: 0; line-height: 1.4;">
+          The underlying metrics support a much higher probability weighting than current market consensus indicates. Expecting accelerated momentum.
+        </p>
+      </div>
     </div>
   </div>
 
@@ -150,6 +179,68 @@ const { prediction } = Astro.props;
       if (voteMsg) voteMsg.style.display = 'block';
       noBtn.setAttribute('disabled', 'true');
       yesBtn?.setAttribute('disabled', 'true');
+    });
+
+    // Comments System Logic
+    const authorInput = document.getElementById('comment-author');
+    const textInput = document.getElementById('comment-text');
+    const submitBtn = document.getElementById('submit-comment');
+    const commentsList = document.getElementById('comments-list');
+
+    const commentsStorageKey = `oddspulse_comments_${slug}`;
+
+    function loadComments() {
+      const savedComments = JSON.parse(localStorage.getItem(commentsStorageKey) || '[]');
+      if (savedComments.length > 0 && commentsList) {
+        // Clear default or prepend saved
+        savedComments.forEach((c) => {
+          const div = document.createElement('div');
+          div.style.cssText = 'background: #030712; border: 1px solid #1F2937; border-radius: 0.75rem; padding: 1rem;';
+          div.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+              <span style="font-size: 0.75rem; font-weight: 700; color: var(--accent);">${escapeHTML(c.author)}</span>
+              <span style="font-size: 0.65rem; color: #6B7280;">Just now</span>
+            </div>
+            <p style="font-size: 0.8rem; color: #D1D5DB; margin: 0; line-height: 1.4;">${escapeHTML(c.text)}</p>
+          `;
+          commentsList.prepend(div);
+        });
+      }
+    }
+
+    function escapeHTML(str) {
+      return str.replace(/[&<>'"]/g, 
+        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+      );
+    }
+
+    loadComments();
+
+    submitBtn?.addEventListener('click', () => {
+      const author = authorInput?.value.trim() || 'Anonymous Analyst';
+      const text = textInput?.value.trim() || '';
+
+      if (!text) return;
+
+      const newComment = { author, text };
+      const existing = JSON.parse(localStorage.getItem(commentsStorageKey) || '[]');
+      existing.push(newComment);
+      localStorage.setItem(commentsStorageKey, JSON.stringify(existing));
+
+      if (commentsList) {
+        const div = document.createElement('div');
+        div.style.cssText = 'background: #030712; border: 1px solid #1F2937; border-radius: 0.75rem; padding: 1rem;';
+        div.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+            <span style="font-size: 0.75rem; font-weight: 700; color: var(--accent);">${escapeHTML(author)}</span>
+            <span style="font-size: 0.65rem; color: #6B7280;">Just now</span>
+          </div>
+          <p style="font-size: 0.8rem; color: #D1D5DB; margin: 0; line-height: 1.4;">${escapeHTML(text)}</p>
+        `;
+        commentsList.prepend(div);
+      }
+
+      if (textInput) textInput.value = '';
     });
   </script>
 </Layout>
