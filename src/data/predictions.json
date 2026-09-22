@@ -72,6 +72,30 @@
     "summary": "Geopolitical realignment continues to drive developing nations toward alternative economic blocs, with multiple formal applications pending."
   },
   {
+    "slug": "global-dedollarization-trade",
+    "title": "Will bilateral non-dollar settlement in global oil and commodity trade exceed 30%?",
+    "category": "Geopolitics",
+    "odds": 67,
+    "change": "+3% this week",
+    "summary": "Tracking the shift toward local currency invoices, alternative cross-border payment rails, and sovereign reserve diversification away from USD."
+  },
+  {
+    "slug": "arctic-shipping-route-commercial",
+    "title": "Will the Northern Sea Route (Arctic passage) see year-round commercial container shipping?",
+    "category": "Geopolitics",
+    "odds": 49,
+    "change": "New entry",
+    "summary": "Evaluating polar ice-breaker fleet capabilities, climate shifts, and geopolitical control over strategic maritime trade bottlenecks."
+  },
+  {
+    "slug": "taiwan-semiconductor-redundancy",
+    "title": "Will offshore semiconductor fabs outside East Asia produce over 25% of advanced sub-5nm chips?",
+    "category": "Geopolitics",
+    "odds": 74,
+    "change": "+2% this week",
+    "summary": "Monitoring government subsidy packages (CHIPS acts), mega-fab construction milestones in US and Europe, and supply chain de-risking."
+  },
+  {
     "slug": "mars-unmanned-landing",
     "title": "Will the first commercial unmanned spacecraft successfully land on Mars by 2028?",
     "category": "Space & Science",
