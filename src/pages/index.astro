@@ -50,7 +50,7 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
   <div style="margin-bottom: 2rem;">
     <div class="badge-live" style="margin-bottom: 1rem;">
       <span style="height: 0.5rem; width: 0.5rem; background: var(--accent); border-radius: 9999px; display: inline-block; box-shadow: 0 0 10px var(--accent);"></span>
-      AI Telemetry Engine v3.8
+      AI Telemetry Engine v3.9
     </div>
     <h1 style="font-size: 2.5rem; font-weight: 800; margin: 0 0 0.75rem 0; letter-spacing: -0.025em; color: #ffffff;">
       Predictive Markets <span style="background: linear-gradient(to right, var(--accent), #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">In Real-Time</span>
@@ -247,109 +247,111 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
   </div>
 
   <script>
-    // Robust Real-Time Telemetry Ticker Simulation for BTC
-    let currentBtcPrice = 91420;
-    const priceEl = document.getElementById('live-btc-price');
-    const changeEl = document.getElementById('live-btc-change');
+    document.addEventListener('DOMContentLoaded', () => {
+      // Robust Real-Time Telemetry Ticker Simulation for BTC
+      let currentBtcPrice = 91420;
+      const priceEl = document.getElementById('live-btc-price');
 
-    function simulateBtcTicker() {
-      // Small random market fluctuation (-$30 to +$30)
-      const delta = (Math.random() - 0.48) * 60;
-      currentBtcPrice += delta;
-      
-      const formattedPrice = '$' + Math.round(currentBtcPrice).toLocaleString('en-US');
-      if (priceEl) priceEl.textContent = formattedPrice;
-    }
-
-    setInterval(simulateBtcTicker, 4000); // Updates smoothly every 4 seconds
-
-    // Subscription Form Logic
-    const subBtn = document.getElementById('subscribe-btn');
-    const subInput = document.getElementById('subscriber-email') as HTMLInputElement;
-    const subSuccess = document.getElementById('subscribe-success');
-
-    subBtn?.addEventListener('click', () => {
-      const email = subInput?.value.trim();
-      if (email && email.includes('@') && email.includes('.')) {
-        localStorage.setItem('oddspulse_subscriber', email);
-        const container = document.getElementById('subscribe-container');
-        if (container) container.style.display = 'none';
-        if (subSuccess) subSuccess.style.display = 'block';
-      } else {
-        alert('Please enter a valid email address for telemetry alerts.');
+      function simulateBtcTicker() {
+        const delta = (Math.random() - 0.48) * 60;
+        currentBtcPrice += delta;
+        const formattedPrice = '$' + Math.round(currentBtcPrice).toLocaleString('en-US');
+        if (priceEl) {
+          priceEl.textContent = formattedPrice;
+        }
       }
-    });
 
-    // Search and Filters Logic
-    const searchInput = document.getElementById('search-input') as HTMLInputElement;
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const bentoCards = document.querySelectorAll('.bento-card');
-    const cards = document.querySelectorAll('.prediction-card') as NodeListOf<HTMLElement>;
-    const noResults = document.getElementById('no-results');
-    const profileStatus = document.getElementById('profile-status');
-    const profilerWidget = document.getElementById('ai-profiler-widget');
-    const closeProfiler = document.getElementById('close-profiler');
+      // Initial call and interval
+      simulateBtcTicker();
+      setInterval(simulateBtcTicker, 4000);
 
-    let currentCategory = 'all';
-    let scrollCount = 0;
-    let mouseMoves = 0;
-    let fastScrolls = 0;
-    let lastScrollTop = window.pageYOffset;
+      // Subscription Form Logic
+      const subBtn = document.getElementById('subscribe-btn');
+      const subInput = document.getElementById('subscriber-email') as HTMLInputElement;
+      const subSuccess = document.getElementById('subscribe-success');
 
-    window.addEventListener('scroll', () => {
-      const st = window.pageYOffset;
-      if (Math.abs(st - lastScrollTop) > 40) fastScrolls++;
-      scrollCount++;
-      lastScrollTop = st <= 0 ? 0 : st;
-      updateProfile();
-    });
-
-    window.addEventListener('mousemove', () => {
-      mouseMoves++;
-      if (mouseMoves % 40 === 0) updateProfile();
-    });
-
-    function updateProfile() {
-      if (!profileStatus) return;
-      if (fastScrolls > 3) {
-        profileStatus.textContent = '⚡ Hyper-Active Crypto & Tech Speculator';
-      } else if (scrollCount > 10 && mouseMoves > 80) {
-        profileStatus.textContent = '🔍 Analytical Macro Strategist';
-      } else if (mouseMoves > 150) {
-        profileStatus.textContent = '🧠 Deep-Dive Futurist & Researcher';
-      } else {
-        profileStatus.textContent = '📊 Passive Telemetry Observer';
-      }
-    }
-
-    closeProfiler?.addEventListener('click', () => {
-      profilerWidget!.style.display = 'none';
-    });
-
-    function filterFeed() {
-      const query = searchInput?.value.toLowerCase().trim() || '';
-      let visible = 0;
-
-      cards.forEach(card => {
-        const title = card.getAttribute('data-title') || '';
-        const cat = card.getAttribute('data-category') || '';
-        const matchesCat = currentCategory === 'all' || cat === currentCategory;
-        const matchesQuery = query === '' || title.includes(query) || cat.includes(query);
-
-        if (matchesCat && matchesQuery) {
-          card.style.display = 'block';
-          visible++;
+      subBtn?.addEventListener('click', () => {
+        const email = subInput?.value.trim();
+        if (email && email.includes('@') && email.includes('.')) {
+          localStorage.setItem('oddspulse_subscriber', email);
+          const container = document.getElementById('subscribe-container');
+          if (container) container.style.display = 'none';
+          if (subSuccess) subSuccess.style.display = 'block';
         } else {
-          card.style.display = 'none';
+          alert('Please enter a valid email address for telemetry alerts.');
         }
       });
 
-      if (noResults) {
-        noResults.style.display = visible === 0 ? 'block' : 'none';
-      }
-    }
+      // Search and Filters Logic
+      const searchInput = document.getElementById('search-input') as HTMLInputElement;
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const bentoCards = document.querySelectorAll('.bento-card');
+      const cards = document.querySelectorAll('.prediction-card') as NodeListOf<HTMLElement>;
+      const noResults = document.getElementById('no-results');
+      const profileStatus = document.getElementById('profile-status');
+      const profilerWidget = document.getElementById('ai-profiler-widget');
+      const closeProfiler = document.getElementById('close-profiler');
 
-    searchInput?.addEventListener('input', filterFeed);
+      let currentCategory = 'all';
+      let scrollCount = 0;
+      let mouseMoves = 0;
+      let fastScrolls = 0;
+      let lastScrollTop = window.pageYOffset;
+
+      window.addEventListener('scroll', () => {
+        const st = window.pageYOffset;
+        if (Math.abs(st - lastScrollTop) > 40) fastScrolls++;
+        scrollCount++;
+        lastScrollTop = st <= 0 ? 0 : st;
+        updateProfile();
+      });
+
+      window.addEventListener('mousemove', () => {
+        mouseMoves++;
+        if (mouseMoves % 40 === 0) updateProfile();
+      });
+
+      function updateProfile() {
+        if (!profileStatus) return;
+        if (fastScrolls > 3) {
+          profileStatus.textContent = '⚡ Hyper-Active Crypto & Tech Speculator';
+        } else if (scrollCount > 10 && mouseMoves > 80) {
+          profileStatus.textContent = '🔍 Analytical Macro Strategist';
+        } else if (mouseMoves > 150) {
+          profileStatus.textContent = '🧠 Deep-Dive Futurist & Researcher';
+        } else {
+          profileStatus.textContent = '📊 Passive Telemetry Observer';
+        }
+      }
+
+      closeProfiler?.addEventListener('click', () => {
+        profilerWidget!.style.display = 'none';
+      });
+
+      function filterFeed() {
+        const query = searchInput?.value.toLowerCase().trim() || '';
+        let visible = 0;
+
+        cards.forEach(card => {
+          const title = card.getAttribute('data-title') || '';
+          const cat = card.getAttribute('data-category') || '';
+          const matchesCat = currentCategory === 'all' || cat === currentCategory;
+          const matchesQuery = query === '' || title.includes(query) || cat.includes(query);
+
+          if (matchesCat && matchesQuery) {
+            card.style.display = 'block';
+            visible++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        if (noResults) {
+          noResults.style.display = visible === 0 ? 'block' : 'none';
+        }
+      }
+
+      searchInput?.addEventListener('input', filterFeed);
 
     filterButtons.forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -376,6 +378,7 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
           filterFeed();
         }
       });
+    });
     });
   </script>
 </Layout>
