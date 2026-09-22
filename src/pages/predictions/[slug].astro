@@ -3,214 +3,90 @@ import Layout from '../../layouts/Layout.astro';
 import predictions from '../../data/predictions.json';
 
 export async function getStaticPaths() {
-  return predictions.map((item) => ({
+  return predictions.map((item: any) => ({
     params: { slug: item.slug },
-    props: { item },
+    props: { prediction: item },
   }));
 }
 
-const { item } = Astro.props;
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "NewsArticle",
-  "headline": item.title,
-  "description": item.summary,
-  "datePublished": "2026-01-01T00:00:00+00:00",
-  "publisher": {
-    "@type": "Organization",
-    "name": "OddsPulse.net",
-    "url": "https://oddspulse.net"
-  }
-};
+const { prediction } = Astro.props;
 ---
 
-<Layout title={`${item.title} - OddsPulse.net`}>
-  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} slot="head" />
+<Layout title={`${prediction.title} - OddsPulse.net`}>
+  <div style="margin-bottom: 1.5rem;">
+    <a href="/" style="font-size: 0.75rem; color: #22d3ee; font-weight: 600;">← Back to Live Feed</a>
+  </div>
 
-  <div class="max-w-3xl mx-auto">
-    <!-- Back Button -->
-    <a href="/" class="inline-flex items-center gap-2 text-xs font-semibold text-cyan-400 hover:text-cyan-300 transition-colors mb-6 group">
-      <span class="group-hover:-translate-x-1 transition-transform">←</span> Back to Live Feed
-    </a>
+  <div class="bento-card" style="margin-bottom: 2rem;">
+    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+      <span style="font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 0.35rem; background: #030712; color: #22d3ee; border: 1px solid #1F2937; text-transform: uppercase;">
+        {prediction.category}
+      </span>
+      <span style="font-size: 1.25rem; font-weight: 800; color: #22d3ee;">{prediction.odds}% Probability</span>
+    </div>
 
-    <!-- Main Card Header -->
-    <div class="p-6 md:p-8 rounded-3xl border border-gray-800 bg-gradient-to-br from-[#121A2C] via-[#0A0F1D] to-[#080C14] shadow-2xl relative overflow-hidden mb-6">
-      <div class="absolute -right-20 -top-20 w-60 h-60 bg-cyan-500/10 rounded-full blur-3xl"></div>
+    <h1 style="font-size: 1.5rem; font-weight: 800; margin: 0 0 1rem 0; color: #ffffff;">
+      {prediction.title}
+    </h1>
+    
+    <p style="font-size: 0.9rem; color: #9CA3AF; line-height: 1.6; margin: 0 0 1.5rem 0;">
+      {prediction.summary}
+    </p>
 
-      <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
-        <span class="text-xs font-bold px-3 py-1 rounded-full bg-cyan-950 text-cyan-400 border border-cyan-500/30 uppercase tracking-wider">
-          {item.category}
-        </span>
-        <span class={`text-xs font-semibold px-3 py-1 rounded-full ${
-          item.change === 'New entry' 
-            ? 'bg-cyan-950/80 text-cyan-400 border border-cyan-500/30' 
-            : item.change?.startsWith('+') 
-              ? 'bg-emerald-950/80 text-emerald-400 border border-emerald-500/30' 
-              : 'bg-rose-950/80 text-rose-400 border border-rose-500/30'
-        }`}>
-          {item.change}
-        </span>
+    <!-- 30-Day Trend Sparkline -->
+    <div style="background: #030712; border: 1px solid #1F2937; border-radius: 1rem; padding: 1.5rem; margin-top: 1.5rem;">
+      <div style="font-size: 0.75rem; font-weight: 700; color: #9CA3AF; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
+        30-Day Probability Trendline Telemetry History
       </div>
-
-      <h1 class="text-2xl md:text-3xl font-extrabold text-white mb-6 leading-tight">
-        {item.title}
-      </h1>
-
-      <!-- Probability & Metrics Box -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 rounded-2xl bg-[#080C14]/90 border border-gray-800 mb-6">
-        <div>
-          <span class="block text-[10px] uppercase font-bold text-gray-500 mb-1">Current Probability</span>
-          <span class="text-3xl font-extrabold text-white">{item.odds}%</span>
-        </div>
-        <div>
-          <span class="block text-[10px] uppercase font-bold text-gray-500 mb-1">Telemetry Status</span>
-          <span class="text-sm font-semibold text-emerald-400 flex items-center gap-1.5 mt-1">
-            <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span> Active Tracking
-          </span>
-        </div>
-        <div>
-          <span class="block text-[10px] uppercase font-bold text-gray-500 mb-1">Market Horizon</span>
-          <span class="text-sm font-semibold text-gray-300 mt-1 block">Long-term Projections</span>
-        </div>
-      </div>
-
-      <p class="text-sm md:text-base text-gray-300 leading-relaxed mb-8">
-        {item.summary}
-      </p>
-
-      <!-- Historical Trend Sparkline Chart -->
-      <div class="mb-8 p-5 rounded-2xl bg-[#080C14]/60 border border-gray-800/80">
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-bold uppercase tracking-widest text-cyan-400">30-Day Probability Trend</span>
-          <span class="text-[11px] text-gray-500">Live Telemetry History</span>
-        </div>
-        <div class="h-24 w-full relative">
-          <svg class="w-full h-full overflow-visible" viewBox="0 0 300 80" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="chart-gradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="rgba(6, 182, 212, 0.3)" />
-                <stop offset="100%" stop-color="rgba(6, 182, 212, 0.0)" />
-              </linearGradient>
-            </defs>
-            <path 
-              d="M 0 50 Q 50 30, 100 45 T 200 25 T 300 15" 
-              fill="none" 
-              stroke="#06b6d4" 
-              stroke-width="2.5" 
-              stroke-linecap="round"
-            />
-            <path 
-              d="M 0 50 Q 50 30, 100 45 T 200 25 T 300 15 L 300 80 L 0 80 Z" 
-              fill="url(#chart-gradient)" 
-            />
-          </svg>
-        </div>
-      </div>
-
-      <!-- Interactive Community Sentiment Voting Widget -->
-      <div class="p-6 rounded-2xl bg-[#080C14] border border-gray-800 mb-8" id="voting-widget">
-        <h3 class="text-sm font-bold text-white mb-2">Community Consensus Poll</h3>
-        <p class="text-xs text-gray-400 mb-4">Do you believe this milestone will be reached within the stated timeframe?</p>
-        
-        <div class="grid grid-cols-2 gap-3 mb-4" id="vote-buttons">
-          <button 
-            data-vote="yes" 
-            class="py-3 px-4 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 font-bold text-xs hover:bg-emerald-900/50 transition-all flex items-center justify-center gap-2 cursor-pointer"
-          >
-            <span>👍 Yes</span>
-            <span id="yes-count" class="bg-emerald-900/60 px-2 py-0.5 rounded-md text-[10px]">0</span>
-          </button>
-          <button 
-            data-vote="no" 
-            class="py-3 px-4 rounded-xl bg-rose-950/40 border border-rose-500/30 text-rose-400 font-bold text-xs hover:bg-rose-900/50 transition-all flex items-center justify-center gap-2 cursor-pointer"
-          >
-            <span>👎 No</span>
-            <span id="no-count" class="bg-rose-900/60 px-2 py-0.5 rounded-md text-[10px]">0</span>
-          </button>
-        </div>
-        <div id="vote-status" class="text-center text-xs text-cyan-400 hidden font-medium">
-          Thank you for casting your vote! Community sentiment updated.
-        </div>
-      </div>
-
-      <!-- Social Share Buttons -->
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-gray-800/80">
-        <span class="text-xs text-gray-400 font-semibold">Share this prediction market:</span>
-        <div class="flex items-center gap-3 w-full sm:w-auto">
-          <a 
-            id="share-twitter" 
-            href="#" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            class="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-[#1DA1F2]/10 border border-[#1DA1F2]/30 text-[#1DA1F2] text-xs font-semibold hover:bg-[#1DA1F2]/20 transition-all text-center"
-          >
-            𝕏 Share on X
-          </a>
-          <a 
-            id="share-telegram" 
-            href="#" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            class="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-[#229ED9]/10 border border-[#229ED9]/30 text-[#229ED9] text-xs font-semibold hover:bg-[#229ED9]/20 transition-all text-center"
-          >
-            ✈️ Telegram
-          </a>
-        </div>
-      </div>
+      <svg viewBox="0 0 600 120" style="width: 100%; height: auto; overflow: visible;">
+        <defs>
+          <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.4" />
+            <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.0" />
+          </linearGradient>
+        </defs>
+        <path d="M 0 90 Q 100 40 200 60 T 400 30 T 600 20 L 600 120 L 0 120 Z" fill="url(#glow)" />
+        <path d="M 0 90 Q 100 40 200 60 T 400 30 T 600 20" fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round" />
+      </svg>
     </div>
   </div>
 
-  <script define:vars={{ itemTitle: item.title, itemOdds: item.odds, itemSlug: item.slug }}>
-    const currentUrl = window.location.href;
-    const shareText = "Tracking \"" + itemTitle + "\" on OddsPulse.net — Current Probability: " + itemOdds + "%. Check it out:";
-    
-    const twitterBtn = document.getElementById('share-twitter');
-    if (twitterBtn) {
-      twitterBtn.setAttribute('href', 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText) + '&url=' + encodeURIComponent(currentUrl));
-    }
+  <!-- Community Voting Widget -->
+  <div class="bento-card">
+    <h3 style="font-size: 1rem; font-weight: 700; margin: 0 0 0.5rem 0;">Community Consensus Poll</h3>
+    <p style="font-size: 0.75rem; color: #9CA3AF; margin: 0 0 1rem 0;">Do you believe this milestone will be reached within the stated timeframe?</p>
+    <div style="display: flex; gap: 1rem;" id="vote-container">
+      <button id="vote-yes" style="flex: 1; background: #022c22; border: 1px solid #059669; color: #34d399; padding: 0.75rem; border-radius: 0.75rem; font-weight: 700; cursor: pointer;">
+        Yes (<span id="yes-count">42</span>)
+      </button>
+      <button id="vote-no" style="flex: 1; background: #4c0519; border: 1px solid #e11d48; color: #fb7185; padding: 0.75rem; border-radius: 0.75rem; font-weight: 700; cursor: pointer;">
+        No (<span id="no-count">12</span>)
+      </button>
+    </div>
+    <div id="vote-msg" style="font-size: 0.75rem; color: #34d399; margin-top: 0.75rem; display: none;">
+      Thank you for casting your vote! Community sentiment updated.
+    </div>
+  </div>
 
-    const telegramBtn = document.getElementById('share-telegram');
-    if (telegramBtn) {
-      telegramBtn.setAttribute('href', 'https://t.me/share/url?url=' + encodeURIComponent(currentUrl) + '&text=' + encodeURIComponent(shareText));
-    }
+  <script>
+    const yesBtn = document.getElementById('vote-yes');
+    const noBtn = document.getElementById('vote-no');
+    const yesCount = document.getElementById('yes-count');
+    const noCount = document.getElementById('no-count');
+    const voteMsg = document.getElementById('vote-msg');
 
-    const storageKey = 'oddspulse_vote_' + itemSlug;
-    const voteButtons = document.querySelectorAll('#vote-buttons button');
-    const voteStatus = document.getElementById('vote-status');
-    const yesCountEl = document.getElementById('yes-count');
-    const noCountEl = document.getElementById('no-count');
+    yesBtn?.addEventListener('click', () => {
+      if (yesCount) yesCount.textContent = (parseInt(yesCount.textContent || '42') + 1).toString();
+      if (voteMsg) voteMsg.style.display = 'block';
+      yesBtn.setAttribute('disabled', 'true');
+      noBtn?.setAttribute('disabled', 'true');
+    });
 
-    let yesVotes = 42;
-    let noVotes = 12;
-
-    const savedVote = localStorage.getItem(storageKey);
-    if (savedVote === 'yes') yesVotes++;
-    if (savedVote === 'no') noVotes++;
-
-    if (yesCountEl) yesCountEl.textContent = yesVotes.toString();
-    if (noCountEl) noCountEl.textContent = noVotes.toString();
-
-    if (savedVote && voteStatus) {
-      voteStatus.classList.remove('hidden');
-      voteButtons.forEach(function(btn) { btn.setAttribute('disabled', 'true'); });
-    }
-
-    voteButtons.forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        const choice = e.currentTarget.getAttribute('data-vote');
-        if (!choice || localStorage.getItem(storageKey)) return;
-
-        localStorage.setItem(storageKey, choice);
-        if (choice === 'yes') yesVotes++;
-        if (choice === 'no') noVotes++;
-
-        if (yesCountEl) yesCountEl.textContent = yesVotes.toString();
-        if (noCountEl) noCountEl.textContent = noVotes.toString();
-
-        if (voteStatus) voteStatus.classList.remove('hidden');
-        voteButtons.forEach(function(b) { b.setAttribute('disabled', 'true'); });
-      });
+    noBtn?.addEventListener('click', () => {
+      if (noCount) noCount.textContent = (parseInt(noCount.textContent || '12') + 1).toString();
+      if (voteMsg) voteMsg.style.display = 'block';
+      noBtn.setAttribute('disabled', 'true');
+      yesBtn?.setAttribute('disabled', 'true');
     });
   </script>
 </Layout>
