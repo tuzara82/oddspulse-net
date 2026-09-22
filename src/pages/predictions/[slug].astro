@@ -10,6 +10,10 @@ export async function getStaticPaths() {
 }
 
 const { prediction } = Astro.props;
+
+// Generate deterministic initial vote counts based on odds and title length
+const baseYes = Math.floor(prediction.odds * 1.8) + 15;
+const baseNo = Math.floor((100 - prediction.odds) * 1.5) + 8;
 ---
 
 <Layout title={`${prediction.title} - OddsPulse.net`}>
@@ -87,10 +91,10 @@ const { prediction } = Astro.props;
     <p style="font-size: 0.75rem; color: #9CA3AF; margin: 0 0 1rem 0;">Do you believe this milestone will be reached within the stated timeframe?</p>
     <div style="display: flex; gap: 1rem;" id="vote-container">
       <button id="vote-yes" style="flex: 1; background: #022c22; border: 1px solid #059669; color: #34d399; padding: 0.75rem; border-radius: 0.75rem; font-weight: 700; cursor: pointer;">
-        Yes (<span id="yes-count">42</span>)
+        Yes (<span id="yes-count">{baseYes}</span>)
       </button>
       <button id="vote-no" style="flex: 1; background: #4c0519; border: 1px solid #e11d48; color: #fb7185; padding: 0.75rem; border-radius: 0.75rem; font-weight: 700; cursor: pointer;">
-        No (<span id="no-count">12</span>)
+        No (<span id="no-count">{baseNo}</span>)
       </button>
     </div>
     <div id="vote-msg" style="font-size: 0.75rem; color: #34d399; margin-top: 0.75rem; display: none;">
@@ -114,7 +118,6 @@ const { prediction } = Astro.props;
 
     <!-- Comments List Container -->
     <div id="comments-list" style="display: flex; flex-direction: column; gap: 0.75rem;">
-      <!-- Default sample comment -->
       <div style="background: #030712; border: 1px solid #1F2937; border-radius: 0.75rem; padding: 1rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
           <span style="font-size: 0.75rem; font-weight: 700; color: var(--accent);">MacroQuant_99</span>
@@ -127,7 +130,7 @@ const { prediction } = Astro.props;
     </div>
   </div>
 
-  <script define:vars={{ slug: prediction.slug, defaultOdds: prediction.odds }}>
+  <script define:vars={{ slug: prediction.slug, defaultOdds: prediction.odds, initYes: baseYes, initNo: baseNo }}>
     // Interactive Simulator Logic
     const slider = document.getElementById('odds-slider');
     const sliderValueText = document.getElementById('slider-value-text');
@@ -160,24 +163,56 @@ const { prediction } = Astro.props;
       }
     });
 
-    // Community Poll Logic
+    // Community Poll Persistence Logic
     const yesBtn = document.getElementById('vote-yes');
     const noBtn = document.getElementById('vote-no');
     const yesCount = document.getElementById('yes-count');
     const noCount = document.getElementById('no-count');
     const voteMsg = document.getElementById('vote-msg');
 
+    const pollStorageKey = `oddspulse_poll_${slug}`;
+    const userVote = localStorage.getItem(pollStorageKey);
+
+    const votesStorageKey = `oddspulse_votes_${slug}`;
+    let currentVotes = JSON.parse(localStorage.getItem(votesStorageKey) || JSON.stringify({ yes: initYes, no: initNo }));
+
+    if (yesCount) yesCount.textContent = currentVotes.yes;
+    if (noCount) noCount.textContent = currentVotes.no;
+
+    if (userVote) {
+      if (yesBtn) yesBtn.setAttribute('disabled', 'true');
+      if (noBtn) noBtn.setAttribute('disabled', 'true');
+      if (voteMsg) {
+        voteMsg.textContent = `✓ You previously voted: ${userVote.toUpperCase()}`;
+        voteMsg.style.display = 'block';
+      }
+    }
+
     yesBtn?.addEventListener('click', () => {
-      if (yesCount) yesCount.textContent = (parseInt(yesCount.textContent || '42') + 1).toString();
-      if (voteMsg) voteMsg.style.display = 'block';
+      if (userVote) return;
+      currentVotes.yes++;
+      localStorage.setItem(votesStorageKey, JSON.stringify(currentVotes));
+      localStorage.setItem(pollStorageKey, 'yes');
+      if (yesCount) yesCount.textContent = currentVotes.yes;
+      if (voteMsg) {
+        voteMsg.textContent = 'Thank you for casting your vote! Community sentiment updated.';
+        voteMsg.style.display = 'block';
+      }
       yesBtn.setAttribute('disabled', 'true');
       noBtn?.setAttribute('disabled', 'true');
     });
 
     noBtn?.addEventListener('click', () => {
-      if (noCount) noCount.textContent = (parseInt(noCount.textContent || '12') + 1).toString();
-      if (voteMsg) voteMsg.style.display = 'block';
-      noBtn.setAttribute('disabled', 'true');
+      if (userVote) return;
+      currentVotes.no++;
+      localStorage.setItem(votesStorageKey, JSON.stringify(currentVotes));
+      localStorage.setItem(pollStorageKey, 'no');
+      if (noCount) noCount.textContent = currentVotes.no;
+      if (voteMsg) {
+        voteMsg.textContent = 'Thank you for casting your vote! Community sentiment updated.';
+        voteMsg.style.display = 'block';
+      }
+      noBtn?.setAttribute('disabled', 'true');
       yesBtn?.setAttribute('disabled', 'true');
     });
 
@@ -192,14 +227,13 @@ const { prediction } = Astro.props;
     function loadComments() {
       const savedComments = JSON.parse(localStorage.getItem(commentsStorageKey) || '[]');
       if (savedComments.length > 0 && commentsList) {
-        // Clear default or prepend saved
         savedComments.forEach((c) => {
           const div = document.createElement('div');
           div.style.cssText = 'background: #030712; border: 1px solid #1F2937; border-radius: 0.75rem; padding: 1rem;';
           div.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
               <span style="font-size: 0.75rem; font-weight: 700; color: var(--accent);">${escapeHTML(c.author)}</span>
-              <span style="font-size: 0.65rem; color: #6B7280;">Just now</span>
+              <span style="font-size: 0.65rem; color: #6B7280;">Saved telemetry</span>
             </div>
             <p style="font-size: 0.8rem; color: #D1D5DB; margin: 0; line-height: 1.4;">${escapeHTML(c.text)}</p>
           `;
