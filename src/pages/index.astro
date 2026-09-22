@@ -292,7 +292,6 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
       }
     }
 
-    searchInput?.addEventListener('input', filterDevFilter); // fallback
     searchInput?.addEventListener('input', filterFeed);
 
     filterButtons.forEach(btn => {
