@@ -50,7 +50,7 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
   <div style="margin-bottom: 2rem;">
     <div class="badge-live" style="margin-bottom: 1rem;">
       <span style="height: 0.5rem; width: 0.5rem; background: var(--accent); border-radius: 9999px; display: inline-block; box-shadow: 0 0 10px var(--accent);"></span>
-      AI Telemetry Engine v3.5
+      AI Telemetry Engine v3.6
     </div>
     <h1 style="font-size: 2.5rem; font-weight: 800; margin: 0 0 0.75rem 0; letter-spacing: -0.025em; color: #ffffff;">
       Predictive Markets <span style="background: linear-gradient(to right, var(--accent), #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">In Real-Time</span>
@@ -187,6 +187,26 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
         </p>
       </div>
 
+      <!-- Email Alerts & Subscription Panel -->
+      <div style="background: linear-gradient(135deg, #121A2C 0%, #0A0F1D 100%); border: 1px solid rgba(var(--accent-rgb), 0.3); border-radius: 1.5rem; padding: 1.25rem; box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.08);">
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+          <span>🔔</span>
+          <h3 style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin: 0;">Odds Alert Feed</h3>
+        </div>
+        <p style="font-size: 0.75rem; color: #9CA3AF; margin: 0 0 1rem 0; line-height: 1.4;">
+          Get instant email dispatches when market probabilities shift by more than 5%.
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;" id="subscribe-container">
+          <input type="email" id="subscriber-email" placeholder="Enter your email..." style="background: #030712; border: 1px solid #1F2937; color: #F3F4F6; font-size: 0.75rem; border-radius: 0.75rem; padding: 0.65rem 0.85rem; outline: none;" />
+          <button id="subscribe-btn" style="background: var(--accent); color: #030712; border: none; padding: 0.6rem; border-radius: 0.75rem; font-weight: 700; font-size: 0.75rem; cursor: pointer; transition: opacity 0.2s;">
+            Enable Telemetry Alerts
+          </button>
+        </div>
+        <div id="subscribe-success" style="font-size: 0.75rem; color: #34d399; font-weight: 700; margin-top: 0.75rem; display: none; text-align: center; background: #022c22; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid rgba(52,211,153,0.3);">
+          ✓ Successfully subscribed to live alerts!
+        </div>
+      </div>
+
       <!-- Bitcoin Whales Panel -->
       <div style="background: linear-gradient(135deg, #121A2C 0%, #0A0F1D 100%); border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 1.5rem; padding: 1.25rem; box-shadow: 0 0 20px rgba(6,182,212,0.08);">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
@@ -206,24 +226,6 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
             <span style="color: #9CA3AF;">Exchange Reserves:</span>
             <span style="font-weight: 700; color: #34d399;">{btcStats.topAddressesSummary.exchangeReservesPercent}</span>
           </div>
-        </div>
-      </div>
-
-      <!-- Bitcoin Distribution Panel -->
-      <div style="background: linear-gradient(135deg, #121A2C 0%, #0A0F1D 100%); border: 1px solid rgba(52, 211, 153, 0.3); border-radius: 1.5rem; padding: 1.25rem; box-shadow: 0 0 20px rgba(52,211,153,0.08);">
-        <h3 style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #34d399; margin: 0 0 1rem 0;">📊 Bitcoin Supply Distribution</h3>
-        <div style="display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.75rem;">
-          {btcStats.distributionTiers.map((tier: any) => (
-            <div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
-                <span style="color: #E5E7EB; font-weight: 600;">{tier.tier}</span>
-                <span style={`color: ${tier.color}; font-weight: 800;`}>{tier.share}</span>
-              </div>
-              <div style="width: 100%; height: 6px; background: #030712; border-radius: 9999px; overflow: hidden; border: 1px solid #1F2937;">
-                <div style={`width: ${tier.share}; height: 100%; background: ${tier.color}; border-radius: 9999px;`}></div>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </aside>
@@ -273,7 +275,26 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
     }
 
     fetchLiveBtcPrice();
-    setInterval(fetchLiveBtcPrice, 60000); // Refresh every 60s
+    setInterval(fetchLiveBtcPrice, 60000);
+
+    // Subscription Form Logic
+    const subBtn = document.getElementById('subscribe-btn');
+    const subInput = document.getElementById('subscriber-email') as HTMLInputElement;
+    const subSuccess = document.getElementById('subscribe-success');
+
+    subBtn?.addEventListener('click', () => {
+      const email = subInput?.value.trim();
+      if (email && email.includes('@') && email.includes('.')) {
+        localStorage.setItem('oddspulse_subscriber', email);
+        if (subContainer => {
+          const container = document.getElementById('subscribe-container');
+          if (container) container.style.display = 'none';
+        });
+        if (subSuccess) subSuccess.style.display = 'block';
+      } else {
+        alert('Please enter a valid email address for telemetry alerts.');
+      }
+    });
 
     // Search and Filters Logic
     const searchInput = document.getElementById('search-input') as HTMLInputElement;
