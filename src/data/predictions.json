@@ -1,8 +1,16 @@
 [
   {
+    "title": "Will commercial Edge AI chips achieve 100 TOPS per watt efficiency before 2028?",
+    "slug": "edge-ai-chips-efficiency-2028",
+    "category": "AI & Tech",
+    "odds": 54,
+    "change": "New entry",
+    "summary": "Hardware manufacturers are rapidly optimizing silicon architectures to bring high-performance neural processing directly to everyday consumer devices with minimal power draw."
+  },
+  {
     "slug": "agi-by-2029",
     "title": "Will Artificial General Intelligence (AGI) surpass human capabilities by 2029?",
-    "odds": 80,
+    "odds": 82,
     "trend": "+1% this week",
     "trendUp": true,
     "category": "AI & Tech",
@@ -11,12 +19,13 @@
       80,
       79,
       80
-    ]
+    ],
+    "change": "+2% this week"
   },
   {
     "slug": "humanoid-robot-under-5000",
     "title": "Will a consumer home humanoid robot retail for under $5,000 by 2030?",
-    "odds": 44,
+    "odds": 42,
     "trend": "+1% this week",
     "trendUp": true,
     "category": "AI & Tech",
@@ -25,12 +34,13 @@
       44,
       43,
       44
-    ]
+    ],
+    "change": "-2% this week"
   },
   {
     "slug": "nvidia-market-cap",
     "title": "Will Nvidia's market cap exceed Apple and Microsoft combined before 2030?",
-    "odds": 40,
+    "odds": 41,
     "trend": "+1% this week",
     "trendUp": true,
     "category": "AI & Tech",
@@ -39,12 +49,13 @@
       38,
       39,
       40
-    ]
+    ],
+    "change": "+1% this week"
   },
   {
     "slug": "global-inflation-2027",
     "title": "Will global inflation sustainably drop below 2% across developed economies over the next 12 months?",
-    "odds": 57,
+    "odds": 58,
     "trend": "-2% this week",
     "trendUp": false,
     "category": "Economy",
@@ -53,12 +64,13 @@
       61,
       59,
       57
-    ]
+    ],
+    "change": "+1% this week"
   },
   {
     "slug": "cbdc-g7-launch",
     "title": "Will at least one G7 nation launch a retail Central Bank Digital Currency (CBDC)?",
-    "odds": 71,
+    "odds": 72,
     "trend": "+2% this week",
     "trendUp": true,
     "category": "Economy",
@@ -67,12 +79,13 @@
       68,
       69,
       71
-    ]
+    ],
+    "change": "+1% this week"
   },
   {
     "slug": "brics-expansion",
     "title": "Will a new major economy formally join the BRICS bloc next year?",
-    "odds": 83,
+    "odds": 81,
     "trend": "+2% this week",
     "trendUp": true,
     "category": "Geopolitics",
@@ -81,12 +94,13 @@
       82,
       81,
       83
-    ]
+    ],
+    "change": "-2% this week"
   },
   {
     "slug": "mars-unmanned-landing",
     "title": "Will the first commercial unmanned spacecraft successfully land on Mars by 2028?",
-    "odds": 70,
+    "odds": 68,
     "trend": "+2% this week",
     "trendUp": true,
     "category": "Space & Science",
@@ -95,12 +109,13 @@
       67,
       68,
       70
-    ]
+    ],
+    "change": "-2% this week"
   },
   {
     "slug": "streaming-vs-tv",
     "title": "Will streaming platforms capture over 70% of traditional linear TV advertising revenue?",
-    "odds": 82,
+    "odds": 84,
     "trend": "-1% this week",
     "trendUp": false,
     "category": "Culture & Society",
@@ -109,12 +124,13 @@
       82,
       83,
       82
-    ]
+    ],
+    "change": "+2% this week"
   },
   {
     "slug": "will-a-major-tech-giant-launch-the-first",
     "title": "Will a major tech giant launch the first commercially successful neural interface for daily use?",
-    "odds": 32,
+    "odds": 33,
     "trend": "+2% this week",
     "trendUp": true,
     "category": "AI & Tech",
@@ -123,12 +139,13 @@
       32,
       30,
       32
-    ]
+    ],
+    "change": "+1% this week"
   },
   {
     "slug": "will-artificial-intelligence-present-an-",
     "title": "Will artificial intelligence present an existential threat to humanity within the next 10 years?",
-    "odds": 11,
+    "odds": 10,
     "trend": "+2% this week",
     "trendUp": true,
     "category": "AI & Tech",
@@ -137,12 +154,13 @@
       10,
       9,
       11
-    ]
+    ],
+    "change": "-2% this week"
   },
   {
     "slug": "will-commercial-nuclear-fusion-generate-",
     "title": "Will commercial nuclear fusion generate stable net electricity to the grid by 2032?",
-    "odds": 39,
+    "odds": 38,
     "trend": "-2% this week",
     "trendUp": false,
     "category": "Space & Science",
@@ -151,12 +169,13 @@
       40,
       41,
       39
-    ]
+    ],
+    "change": "-1% this week"
   },
   {
     "slug": "will-global-electric-vehicle-sales-excee",
     "title": "Will global electric vehicle sales exceed 60% of total new car sales worldwide?",
-    "odds": 50,
+    "odds": 49,
     "trend": "+1% this week",
     "trendUp": true,
     "category": "Economy",
@@ -165,12 +184,13 @@
       48,
       49,
       50
-    ]
+    ],
+    "change": "-1% this week"
   },
   {
     "slug": "will-a-sovereign-nation-adopt-bitcoin-as",
     "title": "Will a sovereign nation adopt Bitcoin as an official national reserve asset by the end of 2027?",
-    "odds": 38,
+    "odds": 39,
     "trend": "New entry",
     "trendUp": true,
     "category": "Crypto",
@@ -179,12 +199,13 @@
       36,
       37,
       38
-    ]
+    ],
+    "change": "+1% this week"
   },
   {
     "slug": "will-humanity-successfully-establish-a-p",
     "title": "Will humanity successfully establish a permanent crewed habitat on the surface of Mars before 2040?",
-    "odds": 45,
+    "odds": 43,
     "trend": "New entry",
     "trendUp": true,
     "category": "Space",
@@ -193,12 +214,13 @@
       43,
       44,
       45
-    ]
+    ],
+    "change": "-2% this week"
   },
   {
     "slug": "will-an-autonomous-ai-system-successfull",
     "title": "Will an autonomous AI system successfully orchestrate a major multinational cyber-defense grid intervention?",
-    "odds": 55,
+    "odds": 57,
     "trend": "New entry",
     "trendUp": true,
     "category": "Geopolitics",
@@ -207,6 +229,7 @@
       53,
       54,
       55
-    ]
+    ],
+    "change": "+2% this week"
   }
 ]
