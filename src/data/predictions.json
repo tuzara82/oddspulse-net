@@ -48,6 +48,14 @@
     "change": "+3%"
   },
   {
+    "slug": "humanoid-robotics-labor-2028",
+    "category": "AI & Tech",
+    "title": "Will multi-purpose humanoid robots achieve autonomous commercial deployment in major automotive assembly lines by 2028?",
+    "summary": "Advancements in neural locomotion models and real-time spatial mapping are accelerating enterprise adoption curves for heavy industrial labor automation.",
+    "odds": 67,
+    "change": "+4%"
+  },
+  {
     "slug": "btc-spot-etf-sovereign-wealth",
     "category": "Crypto",
     "title": "Will at least 3 G20 sovereign wealth funds officially disclose Bitcoin holdings in their reserve portfolios by 2027?",
@@ -64,11 +72,27 @@
     "change": "+6%"
   },
   {
+    "slug": "ethereum-layer2-settlement-dominance",
+    "category": "Crypto",
+    "title": "Will Ethereum Layer-2 networks account for over 95% of total EVM transaction volume before the end of 2026?",
+    "summary": "Data availability blob optimizations and recursive zero-knowledge proofs continue to drive transaction fees down to fractions of a cent, migrating users off L1.",
+    "odds": 84,
+    "change": "+2%"
+  },
+  {
     "slug": "global-semiconductor-corridor",
     "category": "Geopolitics",
     "title": "Will a cross-border semiconductor manufacturing corridor bypass traditional supply choke points by 2028?",
     "summary": "Geopolitical realignment is accelerating multi-billion-dollar fabrication plant investments across neutral allied jurisdictions to secure advanced node autonomy.",
     "odds": 49,
     "change": "-2%"
+  },
+  {
+    "slug": "global-cbdc-interoperability-standard",
+    "category": "Geopolitics",
+    "title": "Will a multilateral central bank digital currency (CBDC) settlement bridge connect at least 10 major economies by 2028?",
+    "summary": "Cross-border wholesale payment trials are exploring distributed ledger architectures to eliminate traditional correspondent banking friction and settlement delays.",
+    "odds": 53,
+    "change": "+1%"
   }
 ]
