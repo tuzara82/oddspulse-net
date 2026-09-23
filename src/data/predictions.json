@@ -1,122 +1,74 @@
 [
   {
-    "title": "Will commercial Edge AI chips achieve 100 TOPS per watt efficiency before 2028?",
-    "slug": "edge-ai-chips-efficiency-2028",
-    "category": "AI & Tech",
-    "odds": 55,
-    "change": "+1% this week",
-    "summary": "Hardware manufacturers are rapidly optimizing silicon architectures to bring high-performance neural processing directly to everyday consumer devices with minimal power draw."
-  },
-  {
-    "slug": "agi-by-2029",
-    "title": "Will Artificial Intelligence (AGI) surpass human capabilities by 2029?",
-    "category": "AI & Tech",
-    "odds": 81,
-    "change": "+1% this week",
-    "summary": "Tracking milestone achievements in frontier models, multi-step autonomous agent architectures, and generalized reasoning benchmarks."
-  },
-  {
-    "slug": "bitcoin-spot-etf-global-dominance",
-    "title": "Will global spot crypto ETF assets under management exceed $500 billion?",
-    "category": "Crypto",
-    "odds": 76,
-    "change": "+1% this week",
-    "summary": "Measuring institutional capital inflows, sovereign wealth fund allocations, and pension fund integrations across global digital asset ETPs."
-  },
-  {
-    "slug": "solana-ethereum-flippening-defi",
-    "title": "Will decentralized exchange (DEX) volume on alternative L1s permanently surpass Ethereum mainnet?",
-    "category": "Crypto",
-    "odds": 63,
-    "change": "-2% this week",
-    "summary": "Tracking transaction throughput, developer mindshare, liquidity aggregation, and gas fee dynamics across multi-chain ecosystems."
-  },
-  {
-    "slug": "major-economy-bitcoin-reserve",
-    "title": "Will a G20 nation officially add Bitcoin to its strategic national currency reserves?",
-    "category": "Crypto",
-    "odds": 39,
-    "change": "-1% this week",
-    "summary": "Monitoring legislative bills, central bank statements, and geopolitical monetary hedges favoring decentralized hard assets."
-  },
-  {
-    "slug": "humanoid-robot-under-5000",
-    "title": "Will a consumer home humanoid robot retail for under $5,000 by 2030?",
-    "category": "AI & Tech",
-    "odds": 45,
-    "change": "+2% this week",
-    "summary": "Analyzing component cost curves, actuator mass production milestones, and domestic neural network navigation training."
-  },
-  {
-    "slug": "nvidia-market-cap",
-    "title": "Will Nvidia's market cap exceed Apple and Microsoft combined before 2030?",
-    "category": "AI & Tech",
-    "odds": 40,
-    "change": "+1% this week",
-    "summary": "Evaluating enterprise data center capital expenditure, next-gen silicon architectures, and global AI infrastructure moats."
-  },
-  {
-    "slug": "global-inflation-2027",
-    "title": "Will global inflation sustainably drop below 2% across developed economies over the next 12 months?",
-    "category": "Economy",
-    "odds": 62,
-    "change": "+2% this week",
-    "summary": "Analyzing central bank interest rate trajectories, energy commodity pricing pressures, and global supply chain re-routing."
-  },
-  {
-    "slug": "cbdc-g7-launch",
-    "title": "Will at least one G7 nation launch a retail Central Bank Digital Currency (CBDC)?",
-    "category": "Economy",
-    "odds": 75,
-    "change": "+2% this week",
-    "summary": "Tracking digital fiat pilot programs, legislative privacy frameworks, and interbank settlement modernisation efforts."
-  },
-  {
-    "slug": "brics-expansion",
-    "title": "Will a new major economy formally join the BRICS bloc next year?",
-    "category": "Geopolitics",
-    "odds": 84,
-    "change": "+1% this week",
-    "summary": "Geopolitical realignment continues to drive developing nations toward alternative economic blocs, with multiple formal applications pending."
-  },
-  {
-    "slug": "global-dedollarization-trade",
-    "title": "Will bilateral non-dollar settlement in global oil and commodity trade exceed 30%?",
-    "category": "Geopolitics",
-    "odds": 67,
-    "change": "-2% this week",
-    "summary": "Tracking the shift toward local currency invoices, alternative cross-border payment rails, and sovereign reserve diversification away from USD."
-  },
-  {
-    "slug": "arctic-shipping-route-commercial",
-    "title": "Will the Northern Sea Route (Arctic passage) see year-round commercial container shipping?",
-    "category": "Geopolitics",
-    "odds": 49,
-    "change": "+2% this week",
-    "summary": "Evaluating polar ice-breaker fleet capabilities, climate shifts, and geopolitical control over strategic maritime trade bottlenecks."
-  },
-  {
-    "slug": "taiwan-semiconductor-redundancy",
-    "title": "Will offshore semiconductor fabs outside East Asia produce over 25% of advanced sub-5nm chips?",
-    "category": "Geopolitics",
-    "odds": 73,
-    "change": "-2% this week",
-    "summary": "Monitoring government subsidy packages (CHIPS acts), mega-fab construction milestones in US and Europe, and supply chain de-risking."
-  },
-  {
-    "slug": "mars-unmanned-landing",
-    "title": "Will the first commercial unmanned spacecraft successfully land on Mars by 2028?",
+    "slug": "spacex-mars-unmanned-2026",
     "category": "Space & Science",
-    "odds": 71,
-    "change": "+1% this week",
-    "summary": "Tracking heavy-lift rocket test flights, interplanetary payload integration, and autonomous orbital insertion telemetry."
+    "title": "Will SpaceX successfully land an uncrewed Starship on Mars before the end of 2026?",
+    "summary": "As launch cadences accelerate and orbital refueling tests mature, attention turns to the upcoming Mars transfer window for the first uncrewed telemetry payload drop.",
+    "odds": 64,
+    "change": "+4%"
   },
   {
-    "slug": "streaming-vs-tv",
-    "title": "Will streaming platforms capture over 70% of traditional linear TV advertising revenue?",
-    "category": "Culture & Society",
-    "odds": 82,
-    "change": "-1% this week",
-    "summary": "Analyzing consumer cord-cutting velocities, programmatic ad-tier subscriber growth, and major media conglomerate budget shifts."
+    "slug": "jwst-biosignature-exoplanet",
+    "category": "Space & Science",
+    "title": "Will the James Webb Space Telescope confirm atmospheric biosignatures on a rocky exoplanet by 2027?",
+    "summary": "Spectroscopic telemetry analysis of nearby habitable-zone super-Earths continues to yield high-resolution transmission data, bringing atmospheric profiling closer to breakthrough thresholds.",
+    "odds": 42,
+    "change": "+2%"
+  },
+  {
+    "slug": "nuclear-fusion-net-electricity-2028",
+    "category": "Space & Science",
+    "title": "Will a commercial magnetic confinement fusion reactor deliver stable net electricity to a grid before 2028?",
+    "summary": "Public-private partnerships in high-temperature superconducting magnets are compressing timelines for sustained plasma containment and energy conversion.",
+    "odds": 38,
+    "change": "-1%"
+  },
+  {
+    "slug": "cern-lhc-dark-matter-particle",
+    "category": "Space & Science",
+    "title": "Will CERN's High-Luminosity LHC discover evidence of a dark matter candidate particle before 2030?",
+    "summary": "Upgrades to luminosity detectors are expanding collision energy thresholds, giving physicists unprecedented collision sample sizes to probe beyond the Standard Model.",
+    "odds": 29,
+    "change": "New entry"
+  },
+  {
+    "slug": "agi-general-system-2027",
+    "category": "AI & Tech",
+    "title": "Will a frontier AI system successfully pass an independent, rigorous Turing Test incorporating multi-step reasoning by 2027?",
+    "summary": "As foundation models transition from pattern matching to autonomous planning agents, evaluators are establishing standardized benchmarks for general cognitive capability.",
+    "odds": 78,
+    "change": "+5%"
+  },
+  {
+    "slug": "commercial-edge-ai-chips",
+    "category": "AI & Tech",
+    "title": "Will commercial Edge AI chips achieve 100 TOPS per watt efficiency before 2028?",
+    "summary": "Hardware manufacturers are rapidly optimizing silicon architectures to bring high-performance neural processing directly to everyday consumer devices with minimal power draw.",
+    "odds": 55,
+    "change": "+3%"
+  },
+  {
+    "slug": "btc-spot-etf-sovereign-wealth",
+    "category": "Crypto",
+    "title": "Will at least 3 G20 sovereign wealth funds officially disclose Bitcoin holdings in their reserve portfolios by 2027?",
+    "summary": "Institutionalization of digital assets through regulated spot vehicles is prompting central banks and sovereign funds to reassess reserve diversification strategies.",
+    "odds": 61,
+    "change": "+8%"
+  },
+  {
+    "slug": "major-exchange-kraken-ipo",
+    "category": "Crypto",
+    "title": "Will cryptocurrency exchange Kraken complete a public stock exchange listing (IPO) before 2027?",
+    "summary": "Regulatory positioning and balance sheet normalization are opening strategic pathways for major Web3 infrastructure giants to enter public equity markets.",
+    "odds": 71,
+    "change": "+6%"
+  },
+  {
+    "slug": "global-semiconductor-corridor",
+    "category": "Geopolitics",
+    "title": "Will a cross-border semiconductor manufacturing corridor bypass traditional supply choke points by 2028?",
+    "summary": "Geopolitical realignment is accelerating multi-billion-dollar fabrication plant investments across neutral allied jurisdictions to secure advanced node autonomy.",
+    "odds": 49,
+    "change": "-2%"
   }
 ]
