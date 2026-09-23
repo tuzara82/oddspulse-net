@@ -1,18 +1,24 @@
 {
+  "sentimentIndex": {
+    "score": 78,
+    "label": "Extreme Optimism (Bullish)",
+    "aiAnalysis": "High probability weighting in AI & Crypto sectors driven by institutional inflows and L2 settlement dominance."
+  },
   "topAddressesSummary": {
     "top1HoldingsPercent": "12.4%",
     "top10HoldingsPercent": "5.8%",
     "exchangeReservesPercent": "11.2%"
   },
-  "distributionTiers": [
-    { "tier": "Whales (>10,000 BTC)", "share": "32.1%", "color": "#22d3ee" },
-    { "tier": "Sharks (1,000 - 10,000 BTC)", "share": "24.5%", "color": "#34d399" },
-    { "tier": "Dolphins (100 - 1,000 BTC)", "share": "18.3%", "color": "#fbbf24" },
-    { "tier": "Fish & Retail (<100 BTC)", "share": "25.1%", "color": "#a855f7" }
-  ],
-  "sentimentIndex": {
-    "score": 78,
-    "label": "Extreme Optimism (Bullish)",
-    "aiAnalysis": "High probability weighting in AI & Crypto sectors driven by institutional inflows."
-  }
+  "topWhaleAddresses": [
+    { "rank": 1, "address": "1P5ZEDWTKTFGxQjZphgWPQUpe554WKDfHQ", "percentage": "3.15%", "entity": "Binance Cold Storage" },
+    { "rank": 2, "address": "34xp4vRoCGJym3xR7yCVPFHoCNxv4Twseo", "percentage": "2.42%", "entity": "Binance Cold Storage II" },
+    { "rank": 3, "address": "bc1qgdjqv0av3q56jvd82tkdjpy7gdp9ut8tlqmgrpmv24sq90ecnvqqjwvw97", "percentage": "1.98%", "entity": "Bitfinex Cold Storage" },
+    { "rank": 4, "address": "1FeexV6bAHb8ybZjqQMjJrcCrHGW9sb6uF", "percentage": "1.45%", "entity": "Mt. Gox Legacy Holding" },
+    { "rank": 5, "address": "385cR5DM96n1SvBDMzLHB9CWVCgPbFF1nQ", "percentage": "1.22%", "entity": "Robinhood Custody" },
+    { "rank": 6, "address": "bc1qazcm763858nkj2dj986etajv6wquslv8uxwczt", "percentage": "1.05%", "entity": "Institutional Trust" },
+    { "rank": 7, "address": "3LYJfcfHPXYJreMsASk2jkn69LWEYKzexb", "percentage": "0.94%", "entity": "Fidelity Custody" },
+    { "rank": 8, "address": "1LdRcdxfbSnmCYYNdeYpUnztiYzVfBEQeC", "percentage": "0.85%", "entity": "Unknown Whale" },
+    { "rank": 9, "address": "347vGwqa2W3Xq31n1o4P2XGjCqL7WnQW8P", "percentage": "0.78%", "entity": "Kraken Custody" },
+    { "rank": 10, "address": "bc1q9vkyvrxdwzhz4vvmdy793fwhh6f2v4fc7p3r2m", "percentage": "0.71%", "entity": "BlackRock iShares ETF" }
+  ]
 }

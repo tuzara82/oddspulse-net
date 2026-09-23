@@ -14,7 +14,7 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
     <div>
       <div class="badge-live" style="margin-bottom: 1rem;">
         <span style="height: 0.5rem; width: 0.5rem; background: var(--accent); border-radius: 9999px; display: inline-block; box-shadow: 0 0 10px var(--accent);"></span>
-        AI Telemetry Engine v4.5
+        AI Telemetry Engine v4.6
       </div>
       <h1 style="font-size: 2.25rem; font-weight: 800; margin: 0 0 0.75rem 0; letter-spacing: -0.025em; color: #ffffff;">
         Predictive Markets <span style="background: linear-gradient(to right, var(--accent), #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">In Real-Time</span>
@@ -35,7 +35,7 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
     </div>
   </div>
 
-  <!-- Bento Grid Category Overview (Now with Space & Science) -->
+  <!-- Bento Grid Category Overview -->
   <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin-bottom: 2rem;">
     <div data-target-category="ai & tech" class="bento-card" style="background: linear-gradient(135deg, #121A2C 0%, #0A0F1D 50%, #080C14 100%); border: 1px solid rgba(6,182,212,0.3); border-radius: 1.5rem; padding: 1.15rem; cursor: pointer;">
       <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.75rem;">
@@ -77,7 +77,7 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
   <style>
     .main-layout {
       display: grid;
-      grid-template-columns: 1fr 320px;
+      grid-template-columns: 1fr 340px;
       gap: 2rem;
     }
     @media (max-width: 1024px) {
@@ -127,6 +127,7 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
     </div>
 
     <aside style="display: flex; flex-direction: column; gap: 1.5rem;">
+      <!-- AI Sentiment Gauge -->
       <div style="background: linear-gradient(135deg, #121A2C 0%, #0A0F1D 100%); border: 1px solid rgba(var(--accent-rgb), 0.4); border-radius: 1.5rem; padding: 1.25rem;">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
           <h3 style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--accent); margin: 0;">🧠 AI Sentiment Gauge</h3>
@@ -139,6 +140,7 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
         <p style="font-size: 0.7rem; color: #9CA3AF; margin: 0; line-height: 1.4;">{btcStats.sentimentIndex.aiAnalysis}</p>
       </div>
 
+      <!-- Email Alerts & Subscription -->
       <div style="background: linear-gradient(135deg, #121A2C 0%, #0A0F1D 100%); border: 1px solid rgba(var(--accent-rgb), 0.3); border-radius: 1.5rem; padding: 1.25rem;">
         <h3 style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--accent); margin: 0 0 0.5rem 0;">🔔 Odds Alert Feed</h3>
         <p style="font-size: 0.75rem; color: #9CA3AF; margin: 0 0 1rem 0;">Get email dispatches when odds shift.</p>
@@ -149,17 +151,25 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
         <div id="subscribe-success" style="font-size: 0.75rem; color: #34d399; font-weight: 700; margin-top: 0.75rem; display: none; text-align: center; background: #022c22; padding: 0.5rem; border-radius: 0.5rem;">✓ Subscribed successfully!</div>
       </div>
 
+      <!-- Bitcoin Top 10 Whale Addresses Panel -->
       <div style="background: linear-gradient(135deg, #121A2C 0%, #0A0F1D 100%); border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 1.5rem; padding: 1.25rem;">
-        <h3 style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--accent); margin: 0 0 1rem 0;">🐋 Bitcoin Whales</h3>
-        <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.75rem;">
-          <div style="display: flex; justify-content: space-between; padding: 0.5rem 0.75rem; background: #080C14; border-radius: 0.75rem; border: 1px solid #1F2937;">
-            <span style="color: #9CA3AF;">Top 1 Address:</span>
-            <span style="font-weight: 700; color: #ffffff;">{btcStats.topAddressesSummary.top1HoldingsPercent}</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; padding: 0.5rem 0.75rem; background: #080C14; border-radius: 0.75rem; border: 1px solid #1F2937;">
-            <span style="color: #9CA3AF;">Exchange Reserves:</span>
-            <span style="font-weight: 700; color: #34d399;">{btcStats.topAddressesSummary.exchangeReservesPercent}</span>
-          </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+          <h3 style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--accent); margin: 0;">🐋 Bitcoin Top 10 Whales</h3>
+          <span style="font-size: 0.6rem; background: rgba(6,182,212,0.2); color: var(--accent); padding: 0.15rem 0.5rem; border-radius: 9999px; border: 1px solid rgba(6,182,212,0.3);">ON-CHAIN</span>
+        </div>
+        
+        <div style="display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.7rem;">
+          {btcStats.topWhaleAddresses.map((whale: any) => (
+            <div style="background: #080C14; border: 1px solid #1F2937; border-radius: 0.75rem; padding: 0.6rem 0.75rem; display: flex; flex-direction: column; gap: 0.25rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: 700; color: var(--accent);">#{whale.rank} {whale.entity}</span>
+                <span style="font-weight: 800; color: #34d399;">{whale.percentage}</span>
+              </div>
+              <div style="font-family: monospace; font-size: 0.65rem; color: #9CA3AF; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title={whale.address}>
+                {whale.address}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </aside>
