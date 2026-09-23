@@ -113,133 +113,131 @@ const baseNo = Math.floor((100 - prediction.odds) * 1.5) + 8;
   </div>
 
   <script define:vars={{ slug: prediction.slug, initYes: baseYes, initNo: baseNo }}>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Simulator Logic
-      const slider = document.getElementById('odds-slider') as HTMLInputElement;
-      const sliderValueText = document.getElementById('slider-value-text');
-      const displayOdds = document.getElementById('display-odds');
-      const simulatorStatus = document.getElementById('simulator-status');
-      const saveBtn = document.getElementById('save-simulation');
+    // Simulator Logic
+    const slider = document.getElementById('odds-slider');
+    const sliderValueText = document.getElementById('slider-value-text');
+    const displayOdds = document.getElementById('display-odds');
+    const simulatorStatus = document.getElementById('simulator-status');
+    const saveBtn = document.getElementById('save-simulation');
 
-      const storageKey = `oddspulse_sim_${slug}`;
-      const savedVal = localStorage.getItem(storageKey);
+    const storageKey = `oddspulse_sim_${slug}`;
+    const savedVal = localStorage.getItem(storageKey);
 
-      if (savedVal && slider && sliderValueText && displayOdds) {
-        slider.value = savedVal;
-        sliderValueText.textContent = savedVal + '%';
-        displayOdds.textContent = savedVal + '% Probability (Simulated)';
-        if (simulatorStatus) simulatorStatus.textContent = 'Custom user simulation loaded';
+    if (savedVal && slider && sliderValueText && displayOdds) {
+      slider.value = savedVal;
+      sliderValueText.textContent = savedVal + '%';
+      displayOdds.textContent = savedVal + '% Probability (Simulated)';
+      if (simulatorStatus) simulatorStatus.textContent = 'Custom user simulation loaded';
+    }
+
+    slider?.addEventListener('input', (e) => {
+      const val = e.target.value;
+      if (sliderValueText) sliderValueText.textContent = val + '%';
+      if (displayOdds) displayOdds.textContent = val + '% Probability (Simulated)';
+    });
+
+    saveBtn?.addEventListener('click', () => {
+      if (slider) {
+        localStorage.setItem(storageKey, slider.value);
+        if (simulatorStatus) simulatorStatus.textContent = '✓ Simulation successfully locked!';
+        setTimeout(() => { if (simulatorStatus) simulatorStatus.textContent = 'Custom simulation active'; }, 3000);
       }
+    });
 
-      slider?.addEventListener('input', (e) => {
-        const val = (e.target as HTMLInputElement).value;
-        if (sliderValueText) sliderValueText.textContent = val + '%';
-        if (displayOdds) displayOdds.textContent = val + '% Probability (Simulated)';
-      });
+    // Poll Voting Logic
+    const yesBtn = document.getElementById('vote-yes');
+    const noBtn = document.getElementById('vote-no');
+    const yesCount = document.getElementById('yes-count');
+    const noCount = document.getElementById('no-count');
+    const voteMsg = document.getElementById('vote-msg');
 
-      saveBtn?.addEventListener('click', () => {
-        if (slider) {
-          localStorage.setItem(storageKey, slider.value);
-          if (simulatorStatus) simulatorStatus.textContent = '✓ Simulation successfully locked!';
-          setTimeout(() => { if (simulatorStatus) simulatorStatus.textContent = 'Custom simulation active'; }, 3000);
-        }
-      });
+    const pollKey = `oddspulse_poll_${slug}`;
+    const votesKey = `oddspulse_votes_${slug}`;
+    
+    let votes = JSON.parse(localStorage.getItem(votesKey) || JSON.stringify({ yes: initYes, no: initNo }));
+    const hasVoted = localStorage.getItem(pollKey);
 
-      // Poll Voting Logic
-      const yesBtn = document.getElementById('vote-yes') as HTMLButtonElement;
-      const noBtn = document.getElementById('vote-no') as HTMLButtonElement;
-      const yesCount = document.getElementById('yes-count');
-      const noCount = document.getElementById('no-count');
-      const voteMsg = document.getElementById('vote-msg');
+    if (yesCount) yesCount.textContent = votes.yes;
+    if (noCount) noCount.textContent = votes.no;
 
-      const pollKey = `oddspulse_poll_${slug}`;
-      const votesKey = `oddspulse_votes_${slug}`;
-      
-      let votes = JSON.parse(localStorage.getItem(votesKey) || JSON.stringify({ yes: initYes, no: initNo }));
-      const hasVoted = localStorage.getItem(pollKey);
+    if (hasVoted) {
+      if (yesBtn) yesBtn.style.opacity = '0.6';
+      if (noBtn) noBtn.style.opacity = '0.6';
+      if (voteMsg) {
+        voteMsg.textContent = `✓ You already voted: ${hasVoted.toUpperCase()}`;
+        voteMsg.style.display = 'block';
+      }
+    }
 
+    yesBtn?.addEventListener('click', () => {
+      if (localStorage.getItem(pollKey)) return;
+      votes.yes++;
+      localStorage.setItem(votesKey, JSON.stringify(votes));
+      localStorage.setItem(pollKey, 'yes');
       if (yesCount) yesCount.textContent = votes.yes;
-      if (noCount) noCount.textContent = votes.no;
-
-      if (hasVoted) {
-        if (yesBtn) yesBtn.style.opacity = '0.6';
-        if (noBtn) noBtn.style.opacity = '0.6';
-        if (voteMsg) {
-          voteMsg.textContent = `✓ You already voted: ${hasVoted.toUpperCase()}`;
-          voteMsg.style.display = 'block';
-        }
+      if (voteMsg) {
+        voteMsg.textContent = '✓ Successfully voted YES!';
+        voteMsg.style.display = 'block';
       }
+      if (yesBtn) yesBtn.style.opacity = '0.6';
+      if (noBtn) noBtn.style.opacity = '0.6';
+    });
 
-      yesBtn?.addEventListener('click', () => {
-        if (localStorage.getItem(pollKey)) return;
-        votes.yes++;
-        localStorage.setItem(votesKey, JSON.stringify(votes));
-        localStorage.setItem(pollKey, 'yes');
-        if (yesCount) yesCount.textContent = votes.yes;
-        if (voteMsg) {
-          voteMsg.textContent = '✓ Successfully voted YES!';
-          voteMsg.style.display = 'block';
-        }
-        if (yesBtn) yesBtn.style.opacity = '0.6';
-        if (noBtn) noBtn.style.opacity = '0.6';
-      });
+    noBtn?.addEventListener('click', () => {
+      if (localStorage.getItem(pollKey)) return;
+      votes.no++;
+      localStorage.setItem(votesKey, JSON.stringify(votes));
+      localStorage.setItem(pollKey, 'no');
+      if (noCount) noCount.textContent = votes.no;
+      if (voteMsg) {
+        voteMsg.textContent = '✓ Successfully voted NO!';
+        voteMsg.style.display = 'block';
+      }
+      if (yesBtn) yesBtn.style.opacity = '0.6';
+      if (noBtn) noBtn.style.opacity = '0.6';
+    });
 
-      noBtn?.addEventListener('click', () => {
-        if (localStorage.getItem(pollKey)) return;
-        votes.no++;
-        localStorage.setItem(votesKey, JSON.stringify(votes));
-        localStorage.setItem(pollKey, 'no');
-        if (noCount) noCount.textContent = votes.no;
-        if (voteMsg) {
-          voteMsg.textContent = '✓ Successfully voted NO!';
-          voteMsg.style.display = 'block';
-        }
-        if (yesBtn) yesBtn.style.opacity = '0.6';
-        if (noBtn) noBtn.style.opacity = '0.6';
-      });
+    // Comments Logic
+    const authorInput = document.getElementById('comment-author');
+    const textInput = document.getElementById('comment-text');
+    const submitBtn = document.getElementById('submit-comment');
+    const commentsList = document.getElementById('comments-list');
+    const commentsKey = `oddspulse_comments_${slug}`;
 
-      // Comments Logic
-      const authorInput = document.getElementById('comment-author') as HTMLInputElement;
-      const textInput = document.getElementById('comment-text') as HTMLTextAreaElement;
-      const submitBtn = document.getElementById('submit-comment');
-      const commentsList = document.getElementById('comments-list');
-      const commentsKey = `oddspulse_comments_${slug}`;
+    const savedComments = JSON.parse(localStorage.getItem(commentsKey) || '[]');
+    savedComments.forEach((c) => {
+      const div = document.createElement('div');
+      div.style.cssText = 'background: #030712; border: 1px solid #1F2937; border-radius: 0.75rem; padding: 1rem; margin-top: 0.75rem;';
+      div.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--accent);">${c.author}</span>
+          <span style="font-size: 0.65rem; color: #6B7280;">User thesis</span>
+        </div>
+        <p style="font-size: 0.8rem; color: #D1D5DB; margin: 0; line-height: 1.4;">${c.text}</p>
+      `;
+      commentsList?.prepend(div);
+    });
 
-      const savedComments = JSON.parse(localStorage.getItem(commentsKey) || '[]');
-      savedComments.forEach((c: any) => {
-        const div = document.createElement('div');
-        div.style.cssText = 'background: #030712; border: 1px solid #1F2937; border-radius: 0.75rem; padding: 1rem; margin-top: 0.75rem;';
-        div.innerHTML = `
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
-            <span style="font-size: 0.75rem; font-weight: 700; color: var(--accent);">${c.author}</span>
-            <span style="font-size: 0.65rem; color: #6B7280;">User thesis</span>
-          </div>
-          <p style="font-size: 0.8rem; color: #D1D5DB; margin: 0; line-height: 1.4;">${c.text}</p>
-        `;
-        commentsList?.prepend(div);
-      });
+    submitBtn?.addEventListener('click', () => {
+      const author = authorInput?.value.trim() || 'Anonymous Analyst';
+      const text = textInput?.value.trim() || '';
+      if (!text) return;
 
-      submitBtn?.addEventListener('click', () => {
-        const author = authorInput?.value.trim() || 'Anonymous Analyst';
-        const text = textInput?.value.trim() || '';
-        if (!text) return;
+      const newComment = { author, text };
+      savedComments.push(newComment);
+      localStorage.setItem(commentsKey, JSON.stringify(savedComments));
 
-        const newComment = { author, text };
-        savedComments.push(newComment);
-        localStorage.setItem(commentsKey, JSON.stringify(savedComments));
-
-        const div = document.createElement('div');
-        div.style.cssText = 'background: #030712; border: 1px solid #1F2937; border-radius: 0.75rem; padding: 1rem; margin-top: 0.75rem;';
-        div.innerHTML = `
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
-            <span style="font-size: 0.75rem; font-weight: 700; color: var(--accent);">${author}</span>
-            <span style="font-size: 0.65rem; color: #6B7280;">Just now</span>
-          </div>
-          <p style="font-size: 0.8rem; color: #D1D5DB; margin: 0; line-height: 1.4;">${text}</p>
-        `;
-        commentsList?.prepend(div);
-        if (textInput) textInput.value = '';
-      });
+      const div = document.createElement('div');
+      div.style.cssText = 'background: #030712; border: 1px solid #1F2937; border-radius: 0.75rem; padding: 1rem; margin-top: 0.75rem;';
+      div.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--accent);">${author}</span>
+          <span style="font-size: 0.65rem; color: #6B7280;">Just now</span>
+        </div>
+        <p style="font-size: 0.8rem; color: #D1D5DB; margin: 0; line-height: 1.4;">${text}</p>
+      `;
+      commentsList?.prepend(div);
+      if (textInput) textInput.value = '';
     });
   </script>
 </Layout>
