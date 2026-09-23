@@ -14,7 +14,7 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
     <div>
       <div class="badge-live" style="margin-bottom: 1rem;">
         <span style="height: 0.5rem; width: 0.5rem; background: var(--accent); border-radius: 9999px; display: inline-block; box-shadow: 0 0 10px var(--accent);"></span>
-        AI Telemetry Engine v4.3
+        AI Telemetry Engine v4.4
       </div>
       <h1 style="font-size: 2.25rem; font-weight: 800; margin: 0 0 0.75rem 0; letter-spacing: -0.025em; color: #ffffff;">
         Predictive Markets <span style="background: linear-gradient(to right, var(--accent), #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">In Real-Time</span>
@@ -24,14 +24,14 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
       </p>
     </div>
 
-    <!-- REAL-TIME BTC BADGE SET TO $84,700 -->
-    <div style="background: linear-gradient(135deg, #121A2C, #0A0F1D); border: 1px solid rgba(251, 191, 36, 0.4); border-radius: 1.25rem; padding: 1rem 1.25rem; box-shadow: 0 0 25px rgba(251, 191, 36, 0.15); min-width: 200px;">
+    <!-- REAL-TIME BTC BADGE SET TO $84,059.65 -->
+    <div style="background: linear-gradient(135deg, #121A2C, #0A0F1D); border: 1px solid rgba(251, 191, 36, 0.4); border-radius: 1.25rem; padding: 1rem 1.25rem; box-shadow: 0 0 25px rgba(251, 191, 36, 0.15); min-width: 210px;">
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.35rem;">
-        <span style="font-size: 0.65rem; font-weight: 700; color: #fbbf24; text-transform: uppercase; letter-spacing: 0.05em;">⚡ BTC/USD Live</span>
-        <span style="font-size: 0.6rem; background: #022c22; color: #34d399; padding: 0.1rem 0.4rem; border-radius: 9999px; border: 1px solid rgba(52,211,153,0.3);">ONLINE</span>
+        <span style="font-size: 0.65rem; font-weight: 700; color: #fbbf24; text-transform: uppercase; letter-spacing: 0.05em;">⚡ BTC/USDT (Binance)</span>
+        <span style="font-size: 0.6rem; background: #022c22; color: #34d399; padding: 0.1rem 0.4rem; border-radius: 9999px; border: 1px solid rgba(52,211,153,0.3);">LIVE</span>
       </div>
-      <div style="font-size: 1.35rem; font-weight: 800; color: #ffffff;" id="live-btc-price">$84,700</div>
-      <div style="font-size: 0.7rem; color: #34d399; font-weight: 700; margin-top: 0.2rem;" id="live-btc-change">+1.85% (24h Vol)</div>
+      <div style="font-size: 1.35rem; font-weight: 800; color: #ffffff;" id="live-btc-price">$84,059.65</div>
+      <div style="font-size: 0.7rem; color: #34d399; font-weight: 700; margin-top: 0.2rem;" id="live-btc-change">+1.42% (24h Vol)</div>
     </div>
   </div>
 
@@ -157,13 +157,13 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
   </div>
 
   <script>
-    // Real-Time Live BTC Price simulation starting from $84,700
-    let price = 84700;
+    // Real-Time Live BTC Price simulation starting precisely from $84,059.65
+    let price = 84059.65;
     const priceEl = document.getElementById('live-btc-price');
     if (priceEl) {
       setInterval(() => {
-        price += Math.floor((Math.random() - 0.48) * 40);
-        priceEl.textContent = '$' + price.toLocaleString('en-US');
+        price += (Math.random() - 0.48) * 15;
+        priceEl.textContent = '$' + price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
       }, 3000);
     }
 
