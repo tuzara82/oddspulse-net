@@ -32,6 +32,14 @@
     "change": "New entry"
   },
   {
+    "slug": "room-temperature-superconductor-replication",
+    "category": "Space & Science",
+    "title": "Will an independent laboratory independently verify ambient room-temperature superconductivity at standard pressure by 2028?",
+    "summary": "Materials science telemetry points to novel hydride structures under extreme computational screening, though physical synthesis and replicability remain heavily contested.",
+    "odds": 22,
+    "change": "+3%"
+  },
+  {
     "slug": "agi-general-system-2027",
     "category": "AI & Tech",
     "title": "Will a frontier AI system successfully pass an independent, rigorous Turing Test incorporating multi-step reasoning by 2027?",
@@ -54,6 +62,14 @@
     "summary": "Advancements in neural locomotion models and real-time spatial mapping are accelerating enterprise adoption curves for heavy industrial labor automation.",
     "odds": 67,
     "change": "+4%"
+  },
+  {
+    "slug": "autonomous-coding-agents-market",
+    "category": "AI & Tech",
+    "title": "Will fully autonomous AI software engineering agents write over 50% of production code in tier-1 tech enterprises by 2028?",
+    "summary": "Self-correcting code synthesis pipelines and multi-agent code review architectures are shifting human developers from writing syntax to high-level system supervision.",
+    "odds": 72,
+    "change": "+6%"
   },
   {
     "slug": "btc-spot-etf-sovereign-wealth",
@@ -80,6 +96,14 @@
     "change": "+2%"
   },
   {
+    "slug": "global-stablecoin-settlement-visa",
+    "category": "Crypto",
+    "title": "Will global stablecoin on-chain settlement volume surpass traditional Visa/Mastercard annual payment processing volume before 2028?",
+    "summary": "Instantaneous cross-border settlement rails and high-yield digital dollar demand across emerging markets are driving exponential peer-to-peer liquidity expansion.",
+    "odds": 48,
+    "change": "+7%"
+  },
+  {
     "slug": "global-semiconductor-corridor",
     "category": "Geopolitics",
     "title": "Will a cross-border semiconductor manufacturing corridor bypass traditional supply choke points by 2028?",
@@ -94,5 +118,29 @@
     "summary": "Cross-border wholesale payment trials are exploring distributed ledger architectures to eliminate traditional correspondent banking friction and settlement delays.",
     "odds": 53,
     "change": "+1%"
+  },
+  {
+    "slug": "arctic-shipping-route-commercialization",
+    "category": "Geopolitics",
+    "title": "Will the Northern Sea Route (Arctic passage) remain commercially open for unescorted cargo transit for over 4 months per year by 2028?",
+    "summary": "Accelerating polar ice recedement is reshaping maritime logistics, cutting transit times between East Asia and Europe by nearly 40% compared to traditional canals.",
+    "odds": 66,
+    "change": "+3%"
+  },
+  {
+    "slug": "global-dedollarization-trade-agreements",
+    "category": "Geopolitics",
+    "title": "Will bilateral non-USD energy settlement agreements account for over 30% of global oil and gas trade volume by 2028?",
+    "summary": "Major non-Western economic blocs are expanding local currency swap agreements and alternative financial messaging infrastructure to mitigate secondary sanction risks.",
+    "odds": 44,
+    "change": "+4%"
+  },
+  {
+    "slug": "autonomous-defense-drone-treaty",
+    "category": "Geopolitics",
+    "title": "Will the United Nations adopt a binding international treaty regulating lethal autonomous weapon systems (LAWS) by 2028?",
+    "summary": "Rapid proliferation of AI-guided loitering munitions in modern conflict zones is forcing diplomatic frameworks to establish accountability limits for machine-driven combat decisions.",
+    "odds": 28,
+    "change": "New entry"
   }
 ]
