@@ -4,19 +4,17 @@ import predictions from '../data/predictions.json';
 import btcStats from '../data/btcStats.json';
 
 const categories = ['All', ...new Set(predictions.map((item: any) => item.category))];
-const trendingMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds).slice(0, 3);
 const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds).slice(0, 6);
 ---
 
 <Layout title="OddsPulse.net - Real-time Predictive Markets & Telemetry">
-  <!-- Moving Ticker Banner with Live BTC Telemetry Simulation -->
+  <!-- Moving Ticker Banner with Hardcoded Initial BTC Price for Instant Visibility -->
   <div style="background: rgba(8, 51, 68, 0.4); border-top: 1px solid rgba(6, 182, 212, 0.3); border-bottom: 1px solid rgba(6, 182, 212, 0.3); padding: 0.5rem 0; margin-bottom: 2rem; overflow: hidden; white-space: nowrap; position: relative;">
-    <div class="ticker-track" style="display: inline-block; animation: tickerScroll 35s linear infinite;">
-      <!-- Live BTC Telemetry Item -->
+    <div style="display: inline-block; animation: tickerScroll 35s linear infinite;">
       <a href="https://www.coingecko.com/en/coins/bitcoin" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 0.75rem; margin-right: 2.5rem; text-decoration: none; color: inherit;">
         <span style="font-size: 0.7rem; font-weight: 700; color: #fbbf24;">⚡ BTC/USD LIVE</span>
         <span style="font-size: 0.75rem; color: #F3F4F6; font-weight: 700;" id="live-btc-price">$91,420</span>
-        <span style="font-size: 0.75rem; font-weight: 800; color: #34d399; background: #022c22; padding: 0.1rem 0.4rem; border-radius: 0.25rem; border: 1px solid rgba(52,211,153,0.3);" id="live-btc-change">+3.42%</span>
+        <span style="font-size: 0.75rem; font-weight: 800; color: #34d399; background: #022c22; padding: 0.1rem 0.4rem; border-radius: 0.25rem; border: 1px solid rgba(52,211,153,0.3);">+3.42%</span>
       </a>
 
       {tickerMarkets.concat(tickerMarkets).map((item: any) => (
@@ -46,11 +44,10 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
     }
   </style>
 
-  <!-- Hero Section -->
   <div style="margin-bottom: 2rem;">
     <div class="badge-live" style="margin-bottom: 1rem;">
       <span style="height: 0.5rem; width: 0.5rem; background: var(--accent); border-radius: 9999px; display: inline-block; box-shadow: 0 0 10px var(--accent);"></span>
-      AI Telemetry Engine v3.9
+      AI Telemetry Engine v4.0
     </div>
     <h1 style="font-size: 2.5rem; font-weight: 800; margin: 0 0 0.75rem 0; letter-spacing: -0.025em; color: #ffffff;">
       Predictive Markets <span style="background: linear-gradient(to right, var(--accent), #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">In Real-Time</span>
@@ -62,11 +59,7 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
 
   <!-- Bento Grid Category Overview -->
   <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-bottom: 2rem;">
-    <div 
-      data-target-category="ai & tech" 
-      class="bento-card" 
-      style="background: linear-gradient(135deg, #121A2C 0%, #0A0F1D 50%, #080C14 100%); border: 1px solid rgba(6,182,212,0.3); border-radius: 1.5rem; padding: 1.25rem; cursor: pointer;"
-    >
+    <div data-target-category="ai & tech" class="bento-card" style="background: linear-gradient(135deg, #121A2C 0%, #0A0F1D 50%, #080C14 100%); border: 1px solid rgba(6,182,212,0.3); border-radius: 1.5rem; padding: 1.25rem; cursor: pointer;">
       <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
         <span style="font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 9999px; background: #083344; color: var(--accent); border: 1px solid rgba(6,182,212,0.4);">AI & TECH</span>
         <span>🤖</span>
@@ -75,11 +68,7 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
       <div style="font-size: 0.7rem; font-weight: 600; color: var(--accent);">Filter feed →</div>
     </div>
 
-    <div 
-      data-target-category="crypto" 
-      class="bento-card" 
-      style="background: linear-gradient(135deg, #121A2C 0%, #0A0F1D 50%, #080C14 100%); border: 1px solid rgba(16,185,129,0.3); border-radius: 1.5rem; padding: 1.25rem; cursor: pointer;"
-    >
+    <div data-target-category="crypto" class="bento-card" style="background: linear-gradient(135deg, #121A2C 0%, #0A0F1D 50%, #080C14 100%); border: 1px solid rgba(16,185,129,0.3); border-radius: 1.5rem; padding: 1.25rem; cursor: pointer;">
       <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
         <span style="font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 9999px; background: #022c22; color: #34d399; border: 1px solid rgba(52,211,153,0.4);">CRYPTO</span>
         <span>📈</span>
@@ -88,11 +77,7 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
       <div style="font-size: 0.7rem; font-weight: 600; color: #34d399;">Markets →</div>
     </div>
 
-    <div 
-      data-target-category="geopolitics" 
-      class="bento-card" 
-      style="background: linear-gradient(135deg, #121A2C 0%, #0A0F1D 50%, #080C14 100%); border: 1px solid rgba(245,158,11,0.3); border-radius: 1.5rem; padding: 1.25rem; cursor: pointer;"
-    >
+    <div data-target-category="geopolitics" class="bento-card" style="background: linear-gradient(135deg, #121A2C 0%, #0A0F1D 50%, #080C14 100%); border: 1px solid rgba(245,158,11,0.3); border-radius: 1.5rem; padding: 1.25rem; cursor: pointer;">
       <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
         <span style="font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 9999px; background: #451a03; color: #fbbf24; border: 1px solid rgba(251,191,36,0.4);">GEOPOLITICS</span>
         <span>🌍</span>
@@ -102,58 +87,34 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
     </div>
   </div>
 
-  <!-- Main Content & Sidebar Grid -->
   <div class="main-layout">
-    <!-- Left Column: Feed & Search -->
     <div>
-      <!-- Search & Filters -->
       <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;">
         <div style="display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.5rem;" id="category-filters">
           {categories.map((cat: any, index: number) => (
-            <button
-              data-category={cat.toLowerCase()}
-              class={`filter-btn ${index === 0 ? 'active' : ''}`}
-            >
-              {cat}
-            </button>
+            <button data-category={cat.toLowerCase()} class={`filter-btn ${index === 0 ? 'active' : ''}`}>{cat}</button>
           ))}
         </div>
-
         <div style="position: relative;">
           <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);">🔍</span>
           <input type="text" id="search-input" placeholder="Search keywords..." class="search-box" style="padding: 0.8rem 1rem 0.8rem 2.75rem; font-size: 0.85rem;" />
         </div>
       </div>
 
-      <!-- Predictions Feed -->
       <div id="predictions-feed" style="display: flex; flex-direction: column; gap: 1rem;">
         {predictions.map((item: any) => {
           const isNew = item.change === "New entry";
           const isPositive = item.change && item.change.startsWith("+");
-          
           return (
-            <a 
-              href={`/predictions/${item.slug}`} 
-              class="prediction-card"
-              data-title={item.title.toLowerCase()}
-              data-category={item.category.toLowerCase()}
-              style="display: block; text-decoration: none;"
-            >
-              <div style="background: linear-gradient(135deg, #121A2C 0%, #0A0F1D 100%); border: 1px solid rgba(31, 41, 55, 0.9); border-radius: 1.25rem; padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; transition: all 0.2s ease;">
+            <a href={`/predictions/${item.slug}`} class="prediction-card" data-title={item.title.toLowerCase()} data-category={item.category.toLowerCase()} style="display: block; text-decoration: none;">
+              <div style="background: linear-gradient(135deg, #121A2C 0%, #0A0F1D 100%); border: 1px solid rgba(31, 41, 55, 0.9); border-radius: 1.25rem; padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;">
                 <div style="display: flex; align-items: center; gap: 1.25rem; min-width: 0; flex: 1;">
-                  <span style="font-size: 0.7rem; font-weight: 700; padding: 0.3rem 0.7rem; border-radius: 0.5rem; background: #030712; color: var(--accent); border: 1px solid rgba(var(--accent-rgb),0.3); text-transform: uppercase; white-space: nowrap;">
-                    {item.category}
-                  </span>
-                  <h2 style="font-size: 0.95rem; font-weight: 700; color: #ffffff; margin: 0; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                    {item.title}
-                  </h2>
+                  <span style="font-size: 0.7rem; font-weight: 700; padding: 0.3rem 0.7rem; border-radius: 0.5rem; background: #030712; color: var(--accent); border: 1px solid rgba(var(--accent-rgb),0.3); text-transform: uppercase; white-space: nowrap;">{item.category}</span>
+                  <h2 style="font-size: 0.95rem; font-weight: 700; color: #ffffff; margin: 0; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{item.title}</h2>
                 </div>
-                
                 <div style="display: flex; align-items: center; gap: 1.25rem; flex-shrink: 0;">
-                  <span style={`font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.6rem; border-radius: 0.5rem; white-space: nowrap; ${isNew ? 'background: #083344; color: var(--accent); border: 1px solid rgba(var(--accent-rgb),0.3);' : isPositive ? 'background: #022c22; color: #34d399; border: 1px solid rgba(52,211,153,0.3);' : 'background: #4c0519; color: #fb7185; border: 1px solid rgba(225,29,72,0.3);'}`}>
-                    {item.change}
-                  </span>
-                  <div style="background: #030712; border: 1px solid rgba(var(--accent-rgb),0.3); border-radius: 0.75rem; padding: 0.5rem 1rem; min-width: 75px; text-align: center; box-shadow: 0 0 15px rgba(var(--accent-rgb),0.1);">
+                  <span style={`font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.6rem; border-radius: 0.5rem; white-space: nowrap; ${isNew ? 'background: #083344; color: var(--accent); border: 1px solid rgba(var(--accent-rgb),0.3);' : isPositive ? 'background: #022c22; color: #34d399; border: 1px solid rgba(52,211,153,0.3);' : 'background: #4c0519; color: #fb7185; border: 1px solid rgba(225,29,72,0.3);'}`}>{item.change}</span>
+                  <div style="background: #030712; border: 1px solid rgba(var(--accent-rgb),0.3); border-radius: 0.75rem; padding: 0.5rem 1rem; min-width: 75px; text-align: center;">
                     <span style="font-size: 1.1rem; font-weight: 800; color: #ffffff;">{item.odds}%</span>
                   </div>
                 </div>
@@ -162,65 +123,38 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
           );
         })}
       </div>
-
-      <div id="no-results" style="display: none; text-align: center; padding: 3rem; color: #6B7280; font-size: 0.85rem;">
-        No matching telemetry records found.
-      </div>
+      <div id="no-results" style="display: none; text-align: center; padding: 3rem; color: #6B7280; font-size: 0.85rem;">No matching records found.</div>
     </div>
 
-    <!-- Right Column: Sidebar -->
     <aside style="display: flex; flex-direction: column; gap: 1.5rem;">
-      <!-- AI Sentiment Gauge Panel -->
-      <div style="background: linear-gradient(135deg, #121A2C 0%, #0A0F1D 100%); border: 1px solid rgba(var(--accent-rgb), 0.4); border-radius: 1.5rem; padding: 1.25rem; box-shadow: 0 0 25px rgba(var(--accent-rgb), 0.1);">
+      <div style="background: linear-gradient(135deg, #121A2C 0%, #0A0F1D 100%); border: 1px solid rgba(var(--accent-rgb), 0.4); border-radius: 1.5rem; padding: 1.25rem;">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
-          <h3 style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin: 0;">🧠 AI Sentiment Gauge</h3>
+          <h3 style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--accent); margin: 0;">🧠 AI Sentiment Gauge</h3>
           <span style="font-size: 0.75rem; font-weight: 800; color: #34d399;">{btcStats.sentimentIndex.score}/100</span>
         </div>
-        <div style="font-size: 0.8rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem;">
-          {btcStats.sentimentIndex.label}
-        </div>
+        <div style="font-size: 0.8rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem;">{btcStats.sentimentIndex.label}</div>
         <div style="width: 100%; height: 8px; background: #030712; border-radius: 9999px; overflow: hidden; border: 1px solid #1F2937; margin-bottom: 0.75rem;">
-          <div style={`width: ${btcStats.sentimentIndex.score}%; height: 100%; background: linear-gradient(90deg, var(--accent), #34d399); border-radius: 9999px;`}></div>
+          <div style={`width: ${btcStats.sentimentIndex.score}%; height: 100%; background: linear-gradient(90deg, var(--accent), #34d399);`}></div>
         </div>
-        <p style="font-size: 0.7rem; color: #9CA3AF; margin: 0; line-height: 1.4;">
-          {btcStats.sentimentIndex.aiAnalysis}
-        </p>
+        <p style="font-size: 0.7rem; color: #9CA3AF; margin: 0; line-height: 1.4;">{btcStats.sentimentIndex.aiAnalysis}</p>
       </div>
 
-      <!-- Email Alerts & Subscription Panel -->
-      <div style="background: linear-gradient(135deg, #121A2C 0%, #0A0F1D 100%); border: 1px solid rgba(var(--accent-rgb), 0.3); border-radius: 1.5rem; padding: 1.25rem; box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.08);">
-        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
-          <span>🔔</span>
-          <h3 style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin: 0;">Odds Alert Feed</h3>
-        </div>
-        <p style="font-size: 0.75rem; color: #9CA3AF; margin: 0 0 1rem 0; line-height: 1.4;">
-          Get instant email dispatches when market probabilities shift by more than 5%.
-        </p>
-        <div style="display: flex; flex-direction: column; gap: 0.75rem;" id="subscribe-container">
+      <div style="background: linear-gradient(135deg, #121A2C 0%, #0A0F1D 100%); border: 1px solid rgba(var(--accent-rgb), 0.3); border-radius: 1.5rem; padding: 1.25rem;">
+        <h3 style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--accent); margin: 0 0 0.5rem 0;">🔔 Odds Alert Feed</h3>
+        <p style="font-size: 0.75rem; color: #9CA3AF; margin: 0 0 1rem 0;">Get email dispatches when odds shift.</p>
+        <div id="subscribe-container" style="display: flex; flex-direction: column; gap: 0.75rem;">
           <input type="email" id="subscriber-email" placeholder="Enter your email..." style="background: #030712; border: 1px solid #1F2937; color: #F3F4F6; font-size: 0.75rem; border-radius: 0.75rem; padding: 0.65rem 0.85rem; outline: none;" />
-          <button id="subscribe-btn" style="background: var(--accent); color: #030712; border: none; padding: 0.6rem; border-radius: 0.75rem; font-weight: 700; font-size: 0.75rem; cursor: pointer; transition: opacity 0.2s;">
-            Enable Telemetry Alerts
-          </button>
+          <button id="subscribe-btn" style="background: var(--accent); color: #030712; border: none; padding: 0.6rem; border-radius: 0.75rem; font-weight: 700; font-size: 0.75rem; cursor: pointer;">Enable Alerts</button>
         </div>
-        <div id="subscribe-success" style="font-size: 0.75rem; color: #34d399; font-weight: 700; margin-top: 0.75rem; display: none; text-align: center; background: #022c22; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid rgba(52,211,153,0.3);">
-          ✓ Successfully subscribed to live alerts!
-        </div>
+        <div id="subscribe-success" style="font-size: 0.75rem; color: #34d399; font-weight: 700; margin-top: 0.75rem; display: none; text-align: center; background: #022c22; padding: 0.5rem; border-radius: 0.5rem;">✓ Subscribed successfully!</div>
       </div>
 
-      <!-- Bitcoin Whales Panel -->
-      <div style="background: linear-gradient(135deg, #121A2C 0%, #0A0F1D 100%); border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 1.5rem; padding: 1.25rem; box-shadow: 0 0 20px rgba(6,182,212,0.08);">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
-          <h3 style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin: 0;">🐋 Bitcoin Top 100 Whales</h3>
-          <span style="font-size: 0.65rem; background: var(--accent-bg); color: var(--accent); padding: 0.15rem 0.5rem; border-radius: 9999px; border: 1px solid rgba(var(--accent-rgb),0.3);">LIVE</span>
-        </div>
+      <div style="background: linear-gradient(135deg, #121A2C 0%, #0A0F1D 100%); border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 1.5rem; padding: 1.25rem;">
+        <h3 style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--accent); margin: 0 0 1rem 0;">🐋 Bitcoin Whales</h3>
         <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.75rem;">
           <div style="display: flex; justify-content: space-between; padding: 0.5rem 0.75rem; background: #080C14; border-radius: 0.75rem; border: 1px solid #1F2937;">
-            <span style="color: #9CA3AF;">Top 1 Address Share:</span>
+            <span style="color: #9CA3AF;">Top 1 Address:</span>
             <span style="font-weight: 700; color: #ffffff;">{btcStats.topAddressesSummary.top1HoldingsPercent}</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; padding: 0.5rem 0.75rem; background: #080C14; border-radius: 0.75rem; border: 1px solid #1F2937;">
-            <span style="color: #9CA3AF;">Top 10 Addresses:</span>
-            <span style="font-weight: 700; color: #ffffff;">{btcStats.topAddressesSummary.top10HoldingsPercent}</span>
           </div>
           <div style="display: flex; justify-content: space-between; padding: 0.5rem 0.75rem; background: #080C14; border-radius: 0.75rem; border: 1px solid #1F2937;">
             <span style="color: #9CA3AF;">Exchange Reserves:</span>
@@ -231,127 +165,44 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
     </aside>
   </div>
 
-  <!-- AI Behavioral Profiler Widget -->
-  <div class="profiler-widget" id="ai-profiler-widget">
-    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
-      <div style="display: flex; align-items: center; gap: 0.5rem;">
-        <span style="height: 0.5rem; width: 0.5rem; background: var(--accent); border-radius: 9999px; animation: pulse 1.5s infinite;"></span>
-        <span style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent);">AI Behavioral Profiler</span>
-      </div>
-      <button id="close-profiler" style="background: none; border: none; color: #6B7280; cursor: pointer; font-size: 0.75rem;">✕</button>
-    </div>
-    <p style="font-size: 0.65rem; color: #9CA3AF; margin: 0 0 0.25rem 0;">Inferred Investor Profile:</p>
-    <div id="profile-status" style="font-size: 0.75rem; font-weight: 800; color: #ffffff; background: var(--accent-bg); padding: 0.4rem 0.6rem; border-radius: 0.5rem; border: 1px solid rgba(var(--accent-rgb),0.2);">
-      Analysing user micro-movements...
-    </div>
-  </div>
-
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Robust Real-Time Telemetry Ticker Simulation for BTC
-      let currentBtcPrice = 91420;
-      const priceEl = document.getElementById('live-btc-price');
+    // Guaranteed BTC Price Ticker Simulation
+    let price = 91420;
+    const priceEl = document.getElementById('live-btc-price');
+    if (priceEl) {
+      setInterval(() => {
+        price += Math.floor((Math.random() - 0.48) * 50);
+        priceEl.textContent = '$' + price.toLocaleString('en-US');
+      }, 3000);
+    }
 
-      function simulateBtcTicker() {
-        const delta = (Math.random() - 0.48) * 60;
-        currentBtcPrice += delta;
-        const formattedPrice = '$' + Math.round(currentBtcPrice).toLocaleString('en-US');
-        if (priceEl) {
-          priceEl.textContent = formattedPrice;
-        }
-      }
+    // Search and Filters
+    const searchInput = document.getElementById('search-input') as HTMLInputElement;
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const bentoCards = document.querySelectorAll('.bento-card');
+    const cards = document.querySelectorAll('.prediction-card') as NodeListOf<HTMLElement>;
+    const noResults = document.getElementById('no-results');
+    let currentCategory = 'all';
 
-      // Initial call and interval
-      simulateBtcTicker();
-      setInterval(simulateBtcTicker, 4000);
-
-      // Subscription Form Logic
-      const subBtn = document.getElementById('subscribe-btn');
-      const subInput = document.getElementById('subscriber-email') as HTMLInputElement;
-      const subSuccess = document.getElementById('subscribe-success');
-
-      subBtn?.addEventListener('click', () => {
-        const email = subInput?.value.trim();
-        if (email && email.includes('@') && email.includes('.')) {
-          localStorage.setItem('oddspulse_subscriber', email);
-          const container = document.getElementById('subscribe-container');
-          if (container) container.style.display = 'none';
-          if (subSuccess) subSuccess.style.display = 'block';
+    function filterFeed() {
+      const query = searchInput?.value.toLowerCase().trim() || '';
+      let visible = 0;
+      cards.forEach(card => {
+        const title = card.getAttribute('data-title') || '';
+        const cat = card.getAttribute('data-category') || '';
+        const matchesCat = currentCategory === 'all' || cat === currentCategory;
+        const matchesQuery = query === '' || title.includes(query) || cat.includes(query);
+        if (matchesCat && matchesQuery) {
+          card.style.display = 'block';
+          visible++;
         } else {
-          alert('Please enter a valid email address for telemetry alerts.');
+          card.style.display = 'none';
         }
       });
+      if (noResults) noResults.style.display = visible === 0 ? 'block' : 'none';
+    }
 
-      // Search and Filters Logic
-      const searchInput = document.getElementById('search-input') as HTMLInputElement;
-      const filterButtons = document.querySelectorAll('.filter-btn');
-      const bentoCards = document.querySelectorAll('.bento-card');
-      const cards = document.querySelectorAll('.prediction-card') as NodeListOf<HTMLElement>;
-      const noResults = document.getElementById('no-results');
-      const profileStatus = document.getElementById('profile-status');
-      const profilerWidget = document.getElementById('ai-profiler-widget');
-      const closeProfiler = document.getElementById('close-profiler');
-
-      let currentCategory = 'all';
-      let scrollCount = 0;
-      let mouseMoves = 0;
-      let fastScrolls = 0;
-      let lastScrollTop = window.pageYOffset;
-
-      window.addEventListener('scroll', () => {
-        const st = window.pageYOffset;
-        if (Math.abs(st - lastScrollTop) > 40) fastScrolls++;
-        scrollCount++;
-        lastScrollTop = st <= 0 ? 0 : st;
-        updateProfile();
-      });
-
-      window.addEventListener('mousemove', () => {
-        mouseMoves++;
-        if (mouseMoves % 40 === 0) updateProfile();
-      });
-
-      function updateProfile() {
-        if (!profileStatus) return;
-        if (fastScrolls > 3) {
-          profileStatus.textContent = '⚡ Hyper-Active Crypto & Tech Speculator';
-        } else if (scrollCount > 10 && mouseMoves > 80) {
-          profileStatus.textContent = '🔍 Analytical Macro Strategist';
-        } else if (mouseMoves > 150) {
-          profileStatus.textContent = '🧠 Deep-Dive Futurist & Researcher';
-        } else {
-          profileStatus.textContent = '📊 Passive Telemetry Observer';
-        }
-      }
-
-      closeProfiler?.addEventListener('click', () => {
-        profilerWidget!.style.display = 'none';
-      });
-
-      function filterFeed() {
-        const query = searchInput?.value.toLowerCase().trim() || '';
-        let visible = 0;
-
-        cards.forEach(card => {
-          const title = card.getAttribute('data-title') || '';
-          const cat = card.getAttribute('data-category') || '';
-          const matchesCat = currentCategory === 'all' || cat === currentCategory;
-          const matchesQuery = query === '' || title.includes(query) || cat.includes(query);
-
-          if (matchesCat && matchesQuery) {
-            card.style.display = 'block';
-            visible++;
-          } else {
-            card.style.display = 'none';
-          }
-        });
-
-        if (noResults) {
-          noResults.style.display = visible === 0 ? 'block' : 'none';
-        }
-      }
-
-      searchInput?.addEventListener('input', filterFeed);
+    searchInput?.addEventListener('input', filterFeed);
 
     filterButtons.forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -379,6 +230,16 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
         }
       });
     });
+
+    // Subscription
+    document.getElementById('subscribe-btn')?.addEventListener('click', () => {
+      const email = (document.getElementById('subscriber-email') as HTMLInputElement)?.value;
+      if (email && email.includes('@')) {
+        document.getElementById('subscribe-container')!.style.display = 'none';
+        document.getElementById('subscribe-success')!.style.display = 'block';
+      } else {
+        alert('Please enter a valid email.');
+      }
     });
   </script>
 </Layout>
