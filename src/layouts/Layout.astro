@@ -3,19 +3,41 @@ import '../styles/global.css';
 
 interface Props {
   title: string;
+  description?: string;
+  image?: string;
 }
 
-const { title } = Astro.props;
+const { 
+  title = "OddsPulse.net - Real-time Predictive Markets & Telemetry", 
+  description = "High-end predictive fintech, Web3 telemetry terminal, and autonomous AI trading bot interface.",
+  image = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop"
+} = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="OddsPulse.net - High-end predictive fintech & Web3 telemetry terminal." />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- SEO Meta Tags -->
     <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Open Graph / Social Sharing (Facebook, LinkedIn, Discord) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+
+    <!-- X (Twitter) Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={Astro.url} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
   </head>
   <body style="background-color: var(--bg-primary); color: var(--text-primary); min-height: 100vh; display: flex; flex-direction: column; font-family: system-ui, -apple-system, sans-serif;">
     
@@ -29,7 +51,7 @@ const { title } = Astro.props;
             <span style="font-size: 1.25rem; font-weight: 900; background: linear-gradient(135deg, var(--accent), #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.05em;">OddsPulse<span style="color: var(--accent);">.net</span></span>
           </a>
           <span style="font-size: 0.65rem; font-weight: 700; background: rgba(var(--accent-rgb), 0.15); color: var(--accent); padding: 0.2rem 0.6rem; border-radius: 9999px; border: 1px solid rgba(var(--accent-rgb), 0.3);">
-            TERMINAL V5.0
+            TERMINAL V5.1
           </span>
         </div>
 
