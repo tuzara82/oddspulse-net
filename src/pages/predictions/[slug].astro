@@ -11,9 +11,21 @@ export async function getStaticPaths() {
 
 const { prediction } = Astro.props;
 
-// SEO Optimizations to satisfy Ahrefs and search engines
-const seoTitle = `${prediction.title.substring(0, 50)}... | OddsPulse`;
-const seoDescription = `${prediction.summary.substring(0, 140)} Live odds: ${prediction.odds}%. Track real-time telemetry on OddsPulse.`;
+// Strict SEO length validation to eliminate Ahrefs warnings
+// Title: ideal 40-55 chars (max 60)
+let seoTitle = prediction.title;
+if (seoTitle.length > 55) {
+  seoTitle = seoTitle.substring(0, 52) + '...';
+}
+
+// Meta Description: ideal 120-150 chars (max 160)
+let seoDescription = prediction.summary || `Real-time probability tracking for ${prediction.title}. Current consensus odds: ${prediction.odds}%.`;
+if (seoDescription.length > 150) {
+  seoDescription = seoDescription.substring(0, 147) + '...';
+}
+if (seoDescription.length < 70) {
+  seoDescription = seoDescription + ` Track real-time AI telemetry and market shifts on OddsPulse terminal.`;
+}
 ---
 
 <Layout title={seoTitle} description={seoDescription}>

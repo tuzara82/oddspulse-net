@@ -10,9 +10,23 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
+
+// Strict SEO length validation for blog posts
+let seoTitle = post.title;
+if (seoTitle.length > 55) {
+  seoTitle = seoTitle.substring(0, 52) + '...';
+}
+
+let seoDescription = post.summary;
+if (seoDescription.length > 150) {
+  seoDescription = seoDescription.substring(0, 147) + '...';
+}
+if (seoDescription.length < 70) {
+  seoDescription = seoDescription + ` Read full research dispatch on OddsPulse.net.`;
+}
 ---
 
-<Layout title={`${post.title} - OddsPulse.net`}>
+<Layout title={seoTitle} description={seoDescription} image={post.image}>
   <div style="margin-bottom: 1.5rem;">
     <a href="/blog" style="font-size: 0.75rem; color: var(--accent); font-weight: 600;">← Back to Research Dispatches</a>
   </div>
