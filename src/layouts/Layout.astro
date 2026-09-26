@@ -1,253 +1,158 @@
 ---
-import { SEO } from "astro-seo";
+import '../styles/global.css';
 
 interface Props {
   title: string;
-  description?: string;
 }
 
-const { 
-  title, 
-  description = "Real-time probabilistic tracking of global macroeconomic, technological, and geopolitical milestones on OddsPulse.net."
-} = Astro.props;
-
-const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : "https://oddspulse.net";
+const { title } = Props = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" data-theme="cyan">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="description" content="OddsPulse.net - High-end predictive fintech & Web3 telemetry terminal." />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    
-    <SEO
-      title={title}
-      description={description}
-      canonical={canonicalURL}
-      openGraph={{
-        basic: { title: title, type: "website", image: "https://oddspulse.net/og-image.jpg", url: canonicalURL }
-      }}
-    />
-
-    <style is:global>
-      :root {
-        --accent: #22d3ee;
-        --accent-rgb: 6, 182, 212;
-        --accent-bg: rgba(8, 51, 68, 0.4);
-      }
-      [data-theme="emerald"] {
-        --accent: #34d399;
-        --accent-rgb: 16, 185, 129;
-        --accent-bg: rgba(2, 44, 34, 0.4);
-      }
-      [data-theme="amber"] {
-        --accent: #fbbf24;
-        --accent-rgb: 245, 158, 11;
-        --accent-bg: rgba(69, 26, 3, 0.4);
-      }
-      [data-theme="purple"] {
-        --accent: #c084fc;
-        --accent-rgb: 168, 85, 247;
-        --accent-bg: rgba(76, 29, 149, 0.4);
-      }
-      [data-theme="crimson"] {
-        --accent: #fb7185;
-        --accent-rgb: 244, 63, 94;
-        --accent-bg: rgba(76, 5, 25, 0.4);
-      }
-      [data-theme="orange"] {
-        --accent: #fb923c;
-        --accent-rgb: 249, 115, 22;
-        --accent-bg: rgba(124, 45, 18, 0.4);
-      }
-      [data-theme="indigo"] {
-        --accent: #818cf8;
-        --accent-rgb: 99, 102, 241;
-        --accent-bg: rgba(49, 46, 129, 0.4);
-      }
-      [data-theme="lime"] {
-        --accent: #acc310;
-        --accent-rgb: 163, 230, 53;
-        --accent-bg: rgba(65, 88, 10, 0.4);
-      }
-
-      body {
-        background-color: #080C14;
-        color: #F3F4F6;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        margin: 0; padding: 0;
-        min-height: 100vh;
-        display: flex; flex-direction: column;
-      }
-      .app-container {
-        max-width: 64rem; margin: 0 auto; padding: 2rem 1rem; width: 100%; flex: 1;
-      }
-      header {
-        display: flex; align-items: center; justify-content: space-between;
-        border-bottom: 1px solid rgba(31, 41, 55, 0.8);
-        padding-bottom: 1.5rem; margin-bottom: 2rem;
-        flex-wrap: wrap; gap: 1rem;
-      }
-      footer {
-        margin-top: 4rem; padding-top: 1.5rem;
-        border-top: 1px solid rgba(31, 41, 55, 0.8);
-        text-align: center; font-size: 0.75rem; color: #9CA3AF;
-      }
-      a { text-decoration: none; color: inherit; }
-
-      .badge-live {
-        display: inline-flex; align-items: center; gap: 0.5rem;
-        padding: 0.25rem 0.75rem; border-radius: 9999px;
-        background: var(--accent-bg);
-        border: 1px solid rgba(var(--accent-rgb), 0.3);
-        color: var(--accent); font-size: 0.75rem; font-weight: 600;
-        text-transform: uppercase; letter-spacing: 0.05em;
-        box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.15);
-      }
-      .bento-card {
-        background: linear-gradient(to bottom right, #121A2C, #0A0F1D, #080C14);
-        border: 1px solid rgba(31, 41, 55, 0.9);
-        border-radius: 1.5rem; padding: 1.5rem;
-        cursor: pointer; transition: all 0.2s ease;
-        position: relative; overflow: hidden;
-      }
-      .bento-card:hover {
-        border-color: rgba(var(--accent-rgb), 0.6);
-        box-shadow: 0 0 25px rgba(var(--accent-rgb), 0.2);
-        transform: translateY(-2px);
-      }
-      .search-box {
-        width: 100%; background: #0D1322; border: 1px solid #1F2937;
-        color: #F3F4F6; font-size: 0.8rem; border-radius: 0.75rem;
-        padding: 0.75rem 1rem 0.75rem 2.5rem; outline: none; transition: border-color 0.2s;
-      }
-      .search-box:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.2); }
-      .filter-btn {
-        background: #121A2C; border: 1px solid #1F2937; color: #D1D5DB;
-        padding: 0.5rem 1rem; border-radius: 0.75rem; font-size: 0.75rem;
-        font-weight: 600; cursor: pointer; transition: all 0.2s; white-space: nowrap;
-      }
-      .filter-btn.active {
-        background: var(--accent); color: #030712; border-color: var(--accent);
-        box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.3);
-      }
-      .profiler-widget {
-        position: fixed; bottom: 1rem; right: 1rem; z-index: 50;
-        background: rgba(12, 18, 32, 0.95); border: 1px solid rgba(var(--accent-rgb), 0.4);
-        backdrop-filter: blur(12px); border-radius: 1rem; padding: 1rem;
-        box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.2); max-width: 280px;
-      }
-      .toast-alert {
-        position: fixed; bottom: 1rem; left: 1rem; z-index: 50;
-        background: rgba(12, 18, 32, 0.95); border: 1px solid rgba(var(--accent-rgb), 0.5);
-        backdrop-filter: blur(12px); border-radius: 1rem; padding: 0.85rem 1.15rem;
-        box-shadow: 0 0 25px rgba(var(--accent-rgb), 0.25); max-width: 320px;
-        display: flex; align-items: center; gap: 0.75rem;
-        transform: translateY(150%); opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease;
-      }
-      .toast-alert.show {
-        transform: translateY(0); opacity: 1;
-      }
-      .theme-dot {
-        width: 13px; height: 13px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: transform 0.2s;
-      }
-      .theme-dot:hover { transform: scale(1.25); }
-    </style>
+    <title>{title}</title>
   </head>
-  <body>
-    <div class="app-container">
-      <header>
-        <a href="/" style="display: flex; align-items: center; gap: 0.75rem;">
-          <div style="height: 2.25rem; width: 2.25rem; border-radius: 0.75rem; background: linear-gradient(to top right, var(--accent), #10b981); padding: 2px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(var(--accent-rgb),0.3);">
-            <div style="height: 100%; width: 100%; background: #080C14; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-              <span style="color: var(--accent); font-weight: 800; font-size: 0.875rem;">OP</span>
-            </div>
-          </div>
-          <span style="font-size: 1.125rem; font-weight: 800; color: #ffffff; letter-spacing: -0.025em;">
-            Odds<span style="color: var(--accent);">Pulse</span>.net
+  <body style="background-color: var(--bg-primary); color: var(--text-primary); min-height: 100vh; display: flex; flex-direction: column; font-family: system-ui, -apple-system, sans-serif;">
+    
+    <!-- Top Terminal Navigation Bar -->
+    <header style="border-bottom: 1px solid rgba(var(--accent-rgb), 0.2); background: rgba(10, 15, 29, 0.8); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 50;">
+      <div style="max-width: 1400px; margin: 0 auto; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+        
+        <!-- Logo & Status -->
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
+          <a href="/" style="text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+            <span style="font-size: 1.25rem; font-weight: 900; background: linear-gradient(135deg, var(--accent), #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.05em;">OddsPulse<span style="color: var(--accent);">.net</span></span>
+          </a>
+          <span style="font-size: 0.65rem; font-weight: 700; background: rgba(var(--accent-rgb), 0.15); color: var(--accent); padding: 0.2rem 0.6rem; border-radius: 9999px; border: 1px solid rgba(var(--accent-rgb), 0.3);">
+            TERMINAL V4.8
           </span>
-        </a>
+        </div>
 
-        <!-- Extended Theme Switcher Dots -->
-        <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-          <span style="font-size: 0.65rem; color: #9CA3AF; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Palette:</span>
-          <div style="display: flex; gap: 0.35rem;" id="theme-switcher">
-            <div class="theme-dot" data-theme-value="cyan" style="background: #22d3ee;" title="Cyber Cyan"></div>
-            <div class="theme-dot" data-theme-value="emerald" style="background: #34d399;" title="Emerald Green"></div>
-            <div class="theme-dot" data-theme-value="amber" style="background: #fbbf24;" title="Gold Amber"></div>
-            <div class="theme-dot" data-theme-value="purple" style="background: #c084fc;" title="Laser Purple"></div>
-            <div class="theme-dot" data-theme-value="crimson" style="background: #fb7185;" title="Neon Crimson"></div>
-            <div class="theme-dot" data-theme-value="orange" style="background: #fb923c;" title="Solar Orange"></div>
-            <div class="theme-dot" data-theme-value="indigo" style="background: #818cf8;" title="Electric Indigo"></div>
-            <div class="theme-dot" data-theme-value="lime" style="background: #a3e635;" title="Matrix Lime"></div>
+        <!-- Right Controls: Accent Customizer & Live Status -->
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; color: #9CA3AF; background: #030712; padding: 0.3rem 0.75rem; border-radius: 9999px; border: 1px solid #1F2937;">
+            <span style="height: 0.5rem; width: 0.5rem; background: #34d399; border-radius: 9999px; display: inline-block; box-shadow: 0 0 8px #34d399; animation: pulse 2s infinite;"></span>
+            <span>Gamma / Binance Feed Online</span>
+          </div>
+
+          <!-- Neon Accent Theme Switcher -->
+          <div style="display: flex; align-items: center; gap: 0.35rem; background: #030712; padding: 0.25rem 0.5rem; border-radius: 9999px; border: 1px solid #1F2937;">
+            <span style="font-size: 0.65rem; color: #6B7280; font-weight: 700; padding-left: 0.2rem;">THEME:</span>
+            <button class="theme-btn" data-accent="#06b6d4" data-rgb="6, 182, 212" style="width: 14px; height: 14px; border-radius: 50%; background: #06b6d4; border: none; cursor: pointer;" title="Cyan Neon"></button>
+            <button class="theme-btn" data-accent="#34d399" data-rgb="52, 211, 153" style="width: 14px; height: 14px; border-radius: 50%; background: #34d399; border: none; cursor: pointer;" title="Emerald Web3"></button>
+            <button class="theme-btn" data-accent="#fbbf24" data-rgb="251, 191, 36" style="width: 14px; height: 14px; border-radius: 50%; background: #fbbf24; border: none; cursor: pointer;" title="Gold Alpha"></button>
+            <button class="theme-btn" data-accent="#f43f5e" data-rgb="244, 63, 94" style="width: 14px; height: 14px; border-radius: 50%; background: #f43f5e; border: none; cursor: pointer;" title="Crimson Risk"></button>
+            <button class="theme-btn" data-accent="#c084fc" data-rgb="192, 132, 252" style="width: 14px; height: 14px; border-radius: 50%; background: #c084fc; border: none; cursor: pointer;" title="Purple Cyber"></button>
           </div>
         </div>
-      </header>
 
-      <main>
-        <slot />
-      </main>
+      </div>
+    </header>
 
-      <footer>
-        <p>© {new Date().getFullYear()} OddsPulse.net — Real-time Predictive Markets & Telemetry Engine.</p>
-      </footer>
-    </div>
+    <!-- Main Content Slot -->
+    <main style="flex: 1; max-width: 1400px; width: 100%; margin: 0 auto; padding: 2rem 1.5rem;">
+      <slot />
+    </main>
 
-    <!-- Live Toast Alert Element -->
-    <div class="toast-alert" id="live-toast">
-      <span style="font-size: 1.25rem;" id="toast-icon">⚡</span>
-      <div>
-        <div style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--accent); letter-spacing: 0.05em;" id="toast-title">Live Telemetry Update</div>
-        <div style="font-size: 0.75rem; color: #F3F4F6; font-weight: 600;" id="toast-message">Market probabilities adjusting...</div>
+    <!-- Footer -->
+    <footer style="border-top: 1px solid rgba(156, 163, 175, 0.1); padding: 1.5rem 0; margin-top: auto; background: rgba(3, 7, 18, 0.5);">
+      <div style="max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: #6B7280; flex-wrap: wrap; gap: 1rem;">
+        <div>© 2026 OddsPulse.net — Real-time Predictive Markets & Telemetry</div>
+        <div style="display: flex; gap: 1.5rem;">
+          <a href="/" style="color: #9CA3AF; text-decoration: none;">Terminal</a>
+          <a href="https://coingecko.com" target="_blank" rel="noopener" style="color: #9CA3AF; text-decoration: none;">CoinGecko API</a>
+          <a href="https://polymarket.com" target="_blank" rel="noopener" style="color: #9CA3AF; text-decoration: none;">Gamma Markets</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- DYNAMIC LIVE TOAST ALERTS SYSTEM (Bottom Left) -->
+    <div id="live-toast-container" style="position: fixed; bottom: 1.5rem; left: 1.5rem; z-index: 100; display: flex; flex-direction: column; gap: 0.75rem; pointer-events: none; max-width: 340px;">
+      <div id="live-toast" style="background: linear-gradient(135deg, #121A2C, #0A0F1D); border: 1px solid rgba(var(--accent-rgb), 0.4); border-radius: 1rem; padding: 0.85rem 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.5); opacity: 0; transform: translateY(20px); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: auto;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.25rem;">
+          <span style="font-size: 0.6rem; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;" id="toast-tag">⚡ TELEMETRY ALERT</span>
+          <span style="font-size: 0.6rem; color: #6B7280;" id="toast-time">Just now</span>
+        </div>
+        <p style="font-size: 0.75rem; color: #ffffff; margin: 0; font-weight: 600; line-height: 1.35;" id="toast-text">
+          Initializing telemetry data streams...
+        </p>
       </div>
     </div>
 
+    <!-- Persistent Theme & Dynamic Toast Script -->
     <script>
-      // Theme Management
-      const savedTheme = localStorage.getItem('oddspulse_theme') || 'cyan';
-      document.documentElement.setAttribute('data-theme', savedTheme);
+      // Theme Switcher Logic
+      const themeButtons = document.querySelectorAll('.theme-btn');
+      const root = document.documentElement;
 
-      document.querySelectorAll('.theme-dot').forEach(dot => {
-        dot.addEventListener('click', (e) => {
-          const theme = (e.currentTarget as HTMLElement).getAttribute('data-theme-value');
-          if (theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('oddspulse_theme', theme);
+      const savedAccent = localStorage.getItem('oddspulse_accent');
+      const savedRgb = localStorage.getItem('oddspulse_rgb');
+
+      if (savedAccent && savedRgb) {
+        root.style.setProperty('--accent', savedAccent);
+        root.style.setProperty('--accent-rgb', savedRgb);
+      }
+
+      themeButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const accent = (e.currentTarget as HTMLElement).getAttribute('data-accent');
+          const rgb = (e.currentTarget as HTMLElement).getAttribute('data-rgb');
+          if (accent && rgb) {
+            root.style.setProperty('--accent', accent);
+            root.style.setProperty('--accent-rgb', rgb);
+            localStorage.setItem('oddspulse_accent', accent);
+            localStorage.setItem('oddspulse_rgb', rgb);
           }
         });
       });
 
-      // Live Market Toast Alerts System
-      const alerts = [
-        { icon: "⚡", title: "AGI Milestone Surge", msg: "Model release velocity increased probability by +2%." },
-        { icon: "🐋", title: "Whale Alert", msg: "5,000 BTC moved to cold storage from institutional reserves." },
-        { icon: "📈", title: "Crypto ETP Inflow", msg: "Global spot ETF volume crossed daily records." },
-        { icon: "🌍", title: "Geopolitical Shift", msg: "New trade corridor agreement submitted for ratification." },
-        { icon: "🤖", title: "Robotics Cost Curve", msg: "Actuator production efficiency improved by 4%." }
+      // Randomized Dynamic Toast Alerts
+      const toastPool = [
+        { tag: "🐋 WHALE ALERT", text: "5,420 BTC ($455M) transferred from unknown wallet to Binance cold storage." },
+        { tag: "📈 PROBABILITY SHIFT", text: "SpaceX Mars uncrewed landing odds surged +4% following successful orbital refueling test." },
+        { tag: "🧠 AI SENTIMENT", text: "Model telemetry detects bullish accumulation wave across tier-1 crypto derivatives." },
+        { tag: "🚀 SPACE & SCIENCE", text: "James Webb Space Telescope captures high-resolution atmospheric transmission spectra on K2-18b." },
+        { tag: "⚡ MACRO UPDATE", text: "G20 central banks evaluate cross-border CBDC settlement framework trials." },
+        { tag: "💡 SYSTEM 2 BOT", text: "Jev Autonomous Agent successfully executed paper trade on Kraken IPO probability index." },
+        { tag: "🌐 GEOPOLITICS", text: "Northern Sea Route commercial cargo transit metrics indicate record ice-free shipping window." },
+        { tag: "🤖 AGI MILESTONE", text: "Autonomous coding agent network resolves 89% of complex benchmark logic puzzles." }
       ];
 
-      const toast = document.getElementById('live-toast');
-      const toastIcon = document.getElementById('toast-icon');
-      const toastTitle = document.getElementById('toast-title');
-      const toastMessage = document.getElementById('toast-message');
+      const toastEl = document.getElementById('live-toast');
+      const toastTag = document.getElementById('toast-tag');
+      const toastText = document.getElementById('toast-text');
+      const toastTime = document.getElementById('toast-time');
 
-      function showRandomAlert() {
-        if (!toast || !toastIcon || !toastTitle || !toastMessage) return;
-        const randomAlert = alerts[Math.floor(Math.random() * alerts.length)];
-        toastIcon.textContent = randomAlert.icon;
-        toastTitle.textContent = randomAlert.title;
-        toastMessage.textContent = randomAlert.msg;
+      function showRandomToast() {
+        if (!toastEl || !toastTag || !toastText || !toastTime) return;
 
-        toast.classList.add('show');
+        // Pick a random alert
+        const randomItem = toastPool[Math.floor(Math.random() * toastPool.length)];
+        toastTag.textContent = randomItem.tag;
+        toastText.textContent = randomItem.text;
+        toastTime.textContent = "Just now";
 
+        // Show toast
+        toastEl.style.opacity = '1';
+        toastEl.style.transform = 'translateY(0)';
+
+        // Hide after 5 seconds
         setTimeout(() => {
-          toast.classList.remove('show');
-        }, 5000);
+          toastEl.style.opacity = '0';
+          toastEl.style.transform = 'translateY(20px)';
+        }, 5500);
       }
 
-      setTimeout(showRandomAlert, 4000);
-      setInterval(showRandomAlert, 18000);
+      // Trigger first toast after 3 seconds, then every 12 seconds with random variation
+      setTimeout(() => {
+        showRandomToast();
+        setInterval(showRandomToast, 13000);
+      }, 3000);
     </script>
   </body>
 </html>
