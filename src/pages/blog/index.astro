@@ -1,9 +1,11 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import posts from '../../data/posts.json';
+
+const blogDescription = "Explore deep-dive analytical research, automated AI trading bot insights, and macroeconomic commentary on OddsPulse.";
 ---
 
-<Layout title="Telemetry Research & Blog - OddsPulse.net">
+<Layout title="Telemetry Research & Blog - OddsPulse.net" description={blogDescription}>
   <div style="margin-bottom: 2rem;">
     <a href="/" style="font-size: 0.75rem; color: var(--accent); font-weight: 600;">← Back to Terminal Feed</a>
   </div>
