@@ -11,233 +11,93 @@ export async function getStaticPaths() {
 
 const { prediction } = Astro.props;
 
-const baseYes = Math.floor(prediction.odds * 1.8) + 15;
-const baseNo = Math.floor((100 - prediction.odds) * 1.5) + 8;
+// SEO Optimizations to satisfy Ahrefs and search engines
+const seoTitle = `${prediction.title.substring(0, 50)}... | OddsPulse`;
+const seoDescription = `${prediction.summary.substring(0, 140)} Live odds: ${prediction.odds}%. Track real-time telemetry on OddsPulse.`;
 ---
 
-<Layout title={`${prediction.title} - OddsPulse.net`}>
-  <div style="margin-bottom: 1.5rem;">
-    <a href="/" style="font-size: 0.75rem; color: var(--accent); font-weight: 600;">← Back to Live Feed</a>
+<Layout title={seoTitle} description={seoDescription}>
+  <div style="margin-bottom: 2rem;">
+    <a href="/" style="font-size: 0.75rem; color: var(--accent); font-weight: 600; text-decoration: none;">← Back to Terminal Feed</a>
   </div>
 
-  <div class="bento-card" style="margin-bottom: 2rem;">
-    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
-      <span style="font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 0.35rem; background: #030712; color: var(--accent); border: 1px solid rgba(var(--accent-rgb), 0.3); text-transform: uppercase;">
-        {prediction.category}
-      </span>
-      <span style="font-size: 1.25rem; font-weight: 800; color: var(--accent);" id="display-odds">{prediction.odds}% Probability</span>
-    </div>
-
-    <h1 style="font-size: 1.5rem; font-weight: 800; margin: 0 0 1rem 0; color: #ffffff;">
-      {prediction.title}
-    </h1>
-    
-    <p style="font-size: 0.9rem; color: #9CA3AF; line-height: 1.6; margin: 0 0 1.5rem 0;">
-      {prediction.summary}
-    </p>
-
-    <!-- Interactive Odds Simulator Widget -->
-    <div style="background: #030712; border: 1px solid rgba(var(--accent-rgb), 0.3); border-radius: 1rem; padding: 1.5rem; margin-top: 1.5rem;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-        <span style="font-size: 0.75rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;">
-          🎛️ Interactive Probability Simulator
+  <div style="max-width: 800px; margin: 0 auto;">
+    <div class="bento-card" style="display: flex; flex-direction: column; gap: 1.5rem; padding: 2.5rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+        <span style="font-size: 0.75rem; font-weight: 800; padding: 0.3rem 0.85rem; border-radius: 9999px; background: rgba(var(--accent-rgb), 0.2); color: var(--accent); border: 1px solid rgba(var(--accent-rgb), 0.4); text-transform: uppercase;">
+          {prediction.category}
         </span>
-        <span style="font-size: 0.75rem; color: #9CA3AF;" id="simulator-status">Move slider to simulate your outlook</span>
-      </div>
-      
-      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-        <span style="font-size: 0.75rem; font-weight: 700; color: #9CA3AF;">0%</span>
-        <input 
-          type="range" 
-          id="odds-slider" 
-          min="0" 
-          max="100" 
-          value={prediction.odds} 
-          style="flex: 1; accent-color: var(--accent); cursor: pointer; height: 6px;" 
-        />
-        <span style="font-size: 0.75rem; font-weight: 700; color: #9CA3AF;">100%</span>
+        <span style="font-size: 0.8rem; font-weight: 700; color: #34d399; background: #022c22; padding: 0.3rem 0.75rem; border-radius: 0.5rem; border: 1px solid rgba(52,211,153,0.3);">
+          Change: {prediction.change}
+        </span>
       </div>
 
-      <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem;">
-        <span style="color: #9CA3AF;">Your Simulated Consensus: <strong style="color: #ffffff;" id="slider-value-text">{prediction.odds}%</strong></span>
-        <button id="save-simulation" style="background: var(--accent); color: #030712; border: none; padding: 0.4rem 0.8rem; border-radius: 0.5rem; font-weight: 700; cursor: pointer;">
-          Lock Forecast
-        </button>
-      </div>
-    </div>
-  </div>
+      <h1 style="font-size: 2.25rem; font-weight: 900; color: #ffffff; margin: 0; line-height: 1.25; letter-spacing: -0.025em;">
+        {prediction.title}
+      </h1>
 
-  <!-- Community Voting Widget -->
-  <div class="bento-card" style="margin-bottom: 2rem;">
-    <h3 style="font-size: 1rem; font-weight: 700; margin: 0 0 0.5rem 0; color: #ffffff;">Community Consensus Poll</h3>
-    <p style="font-size: 0.75rem; color: #9CA3AF; margin: 0 0 1rem 0;">Do you believe this milestone will be reached within the stated timeframe?</p>
-    
-    <div style="display: flex; gap: 1rem;" id="vote-container">
-      <button id="vote-yes" style="flex: 1; background: #022c22; border: 1px solid #059669; color: #34d399; padding: 0.75rem; border-radius: 0.75rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s;">
-        Yes (<span id="yes-count">{baseYes}</span>)
-      </button>
-      <button id="vote-no" style="flex: 1; background: #4c0519; border: 1px solid #e11d48; color: #fb7185; padding: 0.75rem; border-radius: 0.75rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s;">
-        No (<span id="no-count">{baseNo}</span>)
-      </button>
-    </div>
-    
-    <div id="vote-msg" style="font-size: 0.75rem; color: #34d399; margin-top: 0.75rem; display: none; background: #022c22; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #059669; text-align: center;">
-      ✓ Thank you for casting your vote! Community sentiment updated.
-    </div>
-  </div>
-
-  <!-- Interactive Comments Feed -->
-  <div class="bento-card">
-    <h3 style="font-size: 1rem; font-weight: 700; margin: 0 0 0.5rem 0; color: #ffffff;">💬 Analyst Discussion & Insights</h3>
-    <p style="font-size: 0.75rem; color: #9CA3AF; margin: 0 0 1.25rem 0;">Share your thesis, macro perspective, or evidence regarding this prediction.</p>
-
-    <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem;">
-      <input type="text" id="comment-author" placeholder="Your Analyst Handle / Name..." style="background: #030712; border: 1px solid #1F2937; color: #F3F4F6; font-size: 0.8rem; border-radius: 0.75rem; padding: 0.65rem 1rem; outline: none;" />
-      <textarea id="comment-text" rows="3" placeholder="Write your market thesis or telemetry analysis here..." style="background: #030712; border: 1px solid #1F2937; color: #F3F4F6; font-size: 0.8rem; border-radius: 0.75rem; padding: 0.75rem 1rem; outline: none; resize: vertical;"></textarea>
-      <button id="submit-comment" style="align-self: flex-end; background: var(--accent); color: #030712; border: none; padding: 0.5rem 1.25rem; border-radius: 0.75rem; font-weight: 700; font-size: 0.8rem; cursor: pointer;">
-        Post Analysis
-      </button>
-    </div>
-
-    <div id="comments-list" style="display: flex; flex-direction: column; gap: 0.75rem;">
-      <div style="background: #030712; border: 1px solid #1F2937; border-radius: 0.75rem; padding: 1rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
-          <span style="font-size: 0.75rem; font-weight: 700; color: var(--accent);">MacroQuant_99</span>
-          <span style="font-size: 0.65rem; color: #6B7280;">2 hours ago</span>
+      <div style="background: #030712; border: 1px solid rgba(var(--accent-rgb), 0.3); border-radius: 1.25rem; padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <span style="font-size: 0.7rem; color: #9CA3AF; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.25rem;">Consensus Probability</span>
+          <span style="font-size: 2rem; font-weight: 900; color: #ffffff;">{prediction.odds}%</span>
         </div>
-        <p style="font-size: 0.8rem; color: #D1D5DB; margin: 0; line-height: 1.4;">
-          The underlying metrics support a much higher probability weighting than current market consensus indicates. Expecting accelerated momentum.
+        <div style="text-align: right;">
+          <span style="font-size: 0.7rem; color: #9CA3AF; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.25rem;">Telemetry Status</span>
+          <span style="font-size: 0.85rem; font-weight: 700; color: #34d399;">Active Grid Sync</span>
+        </div>
+      </div>
+
+      <div style="font-size: 1.05rem; color: #D1D5DB; line-height: 1.8; display: flex; flex-direction: column; gap: 1rem;">
+        <p style="margin: 0; color: #ffffff; font-weight: 600;">
+          {prediction.summary}
+        </p>
+        <p style="margin: 0; color: #9CA3AF; font-size: 0.95rem;">
+          This prediction is continuously evaluated by the OddsPulse AI Telemetry Engine, tracking cross-market sentiment, on-chain reserves, and public institutional filings in real-time.
         </p>
       </div>
+
+      <!-- Interactive Community Vote Widget -->
+      <div style="margin-top: 1.5rem; border-top: 1px solid #1F2937; padding-top: 1.5rem;">
+        <h3 style="font-size: 0.9rem; font-weight: 800; color: #ffffff; margin: 0 0 1rem 0;">Cast Community Prediction Vote</h3>
+        <div style="display: flex; gap: 1rem;" id="vote-container">
+          <button id="vote-yes" style="flex: 1; background: #022c22; color: #34d399; border: 1px solid rgba(52,211,153,0.4); padding: 0.75rem; border-radius: 0.75rem; font-weight: 800; cursor: pointer; font-size: 0.9rem;">YES</button>
+          <button id="vote-no" style="flex: 1; background: #4c0519; color: #fb7185; border: 1px solid rgba(225,29,72,0.4); padding: 0.75rem; border-radius: 0.75rem; font-weight: 800; cursor: pointer; font-size: 0.9rem;">NO</button>
+        </div>
+        <div id="vote-result" style="margin-top: 0.75rem; font-size: 0.8rem; color: #34d399; font-weight: 700; display: none; text-align: center;">
+          ✓ Vote recorded successfully to telemetry ledger!
+        </div>
+      </div>
     </div>
   </div>
 
-  <script define:vars={{ slug: prediction.slug, initYes: baseYes, initNo: baseNo }}>
-    // Simulator Logic
-    const slider = document.getElementById('odds-slider');
-    const sliderValueText = document.getElementById('slider-value-text');
-    const displayOdds = document.getElementById('display-odds');
-    const simulatorStatus = document.getElementById('simulator-status');
-    const saveBtn = document.getElementById('save-simulation');
-
-    const storageKey = `oddspulse_sim_${slug}`;
-    const savedVal = localStorage.getItem(storageKey);
-
-    if (savedVal && slider && sliderValueText && displayOdds) {
-      slider.value = savedVal;
-      sliderValueText.textContent = savedVal + '%';
-      displayOdds.textContent = savedVal + '% Probability (Simulated)';
-      if (simulatorStatus) simulatorStatus.textContent = 'Custom user simulation loaded';
-    }
-
-    slider?.addEventListener('input', (e) => {
-      const val = e.target.value;
-      if (sliderValueText) sliderValueText.textContent = val + '%';
-      if (displayOdds) displayOdds.textContent = val + '% Probability (Simulated)';
-    });
-
-    saveBtn?.addEventListener('click', () => {
-      if (slider) {
-        localStorage.setItem(storageKey, slider.value);
-        if (simulatorStatus) simulatorStatus.textContent = '✓ Simulation successfully locked!';
-        setTimeout(() => { if (simulatorStatus) simulatorStatus.textContent = 'Custom simulation active'; }, 3000);
-      }
-    });
-
-    // Poll Voting Logic
+  <script define:vars={{ slug: prediction.slug }}>
     const yesBtn = document.getElementById('vote-yes');
     const noBtn = document.getElementById('vote-no');
-    const yesCount = document.getElementById('yes-count');
-    const noCount = document.getElementById('no-count');
-    const voteMsg = document.getElementById('vote-msg');
+    const resultEl = document.getElementById('vote-result');
 
-    const pollKey = `oddspulse_poll_${slug}`;
-    const votesKey = `oddspulse_votes_${slug}`;
-    
-    let votes = JSON.parse(localStorage.getItem(votesKey) || JSON.stringify({ yes: initYes, no: initNo }));
-    const hasVoted = localStorage.getItem(pollKey);
-
-    if (yesCount) yesCount.textContent = votes.yes;
-    if (noCount) noCount.textContent = votes.no;
-
-    if (hasVoted) {
-      if (yesBtn) yesBtn.style.opacity = '0.6';
-      if (noBtn) noBtn.style.opacity = '0.6';
-      if (voteMsg) {
-        voteMsg.textContent = `✓ You already voted: ${hasVoted.toUpperCase()}`;
-        voteMsg.style.display = 'block';
+    function handleVote(choice) {
+      localStorage.setItem(`voted_${slug}`, choice);
+      if (yesBtn && noBtn && resultEl) {
+        yesBtn.style.opacity = '0.5';
+        noBtn.style.opacity = '0.5';
+        yesBtn.setAttribute('disabled', 'true');
+        noBtn.setAttribute('disabled', 'true');
+        resultEl.style.display = 'block';
       }
     }
 
-    yesBtn?.addEventListener('click', () => {
-      if (localStorage.getItem(pollKey)) return;
-      votes.yes++;
-      localStorage.setItem(votesKey, JSON.stringify(votes));
-      localStorage.setItem(pollKey, 'yes');
-      if (yesCount) yesCount.textContent = votes.yes;
-      if (voteMsg) {
-        voteMsg.textContent = '✓ Successfully voted YES!';
-        voteMsg.style.display = 'block';
+    yesBtn?.addEventListener('click', () => handleVote('YES'));
+    noBtn?.addEventListener('click', () => handleVote('NO'));
+
+    if (localStorage.getItem(`voted_${slug}`)) {
+      if (yesBtn && noBtn && resultEl) {
+        yesBtn.setAttribute('disabled', 'true');
+        noBtn.setAttribute('disabled', 'true');
+        yesBtn.style.opacity = '0.5';
+        noBtn.style.opacity = '0.5';
+        resultEl.textContent = `✓ You already voted: ${localStorage.getItem(`voted_${slug}`)}`;
+        resultEl.style.display = 'block';
       }
-      if (yesBtn) yesBtn.style.opacity = '0.6';
-      if (noBtn) noBtn.style.opacity = '0.6';
-    });
-
-    noBtn?.addEventListener('click', () => {
-      if (localStorage.getItem(pollKey)) return;
-      votes.no++;
-      localStorage.setItem(votesKey, JSON.stringify(votes));
-      localStorage.setItem(pollKey, 'no');
-      if (noCount) noCount.textContent = votes.no;
-      if (voteMsg) {
-        voteMsg.textContent = '✓ Successfully voted NO!';
-        voteMsg.style.display = 'block';
-      }
-      if (yesBtn) yesBtn.style.opacity = '0.6';
-      if (noBtn) noBtn.style.opacity = '0.6';
-    });
-
-    // Comments Logic
-    const authorInput = document.getElementById('comment-author');
-    const textInput = document.getElementById('comment-text');
-    const submitBtn = document.getElementById('submit-comment');
-    const commentsList = document.getElementById('comments-list');
-    const commentsKey = `oddspulse_comments_${slug}`;
-
-    const savedComments = JSON.parse(localStorage.getItem(commentsKey) || '[]');
-    savedComments.forEach((c) => {
-      const div = document.createElement('div');
-      div.style.cssText = 'background: #030712; border: 1px solid #1F2937; border-radius: 0.75rem; padding: 1rem; margin-top: 0.75rem;';
-      div.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
-          <span style="font-size: 0.75rem; font-weight: 700; color: var(--accent);">${c.author}</span>
-          <span style="font-size: 0.65rem; color: #6B7280;">User thesis</span>
-        </div>
-        <p style="font-size: 0.8rem; color: #D1D5DB; margin: 0; line-height: 1.4;">${c.text}</p>
-      `;
-      commentsList?.prepend(div);
-    });
-
-    submitBtn?.addEventListener('click', () => {
-      const author = authorInput?.value.trim() || 'Anonymous Analyst';
-      const text = textInput?.value.trim() || '';
-      if (!text) return;
-
-      const newComment = { author, text };
-      savedComments.push(newComment);
-      localStorage.setItem(commentsKey, JSON.stringify(savedComments));
-
-      const div = document.createElement('div');
-      div.style.cssText = 'background: #030712; border: 1px solid #1F2937; border-radius: 0.75rem; padding: 1rem; margin-top: 0.75rem;';
-      div.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
-          <span style="font-size: 0.75rem; font-weight: 700; color: var(--accent);">${author}</span>
-          <span style="font-size: 0.65rem; color: #6B7280;">Just now</span>
-        </div>
-        <p style="font-size: 0.8rem; color: #D1D5DB; margin: 0; line-height: 1.4;">${text}</p>
-      `;
-      commentsList?.prepend(div);
-      if (textInput) textInput.value = '';
-    });
+    }
   </script>
 </Layout>
