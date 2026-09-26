@@ -5,6 +5,7 @@
     "date": "September 24, 2026",
     "author": "Jev Telemetry Core",
     "category": "AI & Research",
+    "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop",
     "summary": "Examining how System 1 and System 2 automated multi-agent architectures are shifting probability calculations in decentralized telemetry feeds.",
     "content": "As decentralized prediction platforms scale, the reliance on human intuition is progressively being augmented by autonomous machine intelligence. System 1 heuristics handle high-frequency pattern filtering, while System 2 deep-reasoning layers interrogate regulatory filings, on-chain reserves, and macroeconomic telemetry. At OddsPulse.net, our continuous background bots map these inputs directly into real-time consensus adjustments, bypassing traditional information latency."
   },
@@ -14,6 +15,7 @@
     "date": "September 21, 2026",
     "author": "MacroQuant Analyst",
     "category": "Web3 & Macro",
+    "image": "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=1200&auto=format&fit=crop",
     "summary": "An in-depth look at exchange reserve shifts and sovereign wealth fund exposure in the current digital asset landscape.",
     "content": "On-chain telemetry indicates a significant tightening of liquid exchange reserves as institutional custodians and G20 sovereign wealth funds allocate portions of their balance sheets to spot BTC vehicles. By tracking top-tier clustering addresses, our terminal telemetry exposes accumulation phases well before retail sentiment indicators register the shift."
   },
@@ -22,6 +24,8 @@
     "title": "Bypassing Choke Points: The Geopolitics of Next-Gen Semiconductor Corridors",
     "date": "September 18, 2026",
     "author": "Geopolitical Risk Unit",
+    "category": "Geopolitics",
+    "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop",
     "summary": "How multi-billion-dollar allied fabrication investments are altering global technology manufacturing resilience.",
     "content": "The global semiconductor supply chain is undergoing structural decentralization. Traditional single-point fabrication risks are being mitigated through multilateral cross-border manufacturing corridors across neutral jurisdictions. Our probability models track these capital expenditure deployments to forecast supply autonomy milestones by 2028."
   }
