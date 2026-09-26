@@ -10,12 +10,12 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
 
 <Layout title="OddsPulse.net - Real-time Predictive Markets & Telemetry">
   
-  <!-- HERO SECTION WITH REAL-TIME LIVE BTC PRICE -->
+  <!-- HERO SECTION WITH REAL-TIME BINANCE API BTC PRICE -->
   <div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1.5rem;">
     <div>
       <div class="badge-live" style="margin-bottom: 1rem;">
         <span style="height: 0.5rem; width: 0.5rem; background: var(--accent); border-radius: 9999px; display: inline-block; box-shadow: 0 0 10px var(--accent);"></span>
-        AI Telemetry Engine v4.7 (Bot Synced)
+        AI Telemetry Engine v4.9 (Binance Stream)
       </div>
       <h1 style="font-size: 2.25rem; font-weight: 800; margin: 0 0 0.75rem 0; letter-spacing: -0.025em; color: #ffffff;">
         Predictive Markets <span style="background: linear-gradient(to right, var(--accent), #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">In Real-Time</span>
@@ -25,14 +25,14 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
       </p>
     </div>
 
-    <!-- LIVE BTC BADGE -->
-    <div style="background: linear-gradient(135deg, #121A2C, #0A0F1D); border: 1px solid rgba(251, 191, 36, 0.4); border-radius: 1.25rem; padding: 1rem 1.25rem; box-shadow: 0 0 25px rgba(251, 191, 36, 0.15); min-width: 210px;">
+    <!-- REAL-TIME BINANCE API BTC BADGE -->
+    <div style="background: linear-gradient(135deg, #121A2C, #0A0F1D); border: 1px solid rgba(251, 191, 36, 0.4); border-radius: 1.25rem; padding: 1rem 1.25rem; box-shadow: 0 0 25px rgba(251, 191, 36, 0.15); min-width: 220px;">
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.35rem;">
-        <span style="font-size: 0.65rem; font-weight: 700; color: #fbbf24; text-transform: uppercase; letter-spacing: 0.05em;">⚡ BTC/USDT (Binance)</span>
-        <span style="font-size: 0.6rem; background: #022c22; color: #34d399; padding: 0.1rem 0.4rem; border-radius: 9999px; border: 1px solid rgba(52,211,153,0.3);">LIVE</span>
+        <span style="font-size: 0.65rem; font-weight: 700; color: #fbbf24; text-transform: uppercase; letter-spacing: 0.05em;">⚡ BTC/USDT (Binance WS)</span>
+        <span style="font-size: 0.6rem; background: #022c22; color: #34d399; padding: 0.1rem 0.4rem; border-radius: 9999px; border: 1px solid rgba(52,211,153,0.3);" id="ws-status">CONNECTING</span>
       </div>
-      <div style="font-size: 1.35rem; font-weight: 800; color: #ffffff;" id="live-btc-price">$84,059.65</div>
-      <div style="font-size: 0.7rem; color: #34d399; font-weight: 700; margin-top: 0.2rem;" id="live-btc-change">+1.42% (24h Vol)</div>
+      <div style="font-size: 1.35rem; font-weight: 800; color: #ffffff;" id="live-btc-price">Loading...</div>
+      <div style="font-size: 0.7rem; color: #34d399; font-weight: 700; margin-top: 0.2rem;" id="live-btc-change">Spot Telemetry Feed</div>
     </div>
   </div>
 
@@ -203,15 +203,72 @@ const tickerMarkets = [...predictions].sort((a: any, b: any) => b.odds - a.odds)
   </div>
 
   <script>
-    let price = 84059.65;
+    // Real-Time Binance WebSocket Stream for Live BTC/USDT Price
     const priceEl = document.getElementById('live-btc-price');
-    if (priceEl) {
-      setInterval(() => {
-        price += (Math.random() - 0.48) * 15;
-        priceEl.textContent = '$' + price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      }, 3000);
+    const wsStatus = document.getElementById('ws-status');
+    const btcChangeEl = document.getElementById('live-btc-change');
+
+    function connectBinanceWS() {
+      // Using Binance public trade stream for real-time spot price
+      const ws = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@trade');
+
+      ws.onopen = () => {
+        if (wsStatus) {
+          wsStatus.textContent = 'CONNECTED';
+          wsStatus.style.background = '#022c22';
+          wsStatus.style.color = '#34d399';
+        }
+      };
+
+      ws.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          const price = parseFloat(data.p);
+          if (priceEl && !isNaN(price)) {
+            priceEl.textContent = '$' + price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+          }
+        } catch (e) {
+          console.error("WS parse error", e);
+        }
+      };
+
+      ws.onerror = (error) => {
+        console.warn("Binance WS error, falling back to REST poll", error);
+        if (wsStatus) wsStatus.textContent = 'REST FALLBACK';
+      };
+
+      ws.onclose = () => {
+        if (wsStatus) {
+          wsStatus.textContent = 'RECONNECTING';
+          wsStatus.style.background = '#451a03';
+          wsStatus.style.color = '#fbbf24';
+        }
+        // Reconnect after 3 seconds
+        setTimeout(connectBinanceWS, 3000);
+      };
     }
 
+    // Fallback REST fetch in case WebSocket is blocked by browser/firewall
+    async function fetchBinanceRest() {
+      try {
+        const res = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
+        const data = await res.json();
+        const price = parseFloat(data.price);
+        if (priceEl && !isNaN(price)) {
+          priceEl.textContent = '$' + price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+      } catch (e) {
+        console.error("REST fetch error", e);
+      }
+    }
+
+    // Initialize connection
+    connectBinanceWS();
+    // Refresh via REST every 5 seconds as a robust backup
+    setInterval(fetchBinanceRest, 5000);
+    fetchBinanceRest();
+
+    // Search and Filters
     const searchInput = document.getElementById('search-input') as HTMLInputElement;
     const filterButtons = document.querySelectorAll('.filter-btn');
     const bentoCards = document.querySelectorAll('.bento-card');
