@@ -5,7 +5,7 @@ interface Props {
   title: string;
 }
 
-const { title } = Props = Astro.props;
+const { title } = Astro.props;
 ---
 
 <!doctype html>
@@ -131,24 +131,20 @@ const { title } = Props = Astro.props;
       function showRandomToast() {
         if (!toastEl || !toastTag || !toastText || !toastTime) return;
 
-        // Pick a random alert
         const randomItem = toastPool[Math.floor(Math.random() * toastPool.length)];
         toastTag.textContent = randomItem.tag;
         toastText.textContent = randomItem.text;
         toastTime.textContent = "Just now";
 
-        // Show toast
         toastEl.style.opacity = '1';
         toastEl.style.transform = 'translateY(0)';
 
-        // Hide after 5 seconds
         setTimeout(() => {
           toastEl.style.opacity = '0';
           toastEl.style.transform = 'translateY(20px)';
         }, 5500);
       }
 
-      // Trigger first toast after 3 seconds, then every 12 seconds with random variation
       setTimeout(() => {
         showRandomToast();
         setInterval(showRandomToast, 13000);
