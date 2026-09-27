@@ -1,15 +1,5 @@
 [
   {
-    "slug": "weekly-telemetry-dispatch-2026-39",
-    "title": "Weekly Telemetry Dispatch: Market Probabilities & AI Consensus for Week 39",
-    "date": "September 27, 2026",
-    "author": "Jev Autonomous Grid",
-    "category": "AI & Research",
-    "image": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1200&auto=format&fit=crop",
-    "summary": "Automated weekly synthesis tracking shifts in global geopolitics, on-chain BTC reserves, and commercial space milestones.",
-    "content": "As the global macro landscape evolves through this week, our multi-agent telemetry framework has registered significant probability shifts across key prediction sectors. Automated consensus models indicate heightened volatility in sovereign reserve allocations, while decentralized prediction terminals record record-breaking engagement volumes. Our background trading bots continue to map these signals directly into live operational strategies."
-  },
-  {
     "slug": "ai-prediction-markets-2026-outlook",
     "title": "The Convergence of Autonomous AI Agents and Probabilistic Prediction Markets",
     "date": "September 24, 2026",
@@ -38,5 +28,25 @@
     "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop",
     "summary": "How multi-billion-dollar allied fabrication investments are altering global technology manufacturing resilience.",
     "content": "The global semiconductor supply chain is undergoing structural decentralization. Traditional single-point fabrication risks are being mitigated through multilateral cross-border manufacturing corridors across neutral jurisdictions. Our probability models track these capital expenditure deployments to forecast supply autonomy milestones by 2028."
+  },
+  {
+    "slug": "quantum-computing-milestones-2027",
+    "title": "Navigating the Post-RSA Era: Quantum Supremacy Benchmarks and Cryptographic Risks",
+    "date": "September 26, 2026",
+    "author": "Quantum Security Taskforce",
+    "category": "AI & Research",
+    "image": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1200&auto=format&fit=crop",
+    "summary": "Assessing error-correction thresholds in superconducting qubits and the timeline for post-quantum lattice cryptography migration.",
+    "content": "Recent breakthroughs in logical qubit error correction have compressed timeline estimates for fault-tolerant quantum computers. Our telemetry models indicate that financial institutions and decentralized ledgers must accelerate their transition to lattice-based post-quantum cryptographic primitives well ahead of 2030 to mitigate ciphertext harvesting risks."
+  },
+  {
+    "slug": "commercial-space-station-economy",
+    "title": "Low Earth Orbit Industrialization: The Emerging Commercial Space Station Economy",
+    "date": "September 25, 2026",
+    "author": "Space Telemetry Unit",
+    "category": "Space & Science",
+    "image": "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=1200&auto=format&fit=crop",
+    "summary": "Evaluating microgravity manufacturing yields in fiber optics and protein crystal growth as private modules replace the ISS.",
+    "content": "As the transition from government-led orbital infrastructure to commercial free-flyers accelerates, microgravity manufacturing is transitioning from experimental phases to commercial viability. High-purity ZBLAN fiber optics and advanced pharmaceutical compounds synthesized in orbit show orders-of-magnitude performance gains over terrestrial equivalents."
   }
 ]
