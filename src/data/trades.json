@@ -1,5 +1,13 @@
 [
   {
+    "market": "Will sovereign AI sovereign cloud infrastructure mandates be adopted across G7 nations?",
+    "outcome": "NO",
+    "confidence": 96.0,
+    "sizeUsdc": 100,
+    "source": "Jev Neural Core",
+    "timestamp": "2026-09-27 20:57:42"
+  },
+  {
     "market": "Will SpaceX successfully land an uncrewed Starship on Mars before the end of 2026?",
     "outcome": "NO",
     "confidence": 91.6,
