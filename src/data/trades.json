@@ -1,5 +1,13 @@
 [
   {
+    "market": "Will global stablecoin settlement volume surpass traditional Visa network volume by 2028?",
+    "outcome": "NO",
+    "confidence": 85.8,
+    "sizeUsdc": 50,
+    "source": "Jev Neural Core",
+    "timestamp": "2026-09-28 00:00:01"
+  },
+  {
     "market": "Will sovereign AI sovereign cloud infrastructure mandates be adopted across G7 nations?",
     "outcome": "NO",
     "confidence": 96.0,
